@@ -70,5 +70,22 @@ namespace PBL5.FoodWeb.API.Database.SeedData
             }
             context.SaveChanges();
         }
+
+        public void SeedCategories()
+        {
+            if(context.Categorys.Any()){
+                return;
+            }
+
+            var jsonData = File.ReadAllText("Database/SeedData/CategoryData.json");
+            var categoriesData =  JsonSerializer.Deserialize<List<Category>>(jsonData);
+            if(categoriesData == null) return;
+
+            foreach(var item in categoriesData){
+                context.Categorys.Add(item);
+            }
+            context.SaveChanges();
+
+        }
     }
 }

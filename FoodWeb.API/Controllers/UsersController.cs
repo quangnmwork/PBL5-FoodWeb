@@ -23,7 +23,7 @@ namespace FoodWeb.API.Controllers
             this._userRepository = userRepository;
         }
 
-        [HttpGet]
+        [HttpGet("getAllUsers")]
         public ActionResult<IEnumerable<User>> GetListUsers()
         {
             return Ok(_userRepository.GetAllUsers());

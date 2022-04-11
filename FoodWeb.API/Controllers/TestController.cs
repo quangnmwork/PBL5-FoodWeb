@@ -7,6 +7,7 @@ using AutoMapper;
 using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
+using FoodWeb.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -21,9 +22,15 @@ namespace Namespace
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public TestController(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+        private readonly IAuthorizeService _authorizeService;
+
+        public TestController(IUserRepository userRepository, 
+                              IMapper mapper, 
+                              IConfiguration configuration,
+                              IAuthorizeService authorizeService)
         {
             this._configuration = configuration;
+            this._authorizeService = authorizeService;
             this._mapper = mapper;
             this._userRepository = userRepository;
         }
@@ -53,13 +60,31 @@ namespace Namespace
         [HttpGet("getClaim")]
         public ActionResult<string> GetClaim()
         {
-            var username = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var strId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             //IEnumerable<Claim> username1 = this.User.FindAll(ClaimTypes.A);
-            if (string.IsNullOrEmpty(username))
+
+            if (string.IsNullOrEmpty(strId))
             {
                 return NotFound();
             }
-            return username;
+            return strId;
+        }
+
+        [HttpGet("authorization")]
+        public ActionResult<string> testAuthorize()
+        {
+            var strId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(_authorizeService.IsSeller(Int32.Parse(strId))) return Content("ok");
+            return BadRequest("nooooo");
+
+            //IEnumerable<Claim> username1 = this.User.FindAll(ClaimTypes.A);
+
+            // if (string.IsNullOrEmpty(username))
+            // {
+            //     return NotFound();
+            // }
+            // return username;
         }
     }
 }

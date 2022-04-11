@@ -6,10 +6,8 @@ using FoodWeb.API.Database.Entities;
 
 namespace FoodWeb.API.Database.IRepositories
 {
-    public interface IGroupDetailRepository
+    public interface ICategoryRepository
     {
-        public void CreateGroupDetail(int idAccount, int idGrop);
-
-        public GroupDetail GetGroupDetailByIdAccount(int id);
+        public IEnumerable<Category> GetAllCategories();
     }
 }

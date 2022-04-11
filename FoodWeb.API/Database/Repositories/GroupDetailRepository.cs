@@ -27,7 +27,7 @@ namespace FoodWeb.API.Database.Repositories
             _context.SaveChanges();
         }
 
-        public GroupDetail GetGroupByIdAccount(int id)
+        public GroupDetail GetGroupDetailByIdAccount(int id)
         {
             return _context.GroupDetails.FirstOrDefault(s => s.AccountId == id);
         }

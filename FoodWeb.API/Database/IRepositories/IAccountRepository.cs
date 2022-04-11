@@ -12,5 +12,7 @@ namespace FoodWeb.API.Database.IRepositories
 
         public Account GetAccountByEmail(string email);
 
+        public Account GetAccountByUserId(int Id);
+
     }
 }

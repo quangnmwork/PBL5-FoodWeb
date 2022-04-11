@@ -39,5 +39,10 @@ namespace FoodWeb.API.Database.Repositories
         public Account GetAccountByEmail(string email){
             return _context.Accounts.FirstOrDefault(s => s.Email == email);
         }
+
+        public Account GetAccountByUserId(int Id)
+        {
+            return _context.Accounts.FirstOrDefault(s => s.UserId == Id);
+        }
     }
 }

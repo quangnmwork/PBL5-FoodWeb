@@ -81,7 +81,7 @@ namespace FoodWeb.API.Controllers
 
             var user = _userRepository.GetUserById(account.UserId);
             
-            var detailGroup = _groupDetailRepository.GetGroupByIdAccount(account.IdAccount);
+            var detailGroup = _groupDetailRepository.GetGroupDetailByIdAccount(account.IdAccount);
             var nameGroup = _groupRepository.GetGroupById(detailGroup.GroupId).NameGroup;
 
             return Ok(new AccountResponse(){

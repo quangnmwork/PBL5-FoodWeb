@@ -25,10 +25,13 @@ namespace FoodWeb.API.Extensions
             //configuration.Filters.
             
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuthorizeService, AuthorizeService>();
+
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGroupDetailRepository, GroupDetailRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

@@ -25,7 +25,8 @@ namespace FoodWeb.API
             seed.SeedGroups();
             seed.SeedPermissions();
             seed.SeedPermissionDetails();
-
+            seed.SeedCategories();
+            
             host.Run();
         }
 
