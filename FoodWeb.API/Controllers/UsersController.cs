@@ -42,7 +42,7 @@ namespace FoodWeb.API.Controllers
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (Id == null) return NotFound();
             _userRepository.UpdateProfile(Int32.Parse(Id),customerDto);
-            if (_userRepository.SaveChanges()) return NoContent();
+            if (_userRepository.SaveChanges()) return Ok(_userRepository.GetUserById(Int32.Parse(Id)));
             return NotFound();
         }
     }
