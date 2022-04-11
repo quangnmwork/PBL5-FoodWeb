@@ -1,12 +1,17 @@
 import { Button } from '@chakra-ui/react';
 import React from 'react';
+import { ComponentEvent } from '../../models/ComponentEvent.model';
 
-interface ButtonProps {
+interface ButtonProps extends ComponentEvent<HTMLButtonElement> {
   textDisplay: string;
-  onClick: (e: React.SyntheticEvent<HTMLButtonElement>) => void;
+  width?: string;
 }
 const ButtonCustom = (props: ButtonProps) => {
-  return <Button onClick={props.onClick}>{props.textDisplay}</Button>;
+  return (
+    <Button onClick={props.onClick} width={props.width}>
+      {props.textDisplay}
+    </Button>
+  );
 };
 
 export default ButtonCustom;

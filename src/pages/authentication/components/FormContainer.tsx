@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import FormSignUp from './FormSignUp';
 import FormSignIn from './FormSignIn';
 import { Flex } from '@chakra-ui/react';
-import './container.css';
+
 const FormContainer = () => {
   const currentPath = useLocation();
   return (
@@ -10,12 +10,18 @@ const FormContainer = () => {
       bgImage={'/assets/bg-form.png'}
       bgRepeat={'no-repeat'}
       width={'100%'}
-      height={'100vh'}
-      bgSize={'100vw 100vh'}
-      justifyContent={'flex-start'}
+      // height={'100%'}
+      bgSize={'100vw auto'}
+      justifyContent={'center'}
       alignItems={'center'}
+      py={'3rem'}
     >
-      <Flex direction={'column'} bgColor={'white'}>
+      <Flex
+        direction={'column'}
+        bgColor={'white'}
+        padding={'2rem'}
+        borderRadius={'.5rem'}
+      >
         {currentPath.pathname == '/auth/sign-in' ? (
           <FormSignIn />
         ) : (
