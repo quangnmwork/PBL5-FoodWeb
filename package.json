@@ -17,6 +17,7 @@
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
+    "axios": "^0.26.1",
     "babel-loader": "^8.2.4",
     "css-loader": "^6.7.1",
     "framer-motion": "^6.2.9",
