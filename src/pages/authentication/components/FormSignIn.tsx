@@ -1,11 +1,12 @@
-import { FormControl, Text } from '@chakra-ui/react';
+import { FormControl } from '@chakra-ui/react';
 import React, { createRef } from 'react';
 import { authAPI } from '../../../api/repositoryFactory';
+import { motion } from 'framer-motion';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
-
 import FormInput from '../../../components/Form/FormInput';
-
+import FormFooterSwitch from './FormFooterSwitch';
 import FormHeading from './FormHeading';
+import { formAnimation } from '../animation';
 
 const FormSignIn = () => {
   const emailInput = createRef<HTMLInputElement>();
@@ -23,7 +24,13 @@ const FormSignIn = () => {
     }
   };
   return (
-    <FormControl>
+    <FormControl
+      as={motion.div}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ delay: '1' }}
+    >
       <FormHeading />
       <FormInput ref={emailInput} textLabel={'Email'} />
       <FormInput
@@ -32,27 +39,14 @@ const FormSignIn = () => {
         typeInput={'password'}
       />
       <ButtonCustom
-        textDisplay="Sign In"
+        textDisplay={'Sign In'}
         onClick={loginHandler}
         width={'100%'}
       />
-      <Text
-        fontSize={{ base: 'xs', md: 'md' }}
-        textAlign={'center'}
-        mt={'1rem'}
-      >
-        Chưa có tài khoản?
-        <Text
-          sx={{
-            display: 'inline',
-            ml: '.2rem',
-            cursor: 'pointer',
-            color: 'main.600'
-          }}
-        >
-          Đăng ký
-        </Text>
-      </Text>
+      <FormFooterSwitch
+        message={'Chưa có tài khoản?'}
+        messageActionType={'sign-in'}
+      />
     </FormControl>
   );
 };

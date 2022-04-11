@@ -8,7 +8,7 @@ interface UserInput {
 const FormInput = React.forwardRef<HTMLInputElement, UserInput>(
   (props, ref) => {
     return (
-      <FormControl my={'1rem'}>
+      <FormControl my={{ base: '.5rem', md: '.8rem' }}>
         {props.typeInput !== 'submit' ? (
           <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
         ) : null}
