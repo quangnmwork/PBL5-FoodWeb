@@ -22,6 +22,16 @@ namespace FoodWeb.API
         {
 
             services.AddControllers();
+
+            services.AddCors(o =>
+                o.AddPolicy("CorsPolicy", builder =>
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                )
+            );
+
             
             services.AddSwaggerGen(c =>
             {
@@ -44,6 +54,8 @@ namespace FoodWeb.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
