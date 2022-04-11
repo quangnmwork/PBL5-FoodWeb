@@ -1,14 +1,13 @@
 import { RoutesConfig } from '../../models/RoutesConfig.model';
-import FormSignUp from './components/FormSignUp';
-import FormSignIn from './components/FormSignIn';
+import FormContainer from './components/FormContainer';
 const AuthRoutes: RoutesConfig[] = [
   {
     path: '/auth/sign-in',
-    component: <FormSignIn />
+    component: <FormContainer />
   },
   {
     path: '/auth/sign-up',
-    component: <FormSignUp />
+    component: <FormContainer />
   }
 ];
 export default AuthRoutes;
