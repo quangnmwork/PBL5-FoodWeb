@@ -4,18 +4,18 @@ import React from 'react';
 interface UserInput {
   textLabel: string;
   typeInput?: string;
-  onClick?: (e: React.SyntheticEvent<HTMLInputElement>) => void;
 }
 const FormInput = React.forwardRef<HTMLInputElement, UserInput>(
   (props, ref) => {
     return (
-      <FormControl>
-        <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
+      <FormControl my={'1rem'}>
+        {props.typeInput !== 'submit' ? (
+          <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
+        ) : null}
         <Input
           ref={ref}
           id={props.textLabel}
           type={props.typeInput || 'text'}
-          onClick={props.typeInput == 'submit' ? props.onClick : undefined}
         />
       </FormControl>
     );
