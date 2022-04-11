@@ -1,0 +1,16 @@
+[{
+    "IdGroup": 1,
+    "NameGroup": "Viewer"
+}, {
+    "IdGroup": 2,
+    "NameGroup": "Customer"
+}, {
+    "IdGroup": 3,
+    "NameGroup": "Shipper"
+}, {
+    "IdGroup": 4,
+    "NameGroup": "Seller"
+}, {
+    "IdGroup": 5,
+    "NameGroup": "Admin"
+}]
