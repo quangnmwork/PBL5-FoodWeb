@@ -13,6 +13,8 @@ namespace FoodWeb.API.Profiles
         public UserMapperProfile()
         {
             CreateMap<User, CustomerDTO>();
+            CreateMap<CustomerDTO,User>()
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

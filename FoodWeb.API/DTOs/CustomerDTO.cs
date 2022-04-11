@@ -8,22 +8,26 @@ namespace FoodWeb.API.DTOs
 {
     public class CustomerDTO
     {
-        [Required]
-        public int IdUser { get; set; }
+        // [Required]
+        // public int IdUser { get; set; }
         
-        [Required]
+        // [Required]
         [StringLength(50)]
         public string NameUser { get; set; }
 
-        [Required]
+        // [Required]
         [StringLength(10)]
         public string Phone { get; set; }
 
-        [Required]
+        // [Required]
         [StringLength(100)]
         public string Address { get; set; }
 
-        [Required]
+        // [Required]
         public string Avatar { get; set; }
+
+        public override string ToString(){
+            return NameUser+ " " + Phone+ " " + Address + "\n";
+        } 
     }
 }

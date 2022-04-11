@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FoodWeb.API.Database.Entities;
-using FoodWeb.API.Database;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using FoodWeb.API.Database.IRepositories;
+using System.Security.Claims;
 using AutoMapper;
+using FoodWeb.API.Database;
+using FoodWeb.API.Database.Entities;
+using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FoodWeb.API.Controllers
 {
@@ -16,10 +18,8 @@ namespace FoodWeb.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository)
         {
-            this._mapper = mapper;
             this._userRepository = userRepository;
         }
 
@@ -35,6 +35,15 @@ namespace FoodWeb.API.Controllers
             var user = _userRepository.GetUserById(Id);
             if (user == null) return NotFound();
             return Ok(user);
+        }
+        [HttpPatch("{Id}")]
+        public ActionResult<User> EditUserById(CustomerDTO customerDto)
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (Id == null) return NotFound();
+            _userRepository.UpdateProfile(Int32.Parse(Id),customerDto);
+            if (_userRepository.SaveChanges()) return NoContent();
+            return NotFound();
         }
     }
 }

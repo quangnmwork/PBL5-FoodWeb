@@ -6,12 +6,15 @@ namespace FoodWeb.API.Database.IRepositories
 {
     public interface IUserRepository
     {
-         public void CreateUser(RegisterDTO registerDTO);
+        public void CreateUser(RegisterDTO registerDTO);
 
-         public IEnumerable<User> GetAllUsers();
+        public IEnumerable<User> GetAllUsers();
 
-         public User GetUserByName(string name);
+        public User GetUserByName(string name);
 
-         public User GetUserById(int Id);
+        public User GetUserById(int Id);
+
+        public bool SaveChanges();
+        public void  UpdateProfile(int Id, CustomerDTO customer);
     }
 }
