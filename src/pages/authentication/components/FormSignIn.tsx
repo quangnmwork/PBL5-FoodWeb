@@ -6,7 +6,6 @@ import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
 import FormFooterSwitch from './FormFooterSwitch';
 import FormHeading from './FormHeading';
-import { formAnimation } from '../animation';
 
 const FormSignIn = () => {
   const emailInput = createRef<HTMLInputElement>();
