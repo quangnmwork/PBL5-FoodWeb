@@ -25,7 +25,7 @@ namespace FoodWeb.API
 
             services.AddCors(o =>
                 o.AddPolicy("CorsPolicy", builder =>
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins("http://localhost:3000")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowAnyOrigin()
