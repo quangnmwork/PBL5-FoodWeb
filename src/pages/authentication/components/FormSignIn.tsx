@@ -1,10 +1,11 @@
-import { FormControl, Heading, HStack, Text } from '@chakra-ui/react';
+import { FormControl, Text } from '@chakra-ui/react';
 import React, { createRef } from 'react';
 import { authAPI } from '../../../api/repositoryFactory';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 
 import FormInput from '../../../components/Form/FormInput';
-import Logo from '../../../components/Logo/Logo';
+
+import FormHeading from './FormHeading';
 
 const FormSignIn = () => {
   const emailInput = createRef<HTMLInputElement>();
@@ -23,12 +24,7 @@ const FormSignIn = () => {
   };
   return (
     <FormControl>
-      <HStack>
-        <Logo width={['5rem', '6rem']} height={['5rem', '6rem']} />
-        <Heading fontSize={{ base: 'md', md: '2xl' }} flexBasis={'80%'}>
-          Welcome Back
-        </Heading>
-      </HStack>
+      <FormHeading />
       <FormInput ref={emailInput} textLabel={'Email'} />
       <FormInput
         ref={passwordInput}

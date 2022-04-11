@@ -1,10 +1,11 @@
-import { FormControl, Heading, HStack, Text } from '@chakra-ui/react';
+import { FormControl, HStack, Text } from '@chakra-ui/react';
 import { createRef } from 'react';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 
 import FormInput from '../../../components/Form/FormInput';
 import FormSelect from '../../../components/Form/FormSelect';
-import Logo from '../../../components/Logo/Logo';
+
+import FormHeading from './FormHeading';
 const FormSignUp = () => {
   const emailInput = createRef<HTMLInputElement>();
   const userNameInput = createRef<HTMLInputElement>();
@@ -12,14 +13,10 @@ const FormSignUp = () => {
   const passwordConfirmInput = createRef<HTMLInputElement>();
   const addressInput = createRef<HTMLInputElement>();
   const phoneInput = createRef<HTMLInputElement>();
+  const roleInput = createRef<HTMLSelectElement>();
   return (
     <FormControl>
-      <HStack>
-        <Logo width={['5rem', '6rem']} height={['5rem', '6rem']} />
-        <Heading fontSize={{ base: 'md', md: '2xl' }} flexBasis={'80%'}>
-          Welcome Back
-        </Heading>
-      </HStack>
+      <FormHeading />
       <HStack gap={'.5rem'}>
         <FormInput ref={emailInput} textLabel={'Email'} />
         <FormInput ref={userNameInput} textLabel={'Username'} />
@@ -38,7 +35,7 @@ const FormSignUp = () => {
         textLabel={'Password Confirm'}
         typeInput={'password'}
       />
-      <FormSelect />
+      <FormSelect ref={roleInput} />
       <ButtonCustom
         textDisplay="Sign In"
         onClick={() => {
