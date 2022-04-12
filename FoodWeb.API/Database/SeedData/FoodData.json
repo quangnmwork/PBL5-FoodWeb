@@ -1,0 +1,49 @@
+[{
+        "UserId": 1,
+        "CategoryId": 1,
+        "NameFood": "Bánh tráng kẹp",
+        "PriceFood": 10000,
+        "TimeCreate": "2015-09-15T07:12:48Z",
+        "DescriptionFood": "Món này ngon nha",
+        "IsHidden": false,
+        "ImageFood": "đây là ảnh các món ăn"
+    }, {
+        "UserId": 4,
+        "CategoryId": 1,
+        "NameFood": "Bánh tráng đập",
+        "PriceFood": 12000,
+        "TimeCreate": "2019-09-15T07:12:48Z",
+        "DescriptionFood": "Món  ngon",
+        "IsHidden": false,
+        "ImageFood": "đây là ảnh các món ăn"
+    }, {
+        "UserId": 5,
+        "CategoryId": 2,
+        "NameFood": "Nước ép trái cây",
+        "PriceFood": 52000,
+        "TimeCreate": "2021-09-15T07:12:48Z",
+        "DescriptionFood": "Món  ngon mỗi ngày",
+        "IsHidden": false,
+        "ImageFood": "đây là ảnh các món ăn"
+    },
+    {
+        "UserId": 1,
+        "CategoryId": 2,
+        "NameFood": "Nước ép trái cây",
+        "PriceFood": 52000,
+        "TimeCreate": "2021-09-15T07:12:48Z",
+        "DescriptionFood": "Món  ngon mỗi ngày",
+        "IsHidden": false,
+        "ImageFood": "đây là ảnh các món ăn"
+    }, {
+        "UserId": 5,
+        "CategoryId": 2,
+        "NameFood": "Nước dừa",
+        "PriceFood": 12000,
+        "TimeCreate": "2021-09-15T07:12:48Z",
+        "DescriptionFood": "Món  ngon mỗi ngày",
+        "IsHidden": false,
+        "ImageFood": "đây là ảnh các món ăn"
+    }
+
+]

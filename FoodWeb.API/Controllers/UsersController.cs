@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using AutoMapper;
 using FoodWeb.API.Database;
 using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
+using FoodWeb.API.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +36,7 @@ namespace FoodWeb.API.Controllers
             if (user == null) return NotFound();
             return Ok(user);
         }
+        
         [HttpPatch("{Id}")]
         public ActionResult<User> EditUserById(CustomerDTO customerDto)
         {
@@ -44,6 +45,13 @@ namespace FoodWeb.API.Controllers
             _userRepository.UpdateProfile(Int32.Parse(Id),customerDto);
             if (_userRepository.SaveChanges()) return Ok(_userRepository.GetUserById(Int32.Parse(Id)));
             return NotFound();
+        }
+
+        [HttpGet("getAllSellers")]
+        [AllowAnonymous]
+        public ActionResult<SellerDTO> GetAllSellers()
+        {
+            return Ok(_userRepository.GetAllSellers());
         }
     }
 }

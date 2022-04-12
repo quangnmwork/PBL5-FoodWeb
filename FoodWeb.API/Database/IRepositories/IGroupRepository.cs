@@ -8,8 +8,12 @@ namespace FoodWeb.API.Database.IRepositories
 {
     public interface IGroupRepository
     {
-        public Group GetGroupByName(string name);
+        public Group GetGroupByNameGroup(string name);
 
         public Group GetGroupById(int id);
+
+        public string GetNameGroupByNameUser(string name);
+
+        public string GetNameGroupByEmail(string email);
     }
 }

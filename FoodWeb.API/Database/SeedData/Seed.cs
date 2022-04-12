@@ -87,5 +87,35 @@ namespace PBL5.FoodWeb.API.Database.SeedData
             context.SaveChanges();
 
         }
+
+        public void SeedUsers(){
+            if(context.Users.Any()){
+                return;
+            }
+
+            var jsonData = File.ReadAllText("Database/SeedData/SellerData.json");
+            var sellersData =  JsonSerializer.Deserialize<List<User>>(jsonData);
+            if(sellersData == null) return;
+
+            foreach(var item in sellersData){
+                context.Users.Add(item);
+            }
+            context.SaveChanges();
+        }
+
+        public void SeedFoods(){
+            if(context.Foods.Any()){
+                return;
+            }
+
+            var jsonData = File.ReadAllText("Database/SeedData/FoodData.json");
+            var foodsData =  JsonSerializer.Deserialize<List<Food>>(jsonData);
+            if(foodsData == null) return;
+
+            foreach(var item in foodsData){
+                context.Foods.Add(item);
+            }
+            context.SaveChanges();
+        }
     }
 }

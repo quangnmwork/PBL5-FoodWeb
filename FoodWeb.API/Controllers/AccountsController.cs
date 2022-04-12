@@ -46,7 +46,7 @@ namespace FoodWeb.API.Controllers
                 return BadRequest("NameUser is existed!");
             }
 
-            if(_groupRepository.GetGroupByName(registerDTO.NameGroup) == null){
+            if(_groupRepository.GetGroupByNameGroup(registerDTO.NameGroup) == null){
                 return BadRequest("Not found group user");
             }
 
@@ -54,7 +54,7 @@ namespace FoodWeb.API.Controllers
             _accountRepository.CreateAccount(registerDTO);
             
             int idAccount = _accountRepository.GetAccountByEmail(registerDTO.Email).IdAccount;
-            int idGroup = _groupRepository.GetGroupByName(registerDTO.NameGroup).IdGroup;
+            int idGroup = _groupRepository.GetGroupByNameGroup(registerDTO.NameGroup).IdGroup;
             _groupDetailRepository.CreateGroupDetail(idAccount, idGroup);
 
             return Ok(new AccountResponse(){
