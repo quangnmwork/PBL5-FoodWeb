@@ -3,10 +3,10 @@ export interface signinInput {
   password: string;
 }
 export interface signupInput {
+  email: string;
+  password: string;
   nameUser: string;
   phone: string;
   address: string;
-  email: string;
-  password: string;
   nameGroup: 'customer' | 'seller' | 'shipper';
 }

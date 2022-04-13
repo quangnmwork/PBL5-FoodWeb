@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import queryString from 'query-string';
 
 const axiosClient = axios.create({
@@ -7,5 +7,14 @@ const axiosClient = axios.create({
   paramsSerializer: (params: Record<string, string>) =>
     queryString.stringify(params)
 });
+
+axiosClient.interceptors.response.use(
+  (res: AxiosResponse) => {
+    return res.data;
+  },
+  (error: AxiosError): Promise<AxiosError> => {
+    return Promise.reject(error);
+  }
+);
 
 export default axiosClient;
