@@ -41,5 +41,10 @@ namespace FoodWeb.API.Database.Repositories
 
             return data;
         }
+
+        public FoodDTO GetFoodById(int Id)
+        {
+            return _context.Foods.Where(s => s.IdFood == Id).ProjectTo<FoodDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
+        }
     }
 }

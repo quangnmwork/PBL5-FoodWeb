@@ -13,6 +13,8 @@ namespace FoodWeb.API.Database.IRepositories
 
         public IEnumerable<FoodDTO> GetAllFoods();
 
+        public FoodDTO GetFoodById(int Id);
+
         public IEnumerable<FoodDTO> GetAllFoodsBySearch(SearchDTO searchDTO);
     }
 }

@@ -26,6 +26,14 @@ namespace Namespace
             return Ok(_foodRepository.GetAllFoods());
         }
 
+        [HttpGet("{Id}")]
+        public ActionResult<FoodDTO> GetFoodById(int Id)
+        {
+            var food = _foodRepository.GetFoodById(Id);
+            if(food == null)    return NotFound();
+            return Ok(food);
+        }
+        
         [HttpGet("search")]
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(SearchDTO search)
         {
