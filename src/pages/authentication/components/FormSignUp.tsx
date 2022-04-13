@@ -44,7 +44,7 @@ const FormSignUp = () => {
       />
       <FormSelect ref={roleInput} />
       <ButtonCustom
-        textDisplay="Sign In"
+        textDisplay="Sign up"
         onClick={() => {
           console.log();
         }}
