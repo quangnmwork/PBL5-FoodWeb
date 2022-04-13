@@ -17,6 +17,11 @@ export const signupSchema = yup.object({
   address: yup.string().required('Địa chỉ không được trống'),
   nameUser: yup.string().required('Tài khoản không được trống'),
   password: yup.string().required('Mật khẩu không được trống'),
-  passwordConfirm: yup.string().required('Xác nhận mật khẩu không được trống'),
+  passwordConfirm: yup
+    .string()
+    .required('Xác nhận mật khẩu không được trống')
+    .test('equal', 'Mật khẩu xác nhận không đúng', function (value) {
+      return value !== this.resolve(yup.ref('password'));
+    }),
   nameGroup: yup.string()
 });

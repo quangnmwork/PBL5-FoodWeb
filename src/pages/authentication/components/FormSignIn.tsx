@@ -1,4 +1,4 @@
-import { FormControl, Flex, FormErrorMessage } from '@chakra-ui/react';
+import { FormControl, Flex, FormErrorMessage, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
@@ -9,11 +9,12 @@ import { signinInput } from './../../../models/Authentication.model';
 import { signinSchema } from './../validation/index';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authAPI } from '../../../api/repositoryFactory';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const FormSignIn = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting }
   } = useForm<signinInput>({
     resolver: yupResolver(signinSchema)
@@ -28,7 +29,9 @@ const FormSignIn = () => {
       setSigninErr(err.response.data);
     }
   };
-
+  useEffect(() => {
+    setSigninErr('');
+  }, [watch().email, watch().password]);
   return (
     <Flex
       direction={'column'}
@@ -61,9 +64,11 @@ const FormSignIn = () => {
           register={register}
           nameRegister={'password'}
         />
-
-        <FormErrorMessage>{signinErr}</FormErrorMessage>
-
+        <FormErrorMessage mb={'1rem'}>
+          <Text textAlign={'center'} width={'100%'}>
+            {signinErr}
+          </Text>
+        </FormErrorMessage>
         <ButtonCustom
           textDisplay={'Sign In'}
           onClick={handleSubmit(loginHandler)}
