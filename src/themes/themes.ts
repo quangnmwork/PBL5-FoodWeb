@@ -32,6 +32,11 @@ const customThemes = extendTheme({
   components: {
     Button: {
       defaultProps: { colorScheme: 'mainScheme' }
+    },
+    Input: {
+      defaultProps: {
+        focusBorderColor: 'main.100'
+      }
     }
   }
 });

@@ -1,4 +1,4 @@
-import { FormControl, HStack } from '@chakra-ui/react';
+import { FormControl, HStack, Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { createRef } from 'react';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
@@ -16,45 +16,53 @@ const FormSignUp = () => {
   const phoneInput = createRef<HTMLInputElement>();
   const roleInput = createRef<HTMLSelectElement>();
   return (
-    <FormControl
-      as={motion.div}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ delay: '1' }}
+    <Flex
+      direction={'column'}
+      bgColor={'white'}
+      padding={'2rem'}
+      borderRadius={'.5rem'}
+      maxWidth={{ base: '80%', md: '48%', lg: '42%' }}
     >
-      <FormHeading />
-      <HStack gap={'.5rem'}>
-        <FormInput ref={emailInput} textLabel={'Email'} />
-        <FormInput ref={userNameInput} textLabel={'Username'} />
-      </HStack>
-      <HStack gap={'.5rem'}>
-        <FormInput ref={addressInput} textLabel={'Address'} />
-        <FormInput ref={phoneInput} textLabel={'Phone'} />
-      </HStack>
-      <FormInput
-        ref={passwordInput}
-        textLabel={'Password'}
-        typeInput={'password'}
-      />
-      <FormInput
-        ref={passwordConfirmInput}
-        textLabel={'Password Confirm'}
-        typeInput={'password'}
-      />
-      <FormSelect ref={roleInput} />
-      <ButtonCustom
-        textDisplay="Sign up"
-        onClick={() => {
-          console.log();
-        }}
-        width={'100%'}
-      />
-      <FormFooterSwitch
-        message={'Đã có tài khoản?'}
-        messageActionType={'sign-up'}
-      />
-    </FormControl>
+      <FormControl
+        as={motion.div}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ delay: '1' }}
+      >
+        <FormHeading />
+        <HStack gap={'.5rem'}>
+          <FormInput ref={emailInput} textLabel={'Email'} />
+          <FormInput ref={userNameInput} textLabel={'Username'} />
+        </HStack>
+        <HStack gap={'.5rem'}>
+          <FormInput ref={addressInput} textLabel={'Address'} />
+          <FormInput ref={phoneInput} textLabel={'Phone'} />
+        </HStack>
+        <FormInput
+          ref={passwordInput}
+          textLabel={'Password'}
+          typeInput={'password'}
+        />
+        <FormInput
+          ref={passwordConfirmInput}
+          textLabel={'Password Confirm'}
+          typeInput={'password'}
+        />
+        <FormSelect ref={roleInput} />
+        <ButtonCustom
+          textDisplay="Sign up"
+          onClick={() => {
+            console.log();
+          }}
+          width={'100%'}
+        />
+        <FormFooterSwitch
+          message={'Đã có tài khoản?'}
+          messageActionType={'sign-up'}
+        />
+      </FormControl>
+    </Flex>
   );
 };
 
