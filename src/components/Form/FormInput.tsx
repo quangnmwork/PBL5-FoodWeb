@@ -13,6 +13,7 @@ const FormInput = React.forwardRef<HTMLInputElement, UserInput>(
           <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
         ) : null}
         <Input
+          borderWidth={'1.5px'}
           ref={ref}
           id={props.textLabel}
           type={props.typeInput || 'text'}

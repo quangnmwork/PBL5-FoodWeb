@@ -1,4 +1,4 @@
-import { FormControl } from '@chakra-ui/react';
+import { FormControl, Flex } from '@chakra-ui/react';
 import React, { createRef } from 'react';
 import { authAPI } from '../../../api/repositoryFactory';
 import { motion } from 'framer-motion';
@@ -23,30 +23,38 @@ const FormSignIn = () => {
     }
   };
   return (
-    <FormControl
-      as={motion.div}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ delay: '1' }}
+    <Flex
+      direction={'column'}
+      bgColor={'white'}
+      padding={'2rem'}
+      borderRadius={'.5rem'}
+      width={{ base: '80%', md: '45%', lg: '30%' }}
     >
-      <FormHeading />
-      <FormInput ref={emailInput} textLabel={'Email'} />
-      <FormInput
-        ref={passwordInput}
-        textLabel={'Password'}
-        typeInput={'password'}
-      />
-      <ButtonCustom
-        textDisplay={'Sign In'}
-        onClick={loginHandler}
-        width={'100%'}
-      />
-      <FormFooterSwitch
-        message={'Chưa có tài khoản?'}
-        messageActionType={'sign-in'}
-      />
-    </FormControl>
+      <FormControl
+        as={motion.div}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ delay: '1' }}
+      >
+        <FormHeading />
+        <FormInput ref={emailInput} textLabel={'Email'} />
+        <FormInput
+          ref={passwordInput}
+          textLabel={'Password'}
+          typeInput={'password'}
+        />
+        <ButtonCustom
+          textDisplay={'Sign In'}
+          onClick={loginHandler}
+          width={'100%'}
+        />
+        <FormFooterSwitch
+          message={'Chưa có tài khoản?'}
+          messageActionType={'sign-in'}
+        />
+      </FormControl>
+    </Flex>
   );
 };
 
