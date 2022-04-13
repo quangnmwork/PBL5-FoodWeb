@@ -10,7 +10,7 @@ const FormContainer = () => {
       bgImage={'/assets/bg-form.png'}
       bgRepeat={'no-repeat'}
       width={'100%'}
-      height={'100%'}
+      // height={'100%'}
       bgSize={'100vw 100%'}
       justifyContent={'center'}
       alignItems={'center'}
@@ -21,7 +21,7 @@ const FormContainer = () => {
         bgColor={'white'}
         padding={'2rem'}
         borderRadius={'.5rem'}
-        width={{ base: '80%', md: '50%', lg: '32%' }}
+        width={{ base: '80%', md: '50%', lg: '30%' }}
       >
         {currentPath.pathname == '/auth/sign-in' ? (
           <FormSignIn />
