@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FoodWeb.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +22,7 @@ namespace FoodWeb.API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddControllers();
 
             services.AddCors(o =>

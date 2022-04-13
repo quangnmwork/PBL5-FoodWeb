@@ -20,6 +20,8 @@ namespace FoodWeb.API.Profiles
             CreateMap<Category, CategoryDTO>();
 
             CreateMap<User, SellerDTO>();
+
+            CreateMap<Food, FoodDTO>().ForMember(dest => dest.NameCategory, opt => opt.MapFrom(src => src.Category.NameCategory));
         }
     }
 }
