@@ -1,6 +1,5 @@
 import { FormControl, HStack, Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { createRef } from 'react';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
 import FormSelect from '../../../components/Form/FormSelect';
@@ -8,13 +7,6 @@ import FormFooterSwitch from './FormFooterSwitch';
 import FormHeading from './FormHeading';
 
 const FormSignUp = () => {
-  const emailInput = createRef<HTMLInputElement>();
-  const userNameInput = createRef<HTMLInputElement>();
-  const passwordInput = createRef<HTMLInputElement>();
-  const passwordConfirmInput = createRef<HTMLInputElement>();
-  const addressInput = createRef<HTMLInputElement>();
-  const phoneInput = createRef<HTMLInputElement>();
-  const roleInput = createRef<HTMLSelectElement>();
   return (
     <Flex
       direction={'column'}
@@ -32,24 +24,16 @@ const FormSignUp = () => {
       >
         <FormHeading />
         <HStack gap={'.5rem'}>
-          <FormInput ref={emailInput} textLabel={'Email'} />
-          <FormInput ref={userNameInput} textLabel={'Username'} />
+          <FormInput textLabel={'Email'} placeholder={'abc@example.com'} />
+          <FormInput textLabel={'Tài khoản'} placeholder={'abc123'} />
         </HStack>
         <HStack gap={'.5rem'}>
-          <FormInput ref={addressInput} textLabel={'Address'} />
-          <FormInput ref={phoneInput} textLabel={'Phone'} />
+          <FormInput textLabel={'Địa chỉ'} placeholder={'123 XYZ Street'} />
+          <FormInput textLabel={'Số điện thoại'} placeholder={'09xxxxx'} />
         </HStack>
-        <FormInput
-          ref={passwordInput}
-          textLabel={'Password'}
-          typeInput={'password'}
-        />
-        <FormInput
-          ref={passwordConfirmInput}
-          textLabel={'Password Confirm'}
-          typeInput={'password'}
-        />
-        <FormSelect ref={roleInput} />
+        <FormInput textLabel={'Mật khẩu'} typeInput={'password'} />
+        <FormInput textLabel={'Xác nhận mật khẩu'} typeInput={'password'} />
+        <FormSelect />
         <ButtonCustom
           textDisplay="Sign up"
           onClick={() => {
