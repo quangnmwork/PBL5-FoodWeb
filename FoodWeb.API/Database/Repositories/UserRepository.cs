@@ -28,6 +28,9 @@ namespace FoodWeb.API.Database.Repositories
                 Address = registerDTO.Address,
             };
 
+            if(registerDTO.NameGroup.ToLower() == "seller" || registerDTO.NameGroup.ToLower() == "shipper")
+                user.Money = 0;
+
             _context.Users.Add(user);
             _context.SaveChanges();
         }
