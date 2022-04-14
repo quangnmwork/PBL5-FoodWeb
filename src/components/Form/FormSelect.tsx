@@ -12,7 +12,7 @@ interface SelectProps {
 const FormSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
     return (
-      <FormControl mb={'1rem'}>
+      <FormControl my={'1rem'}>
         <FormLabel>Type Account</FormLabel>
         <Select
           ref={ref}

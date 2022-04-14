@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  HStack,
-  Flex,
-  FormErrorMessage,
-  Text
-} from '@chakra-ui/react';
+import { FormControl, Flex, FormErrorMessage, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
@@ -27,16 +21,17 @@ const FormSignUp = () => {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting }
-  } = useForm<signupInput>({
+  } = useForm<signupInput | signinInput>({
     resolver: yupResolver(signupSchema)
   });
-
   const [signupErr, setSignupErr] = useState<string>('');
-  const signupHandler: SubmitHandler<signupInput> = async (
-    data: signupInput
+  const signupHandler: SubmitHandler<signupInput | signinInput> = async (
+    data: signupInput | signinInput
   ): Promise<void> => {
     try {
-      await authAPI.signin(data);
+      const submitData = data as signupInput;
+      // console.log(submitData);
+      await authAPI.signup(submitData);
     } catch (err: any) {
       setSignupErr(err.response.data);
     }
@@ -44,14 +39,13 @@ const FormSignUp = () => {
   useEffect(() => {
     setSignupErr('');
   }, [watch().email, watch().password]);
-  console.log(errors);
   return (
     <Flex
       direction={'column'}
       bgColor={'white'}
       padding={'2rem'}
       borderRadius={'.5rem'}
-      maxWidth={{ base: '80%', md: '48%', lg: '42%' }}
+      maxWidth={{ base: '80%', md: '55%', lg: '45%' }}
     >
       <FormControl
         as={motion.div}
@@ -61,38 +55,38 @@ const FormSignUp = () => {
         transition={{ delay: '1' }}
       >
         <FormHeading />
-        <HStack gap={'.5rem'}>
+        <Flex gap={'.5rem'} alignItems={'flex-start'}>
           <FormInput
             textLabel={'Email'}
             placeholder={'abc@example.com'}
             register={register}
             nameRegister={'email'}
-            errorMessage={errors.email?.message}
+            errorMessage={'email' in errors ? errors.email?.message : ''}
           />
           <FormInput
             textLabel={'Tài khoản'}
             placeholder={'abc123'}
             register={register}
             nameRegister={'nameUser'}
-            // errorMessage={errors.?.message}
+            errorMessage={'nameUser' in errors ? errors.nameUser?.message : ''}
           />
-        </HStack>
-        <HStack gap={'.5rem'}>
+        </Flex>
+        <Flex gap={'.5rem'}>
           <FormInput
             textLabel={'Địa chỉ'}
             placeholder={'123 XYZ Street'}
             register={register}
             nameRegister={'address'}
-            // errorMessage={errors?.address?.message}
+            errorMessage={'address' in errors ? errors.address?.message : ''}
           />
           <FormInput
             textLabel={'Số điện thoại'}
             placeholder={'09xxxxx'}
             register={register}
             nameRegister={'phone'}
-            errorMessage={errors?.phone?.message}
+            errorMessage={'phone' in errors ? errors.phone?.message : ''}
           />
-        </HStack>
+        </Flex>
         <FormInput
           textLabel={'Mật khẩu'}
           typeInput={'password'}
@@ -105,7 +99,9 @@ const FormSignUp = () => {
           typeInput={'password'}
           register={register}
           nameRegister={'passwordConfirm'}
-          errorMessage={errors.password?.message}
+          errorMessage={
+            'passwordConfirm' in errors ? errors.passwordConfirm?.message : ''
+          }
         />
         <FormSelect register={register} nameRegister={'nameGroup'} />
         <FormErrorMessage mb={'1rem'}>
@@ -117,6 +113,7 @@ const FormSignUp = () => {
           textDisplay="Sign up"
           onClick={handleSubmit(signupHandler)}
           width={'100%'}
+          isLoading={isSubmitting}
         />
         <FormFooterSwitch
           message={'Đã có tài khoản?'}

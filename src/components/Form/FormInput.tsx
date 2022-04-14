@@ -8,12 +8,12 @@ import React from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { signinInput, signupInput } from '../../models/Authentication.model';
 
-interface UserInput<T> {
+interface UserSignup {
   textLabel: string;
   placeholder?: string;
   typeInput?: string;
   errorMessage?: string;
-  register?: UseFormRegister<T>;
+  register?: UseFormRegister<signinInput | signupInput>;
   nameRegister?:
     | 'email'
     | 'password'
@@ -23,14 +23,14 @@ interface UserInput<T> {
     | 'address'
     | 'nameGroup';
 }
-type UserInputType = UserInput<signupInput | signinInput>;
-const FormInput = React.forwardRef<HTMLInputElement, UserInputType>(
+
+const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
   (props, ref) => {
-    console.log(typeof props);
     return (
       <FormControl
-        my={{ base: '.5rem', md: '.8rem' }}
+        my={{ base: '.5rem', md: '1.2rem' }}
         isInvalid={props.errorMessage ? true : false}
+        // position={'relative'}
       >
         {props.typeInput !== 'submit' ? (
           <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
