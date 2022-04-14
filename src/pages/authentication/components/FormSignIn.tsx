@@ -10,6 +10,8 @@ import { signinSchema } from './../validation/index';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authAPI } from '../../../api/repositoryFactory';
 import { useEffect, useState } from 'react';
+import { storeToken } from '../utils/authStorage';
+
 const FormSignIn = () => {
   const {
     register,
@@ -24,7 +26,8 @@ const FormSignIn = () => {
     data: signinInput
   ): Promise<void> => {
     try {
-      await authAPI.signin(data);
+      const res = await authAPI.signin(data);
+      storeToken(res.data?.token);
     } catch (err: any) {
       setSigninErr(err.response.data);
     }

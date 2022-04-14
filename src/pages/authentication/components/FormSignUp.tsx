@@ -14,6 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { authAPI } from '../../../api/repositoryFactory';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { storeToken } from '../utils/authStorage';
 
 const FormSignUp = () => {
   const {
@@ -30,8 +31,8 @@ const FormSignUp = () => {
   ): Promise<void> => {
     try {
       const submitData = data as signupInput;
-      // console.log(submitData);
-      await authAPI.signup(submitData);
+      const res = await authAPI.signup(submitData);
+      storeToken(res.data.token);
     } catch (err: any) {
       setSignupErr(err.response.data);
     }
@@ -53,6 +54,7 @@ const FormSignUp = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         transition={{ delay: '1' }}
+        isInvalid={signupErr.length > 0}
       >
         <FormHeading />
         <Flex gap={'.5rem'} alignItems={'flex-start'}>
