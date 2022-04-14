@@ -7,5 +7,15 @@ export interface signupInput extends signinInput {
   nameUser: string;
   phone: string;
   address: string;
-  nameGroup: 'customer' | 'seller' | 'shipper';
+  nameGroup: 'Customer' | 'Seller' | 'Shipper';
 }
+
+export type signinAuthType = 'email' | 'password';
+export type signupAuthType =
+  | 'email'
+  | 'password'
+  | 'passwordConfirm'
+  | 'nameUser'
+  | 'phone'
+  | 'address'
+  | 'nameGroup';

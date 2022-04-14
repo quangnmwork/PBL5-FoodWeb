@@ -21,7 +21,7 @@ export const signupSchema = yup.object({
     .string()
     .required('Xác nhận mật khẩu không được trống')
     .test('equal', 'Mật khẩu xác nhận không đúng', function (value) {
-      return value !== this.resolve(yup.ref('password'));
+      return value === this.resolve(yup.ref('password'));
     }),
   nameGroup: yup.string()
 });
