@@ -30,7 +30,6 @@ const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
       <FormControl
         my={{ base: '.5rem', md: '1.2rem' }}
         isInvalid={props.errorMessage ? true : false}
-        // position={'relative'}
       >
         {props.typeInput !== 'submit' ? (
           <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
