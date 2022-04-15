@@ -8,9 +8,22 @@ const axiosClient = axios.create({
     queryString.stringify(params)
 });
 
+axiosClient.interceptors.request.use(async (config) => {
+  let accessToken = '';
+  if (process.env.REACT_APP_NAME_TOKEN) {
+    accessToken = localStorage.getItem(process.env.REACT_APP_NAME_TOKEN) || '';
+  }
+  // console.log(process.env.REACT_APP_NAME_TOKEN);
+  return {
+    ...config,
+    headers: {
+      Authorization: accessToken
+    }
+  };
+});
+
 axiosClient.interceptors.response.use(
   async (res: AxiosResponse) => {
-    // console.log(typeof res.data);
     return res;
   },
   (error: AxiosError): Promise<AxiosError> => {

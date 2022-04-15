@@ -1,10 +1,16 @@
 import { Routes } from 'react-router-dom';
-import Navigation from '../../components/Navigation/Navigation';
 import RenderRoutes from '../../utils/RenderRoutes';
-
 import AuthRoutes from '../authentication/routes';
+import HomeRoutes from '../home/routes';
+import UserRoutes from '../user/routes';
 const OverallLayout = () => {
-  return <Routes>{RenderRoutes(AuthRoutes)}</Routes>;
+  return (
+    <Routes>
+      {RenderRoutes(AuthRoutes)}
+      {RenderRoutes(HomeRoutes)}
+      {RenderRoutes(UserRoutes)}
+    </Routes>
+  );
   // return <Navigation />;
 };
 
