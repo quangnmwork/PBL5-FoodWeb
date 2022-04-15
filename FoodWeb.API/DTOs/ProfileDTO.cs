@@ -14,6 +14,10 @@ namespace FoodWeb.API.DTOs
 
         public string Address { get; set; }
 
+        public double Money { get; set; }
+
         public string Avatar { get; set; }
+
+        public string NameGroup { get; set; }
     }
 }

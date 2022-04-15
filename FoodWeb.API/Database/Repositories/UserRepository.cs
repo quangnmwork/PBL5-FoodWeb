@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodWeb.API.Database.Repositories
 {
@@ -90,7 +91,9 @@ namespace FoodWeb.API.Database.Repositories
 
         public ProfileDTO GetProfileUserById(int Id)
         {
-            return _mapper.Map<ProfileDTO>(_context.Users.FirstOrDefault(s => s.IdUser == Id));
+            var profile = _mapper.Map<ProfileDTO>(_context.Users.FirstOrDefault(s => s.IdUser == Id));
+            profile.NameGroup = GetNameGroupByNameUser(profile.NameUser);
+            return profile;
         }
     }
 }
