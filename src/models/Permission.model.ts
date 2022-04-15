@@ -1,3 +1,1 @@
-export interface Role {
-  nameGroup: 'Customer' | 'Admin' | 'Shipper' | 'Seller';
-}
+export type Role = 'Customer' | 'Admin' | 'Shipper' | 'Seller';
