@@ -50,9 +50,9 @@ namespace FoodWeb.API.Controllers
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (Id == null) return NotFound();
-            var user = _userRepository.GetUserById(Int32.Parse(Id));
-            if(user == null)    return NotFound();
-            return Ok(user);
+            var profile = _userRepository.GetProfileUserById(Int32.Parse(Id));
+            if(profile == null)    return NotFound();
+            return Ok(profile);
 
         }
 

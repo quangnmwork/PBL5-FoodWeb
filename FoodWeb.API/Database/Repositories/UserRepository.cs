@@ -87,5 +87,10 @@ namespace FoodWeb.API.Database.Repositories
             }
             return data;
         }
+
+        public ProfileDTO GetProfileUserById(int Id)
+        {
+            return _mapper.Map<ProfileDTO>(_context.Users.FirstOrDefault(s => s.IdUser == Id));
+        }
     }
 }
