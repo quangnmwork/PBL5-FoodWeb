@@ -16,20 +16,22 @@ namespace FoodWeb.API.Database.Repositories
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public UserRepository(DataContext context, IMapper mapper){
+        public UserRepository(DataContext context, IMapper mapper)
+        {
             this._context = context;
             this._mapper = mapper;
         }
 
         public void CreateUser(RegisterDTO registerDTO)
         {
-            var user = new User{
+            var user = new User
+            {
                 NameUser = registerDTO.NameUser,
                 Phone = registerDTO.Phone,
                 Address = registerDTO.Address,
             };
 
-            if(registerDTO.NameGroup.ToLower() == "seller" || registerDTO.NameGroup.ToLower() == "shipper")
+            if (registerDTO.NameGroup.ToLower() == "seller" || registerDTO.NameGroup.ToLower() == "shipper")
                 user.Money = 0;
 
             _context.Users.Add(user);
@@ -41,7 +43,8 @@ namespace FoodWeb.API.Database.Repositories
             return _context.Users;
         }
 
-        public User GetUserByName(string name){
+        public User GetUserByName(string name)
+        {
             return _context.Users.FirstOrDefault(s => s.NameUser == name);
         }
 
@@ -50,18 +53,25 @@ namespace FoodWeb.API.Database.Repositories
             return _context.Users.Find(Id);
         }
 
-        public bool SaveChanges(){
-            return (_context.SaveChanges() > 0);
+        public void UpdateProfile(int Id, CustomerDTO customerDto)
+        {
+            var updateUser = GetUserById(Id);
+            // Console.WriteLine(updateUser.ToString());
+            // Console.WriteLine(customerDto.ToString());
+            if (updateUser == null) return;
+            if (customerDto.NameUser != null)
+            {
+                foreach (var user in GetAllUsers())
+                {
+                    if (customerDto.NameUser == user.NameUser){
+                        return;
+                    }
+                }
+            }
+            _mapper.Map(customerDto, updateUser);
+            _context.SaveChanges();
         }
 
-        public void UpdateProfile(int Id, CustomerDTO customerDto){
-            var user = GetUserById(Id);
-            // Console.WriteLine(user.ToString());
-            // Console.WriteLine(customerDto.ToString());
-            if (user == null) return;
-            _mapper.Map(customerDto,user);
-        }
-        
         public string GetNameGroupByNameUser(string name)
         {
             var user = _context.Users.FirstOrDefault(u => u.NameUser == name);
@@ -75,15 +85,16 @@ namespace FoodWeb.API.Database.Repositories
             var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
             return _context.Groups.FirstOrDefault(u => u.IdGroup == groupDetail.GroupId).NameGroup;
         }
-        
+
         public IEnumerable<SellerDTO> GetAllSellers()
         {
             // return _context.Users.Where(u => (GetNameGroupByNameUser(u.NameUser) == "Seller"))
             //                      .ProjectTo<SellerDTO>(_mapper.ConfigurationProvider);
 
             List<SellerDTO> data = new List<SellerDTO>();
-            foreach(var user in _context.Users){
-                if(GetNameGroupByNameUser(user.NameUser) == "Seller")
+            foreach (var user in _context.Users)
+            {
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
                     data.Add(_mapper.Map<SellerDTO>(user));
             }
             return data;

@@ -14,8 +14,6 @@ namespace FoodWeb.API.Database.IRepositories
 
         public User GetUserById(int Id);
 
-        public bool SaveChanges();
-
         public void  UpdateProfile(int Id, CustomerDTO customer);
 
         public IEnumerable<SellerDTO> GetAllSellers();
