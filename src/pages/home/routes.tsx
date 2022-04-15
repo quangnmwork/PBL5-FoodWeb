@@ -5,7 +5,8 @@ const HomeRoutes: RoutesConfig[] = [
     path: '/',
     component: <HomeContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: false
+    needProtected: false,
+    specificRole: ['Customer']
   }
 ];
 export default HomeRoutes;

@@ -1,7 +1,11 @@
-import React from 'react';
-
+import { Box } from '@chakra-ui/react';
+import Navigation from './../../../components/Navigation/Navigation';
 const HomeContainer = () => {
-  return <div>Home</div>;
+  return (
+    <Box>
+      <Navigation />
+    </Box>
+  );
 };
 
 export default HomeContainer;
