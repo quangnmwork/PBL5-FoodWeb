@@ -1,14 +1,13 @@
 import { Route, Navigate, useNavigate } from 'react-router-dom';
 import { useUser } from '../hooks/authentication/useUser';
 import { RoutesConfig } from '../models/RoutesConfig.model';
-import FormContainer from '../pages/authentication/components/FormContainer';
 
 const RenderRoutes = (routesConfig: RoutesConfig[]) => {
   const { data } = useUser();
-  console.log(data);
+  // console.log(data);
   return routesConfig.map(
     ({ path, component, redirectWhenAlreadyHasUser, needProtected }) => {
-      console.log(needProtected && data == undefined);
+      // console.log(needProtected && data == undefined);
       if (needProtected && data == undefined) {
         return (
           <Route
