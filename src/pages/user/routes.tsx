@@ -6,7 +6,8 @@ const UserRoutes: RoutesConfig[] = [
     path: '/user-profile',
     component: <UserContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: true
+    needProtected: true,
+    specificRole: ['Shipper', 'Customer']
   }
 ];
 export default UserRoutes;

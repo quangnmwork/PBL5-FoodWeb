@@ -6,5 +6,4 @@ export interface RoutesConfig {
   redirectWhenAlreadyHasUser: boolean;
   needProtected: boolean;
   specificRole?: Role[];
-  guard?: (...args: unknown[]) => boolean | Promise<boolean>;
 }
