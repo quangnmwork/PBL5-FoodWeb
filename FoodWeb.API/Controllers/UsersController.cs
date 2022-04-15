@@ -45,7 +45,18 @@ namespace FoodWeb.API.Controllers
             return Ok(user);
         }
 
-        [HttpPatch("{Id}")]
+        [HttpGet("GetProfileUser")]
+        public ActionResult<User> GetProfileUser()
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (Id == null) return NotFound();
+            var user = _userRepository.GetUserById(Int32.Parse(Id));
+            if(user == null)    return NotFound();
+            return Ok(user);
+
+        }
+
+        [HttpPatch("EditProfile")]
         public ActionResult<User> EditUserById(CustomerDTO customerDto)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
