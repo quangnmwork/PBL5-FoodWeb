@@ -1,14 +1,14 @@
-import { Route, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { useUser } from '../hooks/authentication/useUser';
 import { RoutesConfig } from '../models/RoutesConfig.model';
 
 const RenderRoutes = (routesConfig: RoutesConfig[]) => {
-  const { data } = useUser();
-  // console.log(data);
+  const { data, error } = useUser();
   return routesConfig.map(
     ({ path, component, redirectWhenAlreadyHasUser, needProtected }) => {
       // console.log(needProtected && data == undefined);
-      if (needProtected && data == undefined) {
+      // console.log(!(data && redirectWhenAlreadyHasUser));
+      if (needProtected && !data && error) {
         return (
           <Route
             path={path}
@@ -21,10 +21,10 @@ const RenderRoutes = (routesConfig: RoutesConfig[]) => {
         <Route
           path={path}
           element={
-            !(data && redirectWhenAlreadyHasUser) ? (
+            !(data && redirectWhenAlreadyHasUser && !error) ? (
               component
             ) : (
-              <Navigate to={'/'} />
+              <Navigate to={'/'} replace={true} />
             )
           }
           key={path}
