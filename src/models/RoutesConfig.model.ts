@@ -1,5 +1,7 @@
 export interface RoutesConfig {
   path: string;
   component: JSX.Element;
-  //   guard?: (...args: unknown[]) => boolean | Promise<boolean>;
+  redirectWhenAlreadyHasUser: boolean;
+  needProtected: boolean;
+  guard?: (...args: unknown[]) => boolean | Promise<boolean>;
 }

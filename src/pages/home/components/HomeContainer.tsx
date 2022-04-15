@@ -1,8 +1,7 @@
 import React from 'react';
-import Footer from '../../../components/Footer/Footer';
 
 const HomeContainer = () => {
-  return <Footer />;
+  return <div>Home</div>;
 };
 
 export default HomeContainer;

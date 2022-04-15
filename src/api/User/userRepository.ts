@@ -1,12 +1,8 @@
 import axiosClient from '../repository';
-import { signinInput, signupInput } from './../../models/Authentication.model';
-const path = 'Accounts';
+const path = 'Users';
 
 export default {
-  signin(signinData: signinInput) {
-    return axiosClient.post(`${path}/login`, signinData);
-  },
-  signup(signupData: signupInput) {
-    return axiosClient.post(`${path}/register`, signupData);
+  getUserProfile() {
+    return axiosClient.get(`${path}/GetProfileUser`);
   }
 };
