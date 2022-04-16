@@ -1,7 +1,8 @@
 import React from 'react';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 
 const UserContainer = () => {
-  return <div>UserContainer</div>;
+  return <Sidebar />;
 };
 
 export default UserContainer;
