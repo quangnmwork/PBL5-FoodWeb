@@ -1,24 +1,26 @@
-import { Flex, FlexProps, Icon } from '@chakra-ui/react';
+import { Flex, FlexProps, Icon, Text } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 
 interface SidebarItemProps extends FlexProps {
   icon: IconType;
   iconText: string;
+  isActive?: boolean;
 }
 
 const SidebarItem = (props: SidebarItemProps) => {
   return (
     <Flex
       alignItems={'center'}
-      p="4"
-      mx="0"
+      padding={'4'}
+      ml={'2'}
       role="group"
-      cursor="pointer"
-      _hover={{
-        bg: 'main.100',
-        color: 'white'
-      }}
+      cursor={'pointer'}
+      borderTopLeftRadius={'3rem'}
+      borderBottomLeftRadius={'3rem'}
+      bgColor={'white'}
       transition={'all .2s'}
+      my={'1rem'}
+      _hover={{ backgroundColor: 'main.100', color: 'white' }}
     >
       {props.icon && (
         <Icon
@@ -30,7 +32,7 @@ const SidebarItem = (props: SidebarItemProps) => {
           as={props.icon}
         />
       )}
-      {props.iconText}
+      <Text fontWeight={'bold'}> {props.iconText}</Text>
     </Flex>
   );
 };
