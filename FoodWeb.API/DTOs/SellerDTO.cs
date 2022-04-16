@@ -8,7 +8,7 @@ namespace FoodWeb.API.DTOs
         public int IdUser { get; set; }
         
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string NameUser { get; set; }
 
         [Required]

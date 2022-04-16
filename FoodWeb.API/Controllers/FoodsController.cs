@@ -13,7 +13,7 @@ namespace Namespace
     public class FoodsController : ControllerBase
     {
         private readonly IFoodRepository _foodRepository;
-         
+
         public FoodsController(IFoodRepository foodRepository)
         {
             this._foodRepository = foodRepository;
@@ -30,15 +30,15 @@ namespace Namespace
         public ActionResult<FoodDTO> GetFoodById(int Id)
         {
             var food = _foodRepository.GetFoodById(Id);
-            if(food == null)    return NotFound();
+            if (food == null) return NotFound();
             return Ok(food);
         }
-        
+
         [HttpGet("search")]
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(SearchDTO search)
         {
             var data = _foodRepository.GetAllFoodsBySearch(search);
-            if(data == null)    return NotFound();
+            if (data == null) return NotFound();
             return Ok(_foodRepository.GetAllFoodsBySearch(search));
         }
     }

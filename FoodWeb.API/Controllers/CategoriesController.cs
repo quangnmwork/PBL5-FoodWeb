@@ -26,6 +26,7 @@ namespace Namespace
         [HttpGet("getAllCategories")]
         public ActionResult<IEnumerable<CategoryDTO>> GetAllCategories()
         {
+            // string page = HttpContext.Request.Query["page"];
             return Ok(_categoryRepository.GetAllCategories());
         }
     }

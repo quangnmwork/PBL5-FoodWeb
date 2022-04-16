@@ -14,7 +14,7 @@ namespace FoodWeb.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using var scope = host.Services.CreateScope();
@@ -25,10 +25,10 @@ namespace FoodWeb.API
             seed.SeedGroups();
             seed.SeedPermissions();
             seed.SeedPermissionDetails();
-            // seed.SeedCategories();
-            // seed.SeedUsers();
-            // seed.SeedFoods();
-            
+            await seed.SeedCategories();
+            await seed.SeedUsers();
+            await seed.SeedFoods();
+
             host.Run();
         }
 
