@@ -30,8 +30,8 @@ const RenderRoutes = (routesConfig: RoutesConfig[]) => {
       //   'Permission',
       //   permissionGuard(specificRole!, data?.nameGroup)
       // );
-      console.log('Object', checkObjectExist(data));
-      console.log('Redirect', redirectWhenAlreadyHasUser);
+      // console.log('Object', checkObjectExist(data));
+      // console.log('Redirect', redirectWhenAlreadyHasUser);
       if (needProtected && data && !error && specificRole) {
         return (
           <Route

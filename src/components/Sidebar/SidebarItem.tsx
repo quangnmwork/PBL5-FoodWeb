@@ -12,15 +12,14 @@ const SidebarItem = (props: SidebarItemProps) => {
     <Flex
       alignItems={'center'}
       padding={'4'}
-      ml={'2'}
+      mx={'3'}
       role="group"
       cursor={'pointer'}
-      borderTopLeftRadius={'3rem'}
-      borderBottomLeftRadius={'3rem'}
+      borderRadius={'lg'}
       bgColor={'white'}
       transition={'all .2s'}
       my={'1rem'}
-      _hover={{ backgroundColor: 'main.100', color: 'white' }}
+      _hover={{ backgroundColor: 'main.200', color: 'white' }}
     >
       {props.icon && (
         <Icon
