@@ -29,6 +29,10 @@ namespace FoodWeb.API
             await seed.SeedUsers();
             await seed.SeedFoods();
 
+            // seed.SeedCategories();
+            // seed.SeedUsers();
+            // seed.SeedFoods();
+            //Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy-HH:mm:ss,fff"));
             host.Run();
         }
 

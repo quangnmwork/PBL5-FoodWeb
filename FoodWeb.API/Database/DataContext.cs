@@ -72,7 +72,7 @@ namespace FoodWeb.API.Database
             // System
             builder.Entity<User>(b => {
                 b.HasKey(s => s.IdUser);
-                b.Property(s => s.NameUser).HasMaxLength(50).IsRequired(true);
+                b.Property(s => s.NameUser).HasMaxLength(100).IsRequired(true);
                 b.Property(s => s.Phone).HasMaxLength(10).IsRequired(true);
                 b.Property(s => s.Address).HasMaxLength(100).IsRequired(true);
                 b.Property(s => s.Money).IsRequired(false);
@@ -95,7 +95,7 @@ namespace FoodWeb.API.Database
 
             builder.Entity<Food>(b => {
                 b.HasKey(s => s.IdFood);
-                b.Property(s => s.NameFood).HasMaxLength(100).IsRequired(true);
+                b.Property(s => s.NameFood).HasMaxLength(150).IsRequired(true);
                 b.Property(s => s.PriceFood).IsRequired(true);
                 b.Property(s => s.TimeCreate).IsRequired(true);
                 b.Property(s => s.DescriptionFood).IsRequired(true);
@@ -111,7 +111,7 @@ namespace FoodWeb.API.Database
 
             builder.Entity<Payment>(b => {
                 b.HasKey(s => s.IdPayment);
-                b.Property(s => s.TimePayment).IsRequired(true);
+                b.Property(s => s.TimePayment).IsRequired(false);
                 b.Property(s => s.PriceTotalFood).IsRequired(true);
                 b.Property(s => s.PriceShip).IsRequired(true);
                 b.Property(s => s.IsPayment).IsRequired(true);
@@ -120,9 +120,10 @@ namespace FoodWeb.API.Database
             builder.Entity<OrderDetail>(b => {
                 b.HasKey(s => s.IdOrderDetail);
                 b.Property(s => s.TimeOrderDetail).IsRequired(true);
-                b.Property(s => s.IsShip).IsRequired(false);
+                b.Property(s => s.IsShip).IsRequired(true);
                 b.Property(s => s.TimeShipDone).IsRequired(false);
-                b.Property(s => s.ChoiceShip).IsRequired(false);
+                b.Property(s => s.ChoiceShip).IsRequired(true);
+                b.Property(s => s.CodeOrderDetail).IsRequired(true);
                 b.HasOne(s => s.User).WithMany(s => s.OrderDetails).HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(s => s.Payment).WithOne(s => s.OrderDetail).HasForeignKey<Payment>(s => s.OrderDetailId).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(s => s.Room).WithOne(s => s.OrderDetail).HasForeignKey<Room>(s => s.OrderDetailId).OnDelete(DeleteBehavior.NoAction);

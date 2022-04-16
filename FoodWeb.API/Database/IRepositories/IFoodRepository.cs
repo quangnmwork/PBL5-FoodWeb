@@ -16,5 +16,7 @@ namespace FoodWeb.API.Database.IRepositories
         public FoodDTO GetFoodById(int Id);
 
         public IEnumerable<FoodDTO> GetAllFoodsBySearch(SearchDTO searchDTO);
+
+        public double PriceFoods(List<InfoFoodOrderDTO> ListInfoFood);
     }
 }

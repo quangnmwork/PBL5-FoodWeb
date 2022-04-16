@@ -6,7 +6,7 @@ namespace FoodWeb.API.Database.Entities
     {
         public int IdPayment { get; set; }
 
-        public DateTime TimePayment { get; set; }
+        public DateTime? TimePayment { get; set; }
 
         public double PriceTotalFood { get; set; }
 

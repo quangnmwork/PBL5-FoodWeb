@@ -86,5 +86,22 @@ namespace Namespace
             // }
             // return username;
         }
+
+        [HttpGet("getListInt")]
+        public ActionResult<string> testGetListInt(List<int> a)
+        {
+            foreach(var b in a)
+                Console.WriteLine(b);
+
+            return NoContent();
+
+            //IEnumerable<Claim> username1 = this.User.FindAll(ClaimTypes.A);
+
+            // if (string.IsNullOrEmpty(username))
+            // {
+            //     return NotFound();
+            // }
+            // return username;
+        }
     }
 }
