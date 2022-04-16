@@ -6,7 +6,10 @@ const Sidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minHeight={'100%'}>
-      <SidebarContent onClose={onClose} />
+      <SidebarContent
+        onClose={onClose}
+        display={{ base: 'none', md: 'block' }}
+      />
       <Drawer
         autoFocus={false}
         isOpen={isOpen}

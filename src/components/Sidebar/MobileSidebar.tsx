@@ -2,7 +2,6 @@ import {
   Flex,
   IconButton,
   Text,
-  HStack,
   Menu,
   MenuButton,
   Avatar,
@@ -35,6 +34,7 @@ const MobileSidebar = (props: MobileSidebarProps) => {
         display={{ base: 'flex', md: 'none' }}
         fontSize="xl"
         fontWeight="bold"
+        color={'main.100'}
       >
         User Dashboard
       </Text>
