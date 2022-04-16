@@ -2,7 +2,7 @@ import { Box, Flex, Text, CloseButton, BoxProps } from '@chakra-ui/react';
 import {
   AiOutlineHome,
   AiOutlineUser,
-  AiOutlineSecurityScan,
+  AiOutlineSetting,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
 
@@ -12,7 +12,7 @@ const SidebarItems = [
   { icon: AiOutlineHome, iconText: 'Trang chủ' },
   { icon: AiOutlineUser, iconText: 'Thông tin cá nhân' },
   {
-    icon: AiOutlineSecurityScan,
+    icon: AiOutlineSetting,
     iconText: 'Bảo mật'
   },
   { icon: AiOutlineShoppingCart, iconText: 'Quản lý đơn hàng' }
