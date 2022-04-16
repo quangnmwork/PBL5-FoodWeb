@@ -46,5 +46,16 @@ namespace FoodWeb.API.Database.Repositories
         {
             return _context.Foods.Where(s => s.IdFood == Id).ProjectTo<FoodDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
+
+        public double PriceFoods(List<InfoFoodOrderDTO> ListInfoFood)
+        {
+            double money = 0;
+            foreach(var item in ListInfoFood){
+                var food = _context.Foods.FirstOrDefault(u => u.IdFood == item.IdFood);
+                money += food.PriceFood*item.NumberFood;
+            }
+
+            return money;
+        }
     }
 }

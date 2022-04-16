@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FoodWeb.API.Database.Entities
+namespace FoodWeb.API.DTOs
 {
-    public class OrderDetail
+    public class OrderDTO
     {
         public int IdOrderDetail { get; set; }
 
@@ -16,14 +18,9 @@ namespace FoodWeb.API.Database.Entities
         public bool? ChoiceShip { get; set; }
 
         public string CodeOrderDetail { get; set; }
-        
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
-    
-        public virtual Payment Payment { get; set; }
 
-        public virtual Room Room { get; set; }
+        public int IdRoom { get; set; }
 
-        public List<ListOrder> ListOrders { get; set; }
+        public int IdPayment { get; set; }
     }
 }

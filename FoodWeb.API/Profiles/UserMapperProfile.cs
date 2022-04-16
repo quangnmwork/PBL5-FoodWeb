@@ -24,6 +24,8 @@ namespace FoodWeb.API.Profiles
             CreateMap<Food, FoodDTO>().ForMember(dest => dest.NameCategory, opt => opt.MapFrom(src => src.Category.NameCategory));
 
             CreateMap<User, ProfileDTO>();
+
+            CreateMap<OrderDetail, OrderDTO>();
         }
     }
 }
