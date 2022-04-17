@@ -31,6 +31,7 @@ interface UserSignup extends InputProps {
     | 'nameGroup';
   isEditable?: boolean;
   mustDisable?: boolean;
+  my?: any;
 }
 
 const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
@@ -41,7 +42,7 @@ const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
     const handleType = useCallback(() => {
       if (props.typeInput == 'password' && showPassword == true) return 'text';
       if (!props.typeInput) return 'text';
-      return props.typeInput;
+      return props.typeInput || 'text';
     }, [showPassword]);
     const handleDisable = useCallback(() => {
       if (props.mustDisable) return true;
@@ -50,7 +51,7 @@ const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
     }, [canEdit]);
     return (
       <FormControl
-        my={{ base: '.5rem', md: '1rem' }}
+        my={props.my || { base: '.5rem', md: '1rem' }}
         isInvalid={props.errorMessage ? true : false}
       >
         {props.typeInput !== 'submit' ? (
@@ -60,10 +61,10 @@ const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
           <Input
             borderWidth={'1.5px'}
             ref={ref}
-            id={props.textLabel}
+            id={props.typeInput !== 'submit' ? props.textLabel : ''}
             type={handleType()}
             isReadOnly={handleDisable()}
-            placeholder={props.placeholder}
+            placeholder={props.placeholder || ''}
             {...(props.register && props.nameRegister
               ? props.register(props.nameRegister)
               : null)}
