@@ -1,19 +1,15 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps } from '@chakra-ui/react';
 import React from 'react';
-import { ComponentEvent } from '../../models/ComponentEvent.model';
 
-interface ButtonProps extends ComponentEvent<HTMLButtonElement> {
+interface ButtonProp extends ButtonProps {
   textDisplay: string;
   width?: string;
   isLoading?: boolean;
 }
-const ButtonCustom = (props: ButtonProps) => {
+const ButtonCustom = (props: ButtonProp) => {
+  const { ...rest } = props;
   return (
-    <Button
-      onClick={props.onClick}
-      width={props.width}
-      isLoading={props.isLoading}
-    >
+    <Button width={props.width} isLoading={props.isLoading} {...rest}>
       {props.textDisplay}
     </Button>
   );

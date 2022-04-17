@@ -9,13 +9,22 @@ import {
 import SidebarItem from './SidebarItem';
 
 const SidebarItems = [
-  { icon: AiOutlineHome, iconText: 'Trang chủ' },
-  { icon: AiOutlineUser, iconText: 'Thông tin cá nhân' },
+  { icon: AiOutlineHome, iconText: 'Trang chủ', linkTo: '/' },
+  {
+    icon: AiOutlineUser,
+    iconText: 'Thông tin cá nhân',
+    linkTo: '/user/profile'
+  },
   {
     icon: AiOutlineSetting,
-    iconText: 'Bảo mật'
+    iconText: 'Bảo mật',
+    linkTo: '/user/security'
   },
-  { icon: AiOutlineShoppingCart, iconText: 'Quản lý đơn hàng' }
+  {
+    icon: AiOutlineShoppingCart,
+    iconText: 'Quản lý đơn hàng',
+    linkTo: '/user/orders'
+  }
 ];
 interface SidebarContentProps extends BoxProps {
   onClose: () => void;
@@ -39,6 +48,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarContentProps) => {
       </Flex>
       {SidebarItems.map((sidebar) => (
         <SidebarItem
+          linkTo={sidebar.linkTo}
           isActive={true}
           icon={sidebar.icon}
           iconText={sidebar.iconText}

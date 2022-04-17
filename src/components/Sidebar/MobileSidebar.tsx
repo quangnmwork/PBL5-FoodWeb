@@ -9,8 +9,10 @@ import {
   MenuItem
 } from '@chakra-ui/react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { DynamicObject } from '../../models/DynamicObject.model';
 interface MobileSidebarProps {
   onOpen: () => void;
+  userData?: DynamicObject;
 }
 
 const MobileSidebar = (props: MobileSidebarProps) => {
@@ -41,7 +43,8 @@ const MobileSidebar = (props: MobileSidebarProps) => {
       <Menu>
         <MenuButton py={2} transition="all 0.3s">
           <Avatar
-            src={'https://bcons.com.vn/wp-content/uploads/2019/11/avatar.jpg'}
+            src={props.userData?.avatar || '/assets/user-avatar.jpg'}
+            size={'md'}
           />
         </MenuButton>
         <MenuList>

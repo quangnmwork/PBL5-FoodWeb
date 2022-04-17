@@ -15,6 +15,13 @@ const UserRoutes: RoutesConfig[] = [
     redirectWhenAlreadyHasUser: false,
     needProtected: true,
     specificRole: ['Shipper', 'Customer']
+  },
+  {
+    path: '/user/order',
+    component: <UserContainer />,
+    redirectWhenAlreadyHasUser: false,
+    needProtected: true,
+    specificRole: ['Shipper', 'Customer']
   }
 ];
 export default UserRoutes;
