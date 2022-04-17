@@ -1,4 +1,10 @@
-import { FormControl, Flex, FormErrorMessage, Text } from '@chakra-ui/react';
+import {
+  FormControl,
+  Flex,
+  FormErrorMessage,
+  Text,
+  useToast
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
@@ -15,6 +21,7 @@ import { authAPI } from '../../../api/repositoryFactory';
 import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { storeToken } from '../utils/authStorage';
+import { useNavigate } from 'react-router-dom';
 
 const FormSignUp = () => {
   const {
@@ -25,6 +32,8 @@ const FormSignUp = () => {
   } = useForm<signupInput | signinInput>({
     resolver: yupResolver(signupSchema)
   });
+  const toast = useToast();
+  const navigate = useNavigate();
   const [signupErr, setSignupErr] = useState<string>('');
   const [roleValue, setRoleValue] = useState<string>();
   const signupHandler: SubmitHandler<signupInput | signinInput> = async (
@@ -34,6 +43,16 @@ const FormSignUp = () => {
       const submitData = data as signupInput;
       const res = await authAPI.signup(submitData);
       storeToken(res.data.token);
+      toast({
+        status: 'success',
+        title: 'Đăng kí tài khoản thành công',
+        position: 'bottom-right',
+        duration: 1500,
+        variant: 'subtle'
+      });
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 2000);
     } catch (err: any) {
       setSignupErr(err.response.data);
     }

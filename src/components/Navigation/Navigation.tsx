@@ -7,14 +7,16 @@ import SearchBar from './SearchBar/SearchBar';
 
 const Navigation = () => {
   const { data, error } = useUser();
+  console.log(error);
   return (
     <Flex>
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
       <SearchBar />
       <Avatar
         src={
-          data.avatar ||
-          'https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg'
+          data
+            ? data.avatar
+            : 'https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg'
         }
         display={error ? 'none' : 'block'}
       />
