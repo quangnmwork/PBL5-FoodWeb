@@ -41,6 +41,12 @@ namespace Namespace
             return Ok(_userRepository.GetAllUsers());
         }
 
+        [HttpGet("getAllUsersByPaging")]
+        public ActionResult<IEnumerable<User>> GetListUsersWithPaging(int page = 1, int pageSize = 3)
+        {
+            return Ok(_userRepository.GetAllUsersByPaging(2, 5));
+        }
+
         [HttpGet("getUser/{Id}")]
         public ActionResult<User> GetUserById(int Id)
         {

@@ -10,6 +10,8 @@ namespace FoodWeb.API.Database.IRepositories
 
         public IEnumerable<User> GetAllUsers();
 
+        public IEnumerable<User> GetAllUsersByPaging(int page = 1, int pageSize = 3);
+
         public User GetUserByName(string name);
 
         public User GetUserById(int Id);

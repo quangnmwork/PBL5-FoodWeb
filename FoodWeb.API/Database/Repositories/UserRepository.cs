@@ -7,6 +7,7 @@ using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace FoodWeb.API.Database.Repositories
 {
@@ -105,6 +106,11 @@ namespace FoodWeb.API.Database.Repositories
             var profile = _mapper.Map<ProfileDTO>(_context.Users.FirstOrDefault(s => s.IdUser == Id));
             profile.NameGroup = GetNameGroupByNameUser(profile.NameUser);
             return profile;
+        }
+
+        public IEnumerable<User> GetAllUsersByPaging(int page = 1, int pageSize = 3)
+        {
+            return _context.Users.OrderBy(s => s.IdUser).ToPagedList(page, pageSize).Skip(2).Take(pageSize);
         }
     }
 }
