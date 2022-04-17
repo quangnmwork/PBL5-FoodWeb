@@ -12,10 +12,9 @@ import { AiOutlineCamera } from 'react-icons/ai';
 import { DynamicObject } from '../../models/DynamicObject.model';
 import ButtonCustom from '../Button/ButtonCustom';
 import FormInput from '../Form/FormInput';
-import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { signinInput, signupInput } from '../../models/Authentication.model';
-import { createRef, useState } from 'react';
+import { createRef } from 'react';
 import { userAPI } from '../../api/repositoryFactory';
 
 interface ProfileProps {

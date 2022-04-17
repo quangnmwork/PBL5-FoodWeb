@@ -11,8 +11,8 @@ const ProfileSecurity = () => {
       mx={'auto'}
     >
       <FormInput textLabel={'Mật khẩu cũ'} />
-      <FormInput textLabel={'Mật khẩU mới'} typeInput={'password'} />
-      <FormInput textLabel={'Xác nhận Mật khẩU mới'} typeInput={'password'} />
+      <FormInput textLabel={'Mật khẩu mới'} typeInput={'password'} />
+      <FormInput textLabel={'Xác nhận mật khẩu mới'} typeInput={'password'} />
 
       <ButtonCustom
         textDisplay={'Thay đổi mật khẩu'}

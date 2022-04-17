@@ -11,6 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { authAPI } from '../../../api/repositoryFactory';
 import { useEffect, useState } from 'react';
 import { storeToken } from '../utils/authStorage';
+import { useNavigate } from 'react-router-dom';
 
 const FormSignIn = () => {
   const {
@@ -22,12 +23,14 @@ const FormSignIn = () => {
     resolver: yupResolver(signinSchema)
   });
   const [signinErr, setSigninErr] = useState<string>('');
+  const navigate = useNavigate();
   const loginHandler: SubmitHandler<signinInput> = async (
     data: signinInput
   ): Promise<void> => {
     try {
       const res = await authAPI.signin(data);
       storeToken(res.data?.token);
+      navigate('/', { replace: true });
     } catch (err: any) {
       setSigninErr(err.response.data);
     }
