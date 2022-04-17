@@ -20,10 +20,10 @@ namespace Namespace
 
         }
 
-        [HttpGet("getAllFoods")]
-        public ActionResult<IEnumerable<FoodDTO>> GetAllFoods()
+        [HttpGet("getAllFoods/page-{numberPage}")]
+        public ActionResult<IEnumerable<FoodDTO>> GetAllFoods(int numberPage)
         {
-            return Ok(_foodRepository.GetAllFoods());
+            return Ok(_foodRepository.GetAllFoodsPaging(numberPage));
         }
 
         [HttpGet("{Id}")]
@@ -34,12 +34,12 @@ namespace Namespace
             return Ok(food);
         }
 
-        [HttpGet("search")]
-        public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(SearchDTO search)
+        [HttpGet("search/page-{numberPage}")]
+        public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(int numberPage, SearchDTO search)
         {
-            var data = _foodRepository.GetAllFoodsBySearch(search);
+            var data = _foodRepository.GetAllFoodsBySearchPaging(numberPage, search);
             if (data == null) return NotFound();
-            return Ok(_foodRepository.GetAllFoodsBySearch(search));
+            return Ok(data);
         }
     }
 }

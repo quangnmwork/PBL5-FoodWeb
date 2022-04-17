@@ -59,16 +59,7 @@ namespace FoodWeb.API.Database.Repositories
             var updateUser = GetUserById(Id);
             // Console.WriteLine(updateUser.ToString());
             // Console.WriteLine(customerDto.ToString());
-            if (updateUser == null) return;
-            if (customerDto.NameUser != null)
-            {
-                foreach (var user in GetAllUsers())
-                {
-                    if (customerDto.NameUser == user.NameUser){
-                        return;
-                    }
-                }
-            }
+            
             _mapper.Map(customerDto, updateUser);
             _context.SaveChanges();
         }
@@ -111,6 +102,13 @@ namespace FoodWeb.API.Database.Repositories
         public IEnumerable<User> GetAllUsersByPaging(int page = 1, int pageSize = 3)
         {
             return _context.Users.OrderBy(s => s.IdUser).ToPagedList(page, pageSize).Skip(2).Take(pageSize);
+        }
+
+        public bool CheckExistUserName(string userName)
+        {
+            var data = _context.Users.FirstOrDefault(u => u.NameUser == userName);
+            if(data == null)    return false;
+            return true;
         }
     }
 }

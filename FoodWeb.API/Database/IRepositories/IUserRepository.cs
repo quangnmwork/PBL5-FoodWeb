@@ -21,5 +21,7 @@ namespace FoodWeb.API.Database.IRepositories
         public IEnumerable<SellerDTO> GetAllSellers();
 
         public ProfileDTO GetProfileUserById(int Id);
+
+        public bool CheckExistUserName(string userName);
     }
 }

@@ -11,12 +11,16 @@ namespace FoodWeb.API.Database.IRepositories
     {
         public IEnumerable<FoodDTO> GetAllFoodsByIdSeller(int Id);
 
-        public IEnumerable<FoodDTO> GetAllFoods();
+        //public IEnumerable<FoodDTO> GetAllFoods();
+
+        public IEnumerable<FoodDTO> GetAllFoodsPaging(int numberPage);
 
         public FoodDTO GetFoodById(int Id);
 
-        public IEnumerable<FoodDTO> GetAllFoodsBySearch(SearchDTO searchDTO);
+        //public IEnumerable<FoodDTO> GetAllFoodsBySearch(SearchDTO searchDTO);
 
         public double PriceFoods(List<InfoFoodOrderDTO> ListInfoFood);
+
+        public IEnumerable<FoodDTO> GetAllFoodsBySearchPaging(int numberPage, SearchDTO searchDTO);
     }
 }

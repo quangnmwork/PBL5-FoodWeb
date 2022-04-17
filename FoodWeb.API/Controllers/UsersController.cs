@@ -61,8 +61,11 @@ namespace FoodWeb.API.Controllers
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (Id == null) return NotFound();
+            if(customerDto.NameUser != null && _userRepository.CheckExistUserName(customerDto.NameUser))
+                return BadRequest("NameUser is existed!");
+
             _userRepository.UpdateProfile(Int32.Parse(Id), customerDto);
-            return Ok(_userRepository.GetUserById(Int32.Parse(Id)));
+            return Ok(_userRepository.GetProfileUserById(Int32.Parse(Id)));
         }
 
         [HttpGet("getAllSellers")]
