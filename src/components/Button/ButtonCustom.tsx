@@ -10,7 +10,7 @@ const ButtonCustom = (props: ButtonProp) => {
   const { ...rest } = props;
   return (
     <Button width={props.width} isLoading={props.isLoading} {...rest}>
-      {props.textDisplay}
+      {props.textDisplay || ''}
     </Button>
   );
 };

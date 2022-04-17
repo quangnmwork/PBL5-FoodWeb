@@ -17,6 +17,7 @@ interface ProfileProps {
 }
 
 const Profile = (props: ProfileProps) => {
+  console.log('Profile', props.userData);
   return (
     <Flex
       direction={'column'}
@@ -57,22 +58,24 @@ const Profile = (props: ProfileProps) => {
           </AvatarBadge>
         </Avatar>
       </Box>
-      <Flex gap={'.5rem'} alignItems={'flex-start'}>
-        <FormInput textLabel={'Email'} mustDisable={true} />
-        <FormInput textLabel={'Tên người dùng'} isEditable={true} />
-      </Flex>
-      <Flex gap={'.5rem'} mt={'-1rem'}>
-        <FormInput
-          textLabel={'Địa chỉ'}
-          placeholder={'123 XYZ Street'}
-          isEditable={true}
-        />
-        <FormInput
-          textLabel={'Số điện thoại'}
-          placeholder={'09xxxxx'}
-          isEditable={true}
-        />
-      </Flex>
+      <FormInput
+        textLabel={'Tên người dùng'}
+        isEditable={true}
+        defaultValue={props.userData?.nameUser}
+      />
+      <FormInput
+        textLabel={'Địa chỉ'}
+        placeholder={'123 XYZ Street'}
+        isEditable={true}
+        defaultValue={props.userData?.address}
+      />
+      <FormInput
+        textLabel={'Số điện thoại'}
+        placeholder={'09xxxxx'}
+        isEditable={true}
+        defaultValue={props.userData?.phone}
+      />
+
       <ButtonCustom
         textDisplay={'Lưu thông tin'}
         onClick={() => {
