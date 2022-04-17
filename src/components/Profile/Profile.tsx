@@ -5,19 +5,70 @@ import {
   FormLabel,
   Icon,
   Input,
-  Flex
+  Flex,
+  useToast
 } from '@chakra-ui/react';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { DynamicObject } from '../../models/DynamicObject.model';
 import ButtonCustom from '../Button/ButtonCustom';
 import FormInput from '../Form/FormInput';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { signinInput, signupInput } from '../../models/Authentication.model';
+import { createRef, useState } from 'react';
+import { userAPI } from '../../api/repositoryFactory';
 
 interface ProfileProps {
   userData?: DynamicObject;
 }
 
 const Profile = (props: ProfileProps) => {
-  console.log('Profile', props.userData);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm<signupInput | signinInput>();
+  const userName = createRef<HTMLInputElement>();
+  const address = createRef<HTMLInputElement>();
+  const phone = createRef<HTMLInputElement>();
+  const toast = useToast();
+  console.log(props.userData);
+  const updateUserProfileHandler = async (data: signupInput | signinInput) => {
+    try {
+      const submitData = data as Partial<signupInput>;
+      console.log('Submit data', submitData.nameUser, props.userData?.nameUser);
+      if (!submitData.nameUser?.length) {
+        delete submitData.nameUser;
+      }
+      if (submitData.nameUser === props.userData?.nameUser) {
+        delete submitData.nameUser;
+      }
+      if (!submitData.phone?.length) {
+        delete submitData.phone;
+      }
+      if (!submitData.address?.length) {
+        delete submitData.address;
+      }
+      console.log(submitData);
+      const res = await userAPI.updateUserProfile(submitData);
+      if (res.status == 200) {
+        toast({
+          status: 'success',
+          title: 'Cập nhật thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      }
+    } catch (err: any) {
+      toast({
+        status: 'error',
+        title: 'Cập nhật thất bại',
+        position: 'bottom-right',
+        duration: 1500
+      });
+    }
+  };
   return (
     <Flex
       direction={'column'}
@@ -62,27 +113,34 @@ const Profile = (props: ProfileProps) => {
         textLabel={'Tên người dùng'}
         isEditable={true}
         defaultValue={props.userData?.nameUser}
+        register={register}
+        ref={userName}
+        errorMessage={'nameUser' in errors ? errors.nameUser?.message : ''}
+        nameRegister={'nameUser'}
       />
       <FormInput
         textLabel={'Địa chỉ'}
-        placeholder={'123 XYZ Street'}
         isEditable={true}
         defaultValue={props.userData?.address}
+        ref={address}
+        register={register}
+        nameRegister={'address'}
       />
       <FormInput
         textLabel={'Số điện thoại'}
-        placeholder={'09xxxxx'}
         isEditable={true}
         defaultValue={props.userData?.phone}
+        ref={phone}
+        register={register}
+        nameRegister={'phone'}
       />
 
       <ButtonCustom
         textDisplay={'Lưu thông tin'}
-        onClick={() => {
-          console.log();
-        }}
+        onClick={handleSubmit(updateUserProfileHandler)}
         width={'100%'}
         mt={'.5rem'}
+        isLoading={isSubmitting}
       />
     </Flex>
   );
