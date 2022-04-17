@@ -12,7 +12,7 @@ import {
 import { signupSchema } from './../validation/index';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { authAPI } from '../../../api/repositoryFactory';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { storeToken } from '../utils/authStorage';
 
@@ -26,6 +26,7 @@ const FormSignUp = () => {
     resolver: yupResolver(signupSchema)
   });
   const [signupErr, setSignupErr] = useState<string>('');
+  const [roleValue, setRoleValue] = useState<string>();
   const signupHandler: SubmitHandler<signupInput | signinInput> = async (
     data: signupInput | signinInput
   ): Promise<void> => {
@@ -66,7 +67,9 @@ const FormSignUp = () => {
             errorMessage={'email' in errors ? errors.email?.message : ''}
           />
           <FormInput
-            textLabel={'Tài khoản'}
+            textLabel={
+              roleValue == 'Seller' ? 'Tên cửa hàng' : 'Tên người dùng'
+            }
             placeholder={'abc123'}
             register={register}
             nameRegister={'nameUser'}
@@ -105,7 +108,16 @@ const FormSignUp = () => {
             'passwordConfirm' in errors ? errors.passwordConfirm?.message : ''
           }
         />
-        <FormSelect register={register} nameRegister={'nameGroup'} />
+        <FormSelect
+          register={register}
+          nameRegister={'nameGroup'}
+          value={roleValue}
+          onChange={(e: React.SyntheticEvent<HTMLSelectElement>) => {
+            if ('value' in e.target) {
+              setRoleValue(e.currentTarget.value);
+            }
+          }}
+        />
         <FormErrorMessage mb={'1rem'}>
           <Text textAlign={'center'} width={'100%'}>
             {signupErr}

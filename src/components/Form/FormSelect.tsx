@@ -1,16 +1,17 @@
-import { FormControl, FormLabel, Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Select, SelectProps } from '@chakra-ui/react';
 import React from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { signinInput, signupInput } from '../../models/Authentication.model';
 const nameGroupList = ['Customer', 'Seller', 'Shipper'];
 
-interface SelectProps {
+interface FormSelectProps extends SelectProps {
   register?: UseFormRegister<signupInput | signinInput>;
   nameRegister?: 'nameGroup';
 }
 
-const FormSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
+const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
   (props, ref) => {
+    const { ...rest } = props;
     return (
       <FormControl my={'1rem'}>
         <FormLabel>Type Account</FormLabel>
@@ -19,6 +20,7 @@ const FormSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
           {...(props.register && props.nameRegister
             ? props.register(props.nameRegister)
             : null)}
+          {...rest}
         >
           {nameGroupList.map((nameGroup: string) => (
             <option value={nameGroup} key={nameGroup}>

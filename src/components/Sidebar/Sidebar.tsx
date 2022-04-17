@@ -31,7 +31,7 @@ const Sidebar = (props: SidebarProps) => {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <MobileSidebar onOpen={onOpen} />
+      <MobileSidebar onOpen={onOpen} userData={props.userData} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {props.children}
       </Box>

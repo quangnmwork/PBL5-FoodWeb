@@ -36,6 +36,11 @@ const customThemes = extendTheme({
     Input: {
       defaultProps: {
         focusBorderColor: 'main.100'
+      },
+      variants: {
+        flushed: {
+          backGroundColor: 'main.100'
+        }
       }
     }
   }
