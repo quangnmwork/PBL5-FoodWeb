@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using FoodWeb.API.Database;
@@ -9,6 +10,7 @@ using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.Database.Repositories;
 using FoodWeb.API.DTOs;
 using FoodWeb.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodWeb.API.Controllers
@@ -87,6 +89,35 @@ namespace FoodWeb.API.Controllers
             return Ok(new AccountResponse(){
                 Email = loginDTO.Email,
                 NameUser = user.NameUser,
+                NameGroup = nameGroup,
+                Token = _tokenService.CreateToken(user)
+            });
+        }
+
+        [HttpPatch("changePassword")]
+        [Authorize]
+        public ActionResult<AccountResponse> ChangePassword(ChangePasswordDTO changePassword)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var account = _accountRepository.GetAccountByUserId(Id);
+            using var hmac = new HMACSHA512(account.PasswordSalt);
+            var ComputeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(changePassword.OldPassword));
+
+            for(int i = 0; i < ComputeHash.Length; i++){
+                if(ComputeHash[i] != account.PasswordHash[i])      
+                    return BadRequest("Password invalid");
+            }
+
+            var profile = _userRepository.GetProfileUserById(Id);
+            var nameGroup = _groupRepository.GetNameGroupByNameUser(profile.NameUser);
+            var user = _userRepository.GetUserById(Id);
+
+            _accountRepository.ChangePassword(Id, changePassword.NewPassword);
+
+            return Ok(new AccountResponse{
+                Email = account.Email,
+                NameUser = profile.NameUser,
                 NameGroup = nameGroup,
                 Token = _tokenService.CreateToken(user)
             });

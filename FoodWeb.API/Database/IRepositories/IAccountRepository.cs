@@ -14,5 +14,7 @@ namespace FoodWeb.API.Database.IRepositories
 
         public Account GetAccountByUserId(int Id);
 
+        public void ChangePassword(int IdUser, string NewPassword);
+
     }
 }

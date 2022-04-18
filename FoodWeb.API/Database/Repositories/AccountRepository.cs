@@ -44,5 +44,17 @@ namespace FoodWeb.API.Database.Repositories
         {
             return _context.Accounts.FirstOrDefault(s => s.UserId == Id);
         }
+
+        public void ChangePassword(int IdUser, string NewPassword)
+        {
+            using var hmac = new HMACSHA512();
+            var account = GetAccountByUserId(IdUser);
+
+            account.Password = NewPassword;
+            account.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(NewPassword));
+            account.PasswordSalt = hmac.Key;
+
+            _context.SaveChanges();
+        }
     }
 }
