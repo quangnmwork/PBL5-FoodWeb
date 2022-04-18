@@ -1,5 +1,9 @@
 import axiosClient from '../repository';
-import { signinInput, signupInput } from './../../models/Authentication.model';
+import {
+  changePasswordInput,
+  signinInput,
+  signupInput
+} from './../../models/Authentication.model';
 const path = 'Accounts';
 
 export default {
@@ -8,5 +12,8 @@ export default {
   },
   signup(signupData: signupInput) {
     return axiosClient.post(`${path}/register`, signupData);
+  },
+  changePassword(passwordData: changePasswordInput) {
+    return axiosClient.patch(`${path}/changePassword`, passwordData);
   }
 };

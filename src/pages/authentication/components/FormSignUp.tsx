@@ -20,8 +20,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { authAPI } from '../../../api/repositoryFactory';
 import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { storeToken } from '../utils/authStorage';
 import { useNavigate } from 'react-router-dom';
+import clientStorage from '../../../utils/clientStorage';
 
 const FormSignUp = () => {
   const {
@@ -42,7 +42,7 @@ const FormSignUp = () => {
     try {
       const submitData = data as signupInput;
       const res = await authAPI.signup(submitData);
-      storeToken(res.data.token);
+      clientStorage.getClientStorage().setToken(res.data.token);
       toast({
         status: 'success',
         title: 'Đăng kí tài khoản thành công',
