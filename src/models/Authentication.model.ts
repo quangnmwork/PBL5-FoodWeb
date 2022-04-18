@@ -9,6 +9,10 @@ export interface signupInput extends signinInput {
   address: string;
   nameGroup: 'Customer' | 'Seller' | 'Shipper';
 }
+export interface changePasswordInput {
+  oldPassword: string;
+  newPassword: string;
+}
 
 export type signinAuthType = 'email' | 'password';
 export type signupAuthType =
