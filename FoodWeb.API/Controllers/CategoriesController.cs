@@ -8,7 +8,7 @@ using FoodWeb.API.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Namespace
+namespace FoodWeb.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

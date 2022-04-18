@@ -31,20 +31,6 @@ namespace FoodWeb.API.Controllers
             this._authorizeService = authorizeService;
         }
 
-        [HttpGet("getAllUsers")]
-        public ActionResult<IEnumerable<User>> GetListUsers()
-        {
-            return Ok(_userRepository.GetAllUsers());
-        }
-
-        [HttpGet("{Id}")]
-        public ActionResult<User> GetUserById(int Id)
-        {
-            var user = _userRepository.GetUserById(Id);
-            if (user == null) return NotFound();
-            return Ok(user);
-        }
-
         [HttpGet("GetProfileUser")]
         public ActionResult<ProfileDTO> GetProfileUser()
         {
@@ -70,14 +56,14 @@ namespace FoodWeb.API.Controllers
 
         [HttpGet("getAllSellers")]
         [AllowAnonymous]
-        public ActionResult<SellerDTO> GetAllSellers()
+        public ActionResult<IEnumerable<SellerDTO>> GetAllSellers()
         {
             return Ok(_userRepository.GetAllSellers());
         }
 
         [HttpGet("{Id}/foods")]
         [AllowAnonymous]
-        public ActionResult<SellerDTO> GetFoodByIdSeller(int Id)
+        public ActionResult<IEnumerable<FoodDTO>> GetFoodByIdSeller(int Id)
         {
             if (_userRepository.GetUserById(Id) == null || !_authorizeService.IsSeller(Id))
                 return NotFound();

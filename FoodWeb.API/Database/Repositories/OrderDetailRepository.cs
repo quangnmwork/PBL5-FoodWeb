@@ -46,5 +46,14 @@ namespace FoodWeb.API.Database.Repositories
                                         .OrderByDescending(u => u.TimeOrderDetail)
                                         .ToPagedList(numberPage, PageServiceExtensions.OrderDetailPageSize);
         }
+
+        
+        public bool CheckExistListOrderWithIdUser(int IdUser, int IdOrderDetail)
+        {
+            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.UserId == IdUser && u.IdOrderDetail == IdOrderDetail);
+            if(orderDetail == null)
+                return false;
+            return true;
+        }
     }
 }

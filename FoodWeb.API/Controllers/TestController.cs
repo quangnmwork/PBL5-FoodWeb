@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace Namespace
+namespace FoodWeb.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

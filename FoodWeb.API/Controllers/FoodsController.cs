@@ -6,7 +6,7 @@ using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Namespace
+namespace FoodWeb.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

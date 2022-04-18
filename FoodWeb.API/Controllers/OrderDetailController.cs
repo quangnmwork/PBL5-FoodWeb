@@ -11,7 +11,7 @@ using FoodWeb.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Namespace
+namespace FoodWeb.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -72,13 +72,26 @@ namespace Namespace
         }
 
         [HttpGet("getAllOrder/page-{numberPage}")]
-        public ActionResult<OrderDetail> GetListOrder(int numberPage)
+        public ActionResult<IEnumerable<OrderDTO>> GetListOrder(int numberPage)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
                 return BadRequest("Action only customer");
                 
             return Ok(_orderDetailRepository.GetAllOrderDetailByIdUser(Int32.Parse(Id), numberPage));
+        }
+
+        [HttpGet("getListFoodOrder/{IdOrderDetail}")]
+        public ActionResult<IEnumerable<InfoFoodOrderDTO>> GetListFoodOrder(int IdOrderDetail)
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
+                return BadRequest("Action only customer");
+            
+            if(!_orderDetailRepository.CheckExistListOrderWithIdUser(Int32.Parse(Id), IdOrderDetail))
+                return NotFound("No exist list order");
+
+            return Ok(_listOrderRepository.GetListFoodOrder(IdOrderDetail));
         }
     }
 }

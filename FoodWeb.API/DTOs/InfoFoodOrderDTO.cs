@@ -4,6 +4,8 @@ namespace FoodWeb.API.DTOs
     {
         public int IdFood { get; set; }
 
+        public string NameFood { get; set; }
+        
         public int NumberFood { get; set;}
     }
 }

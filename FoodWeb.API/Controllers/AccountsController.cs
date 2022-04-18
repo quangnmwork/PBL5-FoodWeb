@@ -36,7 +36,7 @@ namespace FoodWeb.API.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult<string> Register(RegisterDTO registerDTO)
+        public ActionResult<AccountResponse> Register(RegisterDTO registerDTO)
         {
             if(_accountRepository.GetAccountByEmail(registerDTO.Email) != null){
                 return BadRequest("Email is existed!");
@@ -66,7 +66,7 @@ namespace FoodWeb.API.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<string> Login(LoginDTO loginDTO)
+        public ActionResult<AccountResponse> Login(LoginDTO loginDTO)
         {
             var account = _accountRepository.GetAccountByEmail(loginDTO.Email);
             if(account == null) return Unauthorized("Invalid username or password");
