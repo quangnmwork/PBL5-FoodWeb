@@ -54,13 +54,13 @@ namespace FoodWeb.API.Database.Repositories
             return _context.Users.Find(Id);
         }
 
-        public void UpdateProfile(int Id, CustomerDTO customerDto)
+        public void  UpdateProfile(int Id, UserDTO user)
         {
             var updateUser = GetUserById(Id);
             // Console.WriteLine(updateUser.ToString());
             // Console.WriteLine(customerDto.ToString());
             
-            _mapper.Map(customerDto, updateUser);
+            _mapper.Map(user, updateUser);
             _context.SaveChanges();
         }
 

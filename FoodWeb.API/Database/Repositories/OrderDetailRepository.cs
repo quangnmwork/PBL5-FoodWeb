@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
+using FoodWeb.API.DTOs;
+using FoodWeb.API.Extensions;
+using PagedList;
 
 namespace FoodWeb.API.Database.Repositories
 {
@@ -33,6 +37,14 @@ namespace FoodWeb.API.Database.Repositories
             _context.SaveChanges();
 
             return orderDetail;
+        }
+
+        public IEnumerable<OrderDTO> GetAllOrderDetailByIdUser(int IdUser, int numberPage)
+        {
+            return _context.OrderDetails.Where(u => u.UserId == IdUser)
+                                        .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
+                                        .OrderByDescending(u => u.TimeOrderDetail)
+                                        .ToPagedList(numberPage, PageServiceExtensions.OrderDetailPageSize);
         }
     }
 }

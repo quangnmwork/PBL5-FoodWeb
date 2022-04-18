@@ -12,9 +12,9 @@ namespace FoodWeb.API.Profiles
     {
         public UserMapperProfile()
         {
-            CreateMap<User, CustomerDTO>();
+            CreateMap<User, UserDTO>();
 
-            CreateMap<CustomerDTO, User>()
+            CreateMap<UserDTO, User>()
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Category, CategoryDTO>();
@@ -25,7 +25,8 @@ namespace FoodWeb.API.Profiles
 
             CreateMap<User, ProfileDTO>();
 
-            CreateMap<OrderDetail, OrderDTO>();
+            CreateMap<OrderDetail, OrderDTO>().ForMember(dest => dest.IdRoom, opt => opt.MapFrom(src => src.Room.IdRoom))
+                                              .ForMember(dest => dest.IdPayment, opt => opt.MapFrom(src => src.Payment.IdPayment));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace FoodWeb.API.Controllers
         }
 
         [HttpGet("GetProfileUser")]
-        public ActionResult<User> GetProfileUser()
+        public ActionResult<ProfileDTO> GetProfileUser()
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (Id == null) return NotFound();
@@ -57,14 +57,14 @@ namespace FoodWeb.API.Controllers
         }
 
         [HttpPatch("EditProfile")]
-        public ActionResult<User> EditUser(CustomerDTO customerDto)
+        public ActionResult<ProfileDTO> EditUser(UserDTO userDTO)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (Id == null) return NotFound();
-            if(customerDto.NameUser != null && _userRepository.CheckExistUserName(customerDto.NameUser))
+            if(userDTO.NameUser != null && _userRepository.CheckExistUserName(userDTO.NameUser))
                 return BadRequest("NameUser is existed!");
 
-            _userRepository.UpdateProfile(Int32.Parse(Id), customerDto);
+            _userRepository.UpdateProfile(Int32.Parse(Id), userDTO);
             return Ok(_userRepository.GetProfileUserById(Int32.Parse(Id)));
         }
 
