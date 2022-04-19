@@ -106,7 +106,11 @@ namespace PBL5.FoodWeb.API.Database.SeedData
 
         public async Task<bool> SeedUsersDetail(String path){
             var jsonData = File.ReadAllText(path, Encoding.UTF8);
-            var data = JsonSerializer.Deserialize<List<User>>(jsonData);
+            var options = new JsonSerializerOptions()
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
+            };
+            var data = JsonSerializer.Deserialize<List<User>>(jsonData, options);
             if (data == null) return false;
             foreach (var item in data)
             {
