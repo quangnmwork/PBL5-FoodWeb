@@ -4,14 +4,16 @@ using FoodWeb.API.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodWeb.API.Database.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220419153904_Add_IdShipper_OrderDetail")]
+    partial class Add_IdShipper_OrderDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,7 +205,7 @@ namespace FoodWeb.API.Database.Migrations
                         .IsRequired()
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ShipperId")
+                    b.Property<int>("ShipperId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TimeOrderDetail")
@@ -461,7 +463,8 @@ namespace FoodWeb.API.Database.Migrations
                     b.HasOne("FoodWeb.API.Database.Entities.User", "Shipper")
                         .WithMany("OrderDetailShippers")
                         .HasForeignKey("ShipperId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 

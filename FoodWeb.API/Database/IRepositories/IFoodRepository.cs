@@ -9,7 +9,9 @@ namespace FoodWeb.API.Database.IRepositories
 {
     public interface IFoodRepository
     {
-        public IEnumerable<FoodDTO> GetAllFoodsByIdSeller(int Id);
+        public int GetToTalAllFoodsByIdSeller(int Id);
+
+        public IEnumerable<FoodDTO> GetAllFoodsByIdSellerPaging(int Id, int numberPage);
 
         //public IEnumerable<FoodDTO> GetAllFoods();
 

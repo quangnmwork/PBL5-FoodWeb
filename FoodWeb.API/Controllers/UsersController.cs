@@ -56,7 +56,7 @@ namespace FoodWeb.API.Controllers
 
         [HttpGet("getTotalPageAllSellers")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<SellerDTO>> GetToTalPageAllSellers()
+        public ActionResult<int> GetToTalPageAllSellers()
         {
             return Ok(_userRepository.GetTotalPageSellers());
         }
@@ -71,14 +71,24 @@ namespace FoodWeb.API.Controllers
             return Ok(_userRepository.GetAllSellersPaging(numberPage));
         }
 
-        [HttpGet("{Id}/foods")]
+        [HttpGet("{Id}/foods/getTotalPageFoodByIdSeller")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<FoodDTO>> GetFoodByIdSeller(int Id)
+        public ActionResult<int> GetTotalPageFoodByIdSeller(int Id, int numberPage)
+        {
+            return Ok(_foodRepository.GetToTalAllFoodsByIdSeller(Id));
+        }
+
+        [HttpGet("{Id}/foods/page-{numberPage}")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<FoodDTO>> GetFoodByIdSeller(int Id, int numberPage)
         {
             if (_userRepository.GetUserById(Id) == null || !_authorizeService.IsSeller(Id))
                 return NotFound();
 
-            return Ok(_foodRepository.GetAllFoodsByIdSeller(Id));
+            if(numberPage > _foodRepository.GetToTalAllFoodsByIdSeller(Id))
+                return NotFound("Page is not exist");
+
+            return Ok(_foodRepository.GetAllFoodsByIdSellerPaging(Id, numberPage));
         }
     }
 }

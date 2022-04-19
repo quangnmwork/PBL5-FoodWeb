@@ -17,8 +17,11 @@ namespace FoodWeb.API.Database.Entities
 
         public string CodeOrderDetail { get; set; }
         
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public int CustomerId { get; set; }
+        public virtual User Customer { get; set; }
+
+        public int? ShipperId { get; set; }
+        public virtual User Shipper { get; set; }
     
         public virtual Payment Payment { get; set; }
 

@@ -22,7 +22,9 @@ namespace FoodWeb.API.Database.Entities
         
         public List<Food> Foods { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderDetail> OrderDetailCustomers { get; set; }
+
+        public List<OrderDetail> OrderDetailShippers { get; set; }
 
         public override string ToString(){
             return IdUser + " " + NameUser + "\n";

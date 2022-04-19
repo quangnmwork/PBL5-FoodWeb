@@ -27,6 +27,11 @@ namespace FoodWeb.API.Database.Repositories
         //     return _context.Foods.ProjectTo<FoodDTO>(_mapper.ConfigurationProvider);
         // }
 
+        public int GetTotalPageAllFoods()
+        {
+            return (int)Math.Ceiling(1.0*_context.Foods.Count()/PageServiceExtensions.FoodPageSize);
+        }
+
         public IEnumerable<FoodDTO> GetAllFoodsPaging(int numberPage)
         {
             return _context.Foods.ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
@@ -34,9 +39,18 @@ namespace FoodWeb.API.Database.Repositories
                                  .ToPagedList(numberPage, PageServiceExtensions.FoodPageSize);
         }
 
-        public IEnumerable<FoodDTO> GetAllFoodsByIdSeller(int Id)
+        public int GetToTalAllFoodsByIdSeller(int Id)
         {
-            return _context.Foods.Where(s => s.UserId == Id).ProjectTo<FoodDTO>(_mapper.ConfigurationProvider);
+            var number = _context.Foods.Where(s => s.UserId == Id).Count();
+            return (int)Math.Ceiling(1.0*number/PageServiceExtensions.FoodOfSellerPageSize);
+        }
+
+        public IEnumerable<FoodDTO> GetAllFoodsByIdSellerPaging(int Id, int numberPage)
+        {
+            return _context.Foods.Where(s => s.UserId == Id)
+                                 .ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
+                                 .OrderBy(u => u.IdFood)
+                                 .ToPagedList(numberPage, PageServiceExtensions.FoodOfSellerPageSize);
         }
 
         // public IEnumerable<FoodDTO> GetAllFoodsBySearch(SearchDTO searchDTO)
@@ -75,11 +89,6 @@ namespace FoodWeb.API.Database.Repositories
             return money;
         }
 
-        public int GetTotalPageAllFoods()
-        {
-            return (int)Math.Ceiling(1.0*_context.Foods.Count()/PageServiceExtensions.FoodPageSize);
-        }
-
         public int GetTotalPageAllFoodsBySearch(SearchDTO searchDTO)
         {
             var numberFood = _context.Foods.ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
@@ -88,5 +97,7 @@ namespace FoodWeb.API.Database.Repositories
 
             return (int)Math.Ceiling(1.0*numberFood/PageServiceExtensions.FoodPageSize);
         }
+
+        
     }
 }

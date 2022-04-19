@@ -18,7 +18,7 @@ namespace FoodWeb.API.Database.Repositories
         public Room CreateRoom(int OrderDetailId)
         {
             var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.IdOrderDetail == OrderDetailId);
-            var nameUser = _context.Users.FirstOrDefault(u => u.IdUser == orderDetail.UserId).NameUser;
+            var nameUser = _context.Users.FirstOrDefault(u => u.IdUser == orderDetail.CustomerId).NameUser;
             var room = new Room
             {
                 OrderDetailId = OrderDetailId,

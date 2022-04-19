@@ -22,5 +22,9 @@ namespace FoodWeb.API.DTOs
         public int IdRoom { get; set; }
 
         public int IdPayment { get; set; }
+
+        public int IdCustomer { get; set; }
+
+        public int IdShipper { get; set; }
     }
 }

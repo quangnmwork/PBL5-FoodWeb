@@ -25,12 +25,13 @@ namespace FoodWeb.API.Database.Repositories
         public OrderDetail CreateOrderDetail(int IdUser, string CodeOrderDetail)
         {
             var orderDetail = new OrderDetail{
-                UserId = IdUser,
+                CustomerId = IdUser,
+                ShipperId = null,
                 TimeOrderDetail = DateTime.Now,
                 IsShip = false,
                 TimeShipDone = null,
                 ChoiceShip = false,
-                CodeOrderDetail = CodeOrderDetail
+                CodeOrderDetail = CodeOrderDetail,
             };
 
             _context.OrderDetails.Add(orderDetail);
@@ -41,7 +42,7 @@ namespace FoodWeb.API.Database.Repositories
 
         public IEnumerable<OrderDTO> GetAllOrderDetailByIdUserPaging(int IdUser, int numberPage)
         {
-            return _context.OrderDetails.Where(u => u.UserId == IdUser)
+            return _context.OrderDetails.Where(u => u.CustomerId == IdUser)
                                         .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
                                         .OrderByDescending(u => u.TimeOrderDetail)
                                         .ToPagedList(numberPage, PageServiceExtensions.OrderDetailHistoryPageSize);
@@ -50,7 +51,7 @@ namespace FoodWeb.API.Database.Repositories
         
         public bool CheckExistListOrderWithIdUser(int IdUser, int IdOrderDetail)
         {
-            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.UserId == IdUser && u.IdOrderDetail == IdOrderDetail);
+            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.CustomerId == IdUser && u.IdOrderDetail == IdOrderDetail);
             if(orderDetail == null)
                 return false;
             return true;
@@ -58,7 +59,7 @@ namespace FoodWeb.API.Database.Repositories
 
         public int GetTotalPageOrderDetailByIdUserPaging(int IdUser)
         {
-            var number = _context.OrderDetails.Where(u => u.UserId == IdUser).Count();
+            var number = _context.OrderDetails.Where(u => u.CustomerId == IdUser).Count();
             return (int)Math.Ceiling(1.0*number/PageServiceExtensions.OrderDetailHistoryPageSize);
         }
 
