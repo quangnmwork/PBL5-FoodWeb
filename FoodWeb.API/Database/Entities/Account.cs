@@ -18,5 +18,9 @@ namespace FoodWeb.API.Database.Entities
 
         public int UserId { get; set; }
         public User User { get; set; }
+        public override string ToString()
+        {
+            return Email + " " + Password + " " + PasswordHash+ " " + PasswordSalt;
+        }
     }
 }

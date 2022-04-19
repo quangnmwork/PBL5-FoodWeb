@@ -35,7 +35,7 @@ namespace FoodWeb.API.Database
             // Authorization
             builder.Entity<Account>(b => {
                 b.HasKey(s => s.IdAccount);
-                b.Property(s => s.Email).HasMaxLength(50).IsRequired(true);
+                b.Property(s => s.Email).HasMaxLength(100).IsRequired(true);
                 b.Property(s => s.Password).HasMaxLength(50).IsRequired(true);
                 b.Property(s => s.PasswordHash).IsRequired(true);
                 b.Property(s => s.PasswordSalt).IsRequired(true);
