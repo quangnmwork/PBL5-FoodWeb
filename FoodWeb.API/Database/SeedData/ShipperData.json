@@ -2,28 +2,24 @@
         "NameUser": "Shipper1",
         "Phone": "0123456789",
         "Address": "DHBK",
-        "Avatar": "",
-        "Money": 0
+        "Avatar": ""
     },
     {
         "NameUser": "Shipper2",
         "Phone": "0123456789",
         "Address": "DHBK",
-        "Avatar": "",
-        "Money": 0
+        "Avatar": ""
     },
     {
         "NameUser": "Shipper3",
         "Phone": "0123456789",
         "Address": "DHBK",
-        "Avatar": "",
-        "Money": 0
+        "Avatar": ""
     },
     {
         "NameUser": "Shipper4",
         "Phone": "0123456789",
         "Address": "DHBK",
-        "Avatar": "",
-        "Money": 0
+        "Avatar": ""
     }
 ]
