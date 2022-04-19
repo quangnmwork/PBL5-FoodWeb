@@ -54,11 +54,21 @@ namespace FoodWeb.API.Controllers
             return Ok(_userRepository.GetProfileUserById(Int32.Parse(Id)));
         }
 
-        [HttpGet("getAllSellers")]
+        [HttpGet("getTotalPageAllSellers")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<SellerDTO>> GetAllSellers()
+        public ActionResult<IEnumerable<SellerDTO>> GetToTalPageAllSellers()
         {
-            return Ok(_userRepository.GetAllSellers());
+            return Ok(_userRepository.GetTotalPageSellers());
+        }
+
+        [HttpGet("getAllSellers/page-{numberPage}")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<SellerDTO>> GetAllSellersPaging(int numberPage)
+        {
+            if(numberPage > _userRepository.GetTotalPageSellers())
+                return NotFound("Page is not exist");
+
+            return Ok(_userRepository.GetAllSellersPaging(numberPage));
         }
 
         [HttpGet("{Id}/foods")]

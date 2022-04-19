@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
+using FoodWeb.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using PagedList;
 
@@ -78,7 +79,18 @@ namespace FoodWeb.API.Database.Repositories
             return _context.Groups.FirstOrDefault(u => u.IdGroup == groupDetail.GroupId).NameGroup;
         }
 
-        public IEnumerable<SellerDTO> GetAllSellers()
+        public int GetTotalPageSellers()
+        {
+            List<SellerDTO> data = new List<SellerDTO>();
+            foreach (var user in _context.Users)
+            {
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                    data.Add(_mapper.Map<SellerDTO>(user));
+            }
+            return (int)Math.Ceiling(1.0*data.Count()/PageServiceExtensions.SellerPageSize);
+        }
+
+        public IEnumerable<SellerDTO> GetAllSellersPaging(int numberPage)
         {
             // return _context.Users.Where(u => (GetNameGroupByNameUser(u.NameUser) == "Seller"))
             //                      .ProjectTo<SellerDTO>(_mapper.ConfigurationProvider);
@@ -89,7 +101,8 @@ namespace FoodWeb.API.Database.Repositories
                 if (GetNameGroupByNameUser(user.NameUser) == "Seller")
                     data.Add(_mapper.Map<SellerDTO>(user));
             }
-            return data;
+            return data.OrderBy(u => u.IdUser).ToPagedList(numberPage, PageServiceExtensions.SellerPageSize);
+
         }
 
         public ProfileDTO GetProfileUserById(int Id)
