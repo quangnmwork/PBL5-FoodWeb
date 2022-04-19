@@ -7,11 +7,12 @@ namespace FoodWeb.API.Extensions
 {
     public static class PageServiceExtensions
     {
-        public const int FoodPageSize = 10;
+        public const int FoodPageSize = 10;     // food của trang home
         
-        public const int SellerPageSize = 10;
+        public const int SellerPageSize = 10;   // seller của trang home
 
-        public const int OrderDetailPageSize = 10;
+        public const int OrderDetailHistoryPageSize = 10; //List order detail của 1 customer trong phần lịch sử
 
+        public const int OrderDetailChoiceShipPageSize = 10; // list order detail để shipper chọn ship
     }
 }

@@ -13,6 +13,8 @@ namespace FoodWeb.API.Database.IRepositories
 
         //public IEnumerable<FoodDTO> GetAllFoods();
 
+        public int GetTotalPageAllFoods();
+
         public IEnumerable<FoodDTO> GetAllFoodsPaging(int numberPage);
 
         public FoodDTO GetFoodById(int Id);
@@ -20,6 +22,8 @@ namespace FoodWeb.API.Database.IRepositories
         //public IEnumerable<FoodDTO> GetAllFoodsBySearch(SearchDTO searchDTO);
 
         public double PriceFoods(List<InfoFoodOrderDTO> ListInfoFood);
+
+        public int GetTotalPageAllFoodsBySearch(SearchDTO searchDTO);
 
         public IEnumerable<FoodDTO> GetAllFoodsBySearchPaging(int numberPage, SearchDTO searchDTO);
     }

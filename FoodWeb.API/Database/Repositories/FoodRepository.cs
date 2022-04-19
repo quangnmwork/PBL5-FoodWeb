@@ -74,5 +74,19 @@ namespace FoodWeb.API.Database.Repositories
 
             return money;
         }
+
+        public int GetTotalPageAllFoods()
+        {
+            return (int)Math.Ceiling(1.0*_context.Foods.Count()/PageServiceExtensions.FoodPageSize);
+        }
+
+        public int GetTotalPageAllFoodsBySearch(SearchDTO searchDTO)
+        {
+            var numberFood = _context.Foods.ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
+                                           .Where(u => u.NameCategory == searchDTO.NameCategory && u.NameFood.Contains(searchDTO.KeyName))
+                                           .Count();
+
+            return (int)Math.Ceiling(1.0*numberFood/PageServiceExtensions.FoodPageSize);
+        }
     }
 }

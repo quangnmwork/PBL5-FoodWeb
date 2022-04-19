@@ -23,7 +23,16 @@ namespace FoodWeb.API.Controllers
         [HttpGet("getAllFoods/page-{numberPage}")]
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoods(int numberPage)
         {
+            if(numberPage > _foodRepository.GetTotalPageAllFoods())
+                return NotFound("Page is not exist");
+
             return Ok(_foodRepository.GetAllFoodsPaging(numberPage));
+        }
+
+        [HttpGet("getTotalPageAllFoods")]
+        public ActionResult<int> GetTotalPageAllFoods()
+        {
+            return Ok(_foodRepository.GetTotalPageAllFoods());
         }
 
         [HttpGet("{Id}")]
@@ -37,9 +46,18 @@ namespace FoodWeb.API.Controllers
         [HttpGet("search/page-{numberPage}")]
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(int numberPage, SearchDTO search)
         {
+            if(numberPage > _foodRepository.GetTotalPageAllFoodsBySearch(search))
+                return NotFound("Page is not exist");
+
             var data = _foodRepository.GetAllFoodsBySearchPaging(numberPage, search);
             if (data == null) return NotFound();
             return Ok(data);
+        }
+
+        [HttpGet("getTotalPageAllFoodsBySearch")]
+        public ActionResult<int> GetTotalPageAllFoodsBySearch(SearchDTO search)
+        {
+            return Ok(_foodRepository.GetTotalPageAllFoodsBySearch(search));
         }
     }
 }

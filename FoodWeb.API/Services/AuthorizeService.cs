@@ -36,6 +36,12 @@ namespace FoodWeb.API.Services
             return group == "customer";
         }
 
+        public bool IsShipper(int Id)
+        {
+            var group = GetGroupById(Id);
+            return group == "shipper";
+        }
+
         public bool IsSeller(int Id)
         {
             var group = GetGroupById(Id);

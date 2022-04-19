@@ -37,6 +37,7 @@ namespace FoodWeb.API.Extensions
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IListOrderRepository, ListOrderRepository>();
+            services.AddScoped<IRoomDetailRepository, RoomDetailRepository>();
 
             return services;
         }

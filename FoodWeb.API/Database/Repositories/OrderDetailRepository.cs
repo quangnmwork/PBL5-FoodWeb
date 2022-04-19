@@ -39,12 +39,12 @@ namespace FoodWeb.API.Database.Repositories
             return orderDetail;
         }
 
-        public IEnumerable<OrderDTO> GetAllOrderDetailByIdUser(int IdUser, int numberPage)
+        public IEnumerable<OrderDTO> GetAllOrderDetailByIdUserPaging(int IdUser, int numberPage)
         {
             return _context.OrderDetails.Where(u => u.UserId == IdUser)
                                         .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
                                         .OrderByDescending(u => u.TimeOrderDetail)
-                                        .ToPagedList(numberPage, PageServiceExtensions.OrderDetailPageSize);
+                                        .ToPagedList(numberPage, PageServiceExtensions.OrderDetailHistoryPageSize);
         }
 
         
@@ -54,6 +54,26 @@ namespace FoodWeb.API.Database.Repositories
             if(orderDetail == null)
                 return false;
             return true;
+        }
+
+        public int GetTotalPageOrderDetailByIdUserPaging(int IdUser)
+        {
+            var number = _context.OrderDetails.Where(u => u.UserId == IdUser).Count();
+            return (int)Math.Ceiling(1.0*number/PageServiceExtensions.OrderDetailHistoryPageSize);
+        }
+
+        public int GetTotalPageOrderDetailByChoiceShip()
+        {
+            var number = _context.OrderDetails.Where(u => u.ChoiceShip == false).Count();
+            return (int)Math.Ceiling(1.0*number/ PageServiceExtensions.OrderDetailChoiceShipPageSize);
+        }
+
+        public IEnumerable<OrderDTO> GetAllOrderDetailByChoiceShipPaging(int numberPage)
+        {
+            return _context.OrderDetails.Where(u => u.ChoiceShip == false)
+                                        .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
+                                        .OrderByDescending(u => u.TimeOrderDetail)
+                                        .ToPagedList(numberPage, PageServiceExtensions.OrderDetailChoiceShipPageSize);
         }
     }
 }

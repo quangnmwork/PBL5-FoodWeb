@@ -77,8 +77,21 @@ namespace FoodWeb.API.Controllers
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
                 return BadRequest("Action only customer");
-                
-            return Ok(_orderDetailRepository.GetAllOrderDetailByIdUser(Int32.Parse(Id), numberPage));
+            
+            if(numberPage > _orderDetailRepository.GetTotalPageOrderDetailByIdUserPaging(Int32.Parse(Id)))
+                return NotFound("Page is not exist");
+
+            return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserPaging(Int32.Parse(Id), numberPage));
+        }
+
+        [HttpGet("getTotalPageListOrder")]
+        public ActionResult<int> GetTotalPageListOrder()
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
+                return BadRequest("Action only customer");
+
+            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserPaging(Int32.Parse(Id)));
         }
 
         [HttpGet("getListFoodOrder/{IdOrderDetail}")]
@@ -92,6 +105,26 @@ namespace FoodWeb.API.Controllers
                 return NotFound("No exist list order");
 
             return Ok(_listOrderRepository.GetListFoodOrder(IdOrderDetail));
+        }
+
+        [HttpGet("getTotalPageChoiceShip")]
+        public ActionResult<int> GetTotalPageChoiceShip()
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsShipper(Id))
+                return BadRequest("Action only Shipper");
+
+            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByChoiceShip());
+        }
+
+        [HttpGet("getListOrderDetailChoiceShip/page-{numberPage}")]
+        public ActionResult<IEnumerable<OrderDTO>> GetListOrderDetailChoiceShip(int numberPage)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsShipper(Id))
+                return BadRequest("Action only Shipper");
+
+            return Ok(_orderDetailRepository.GetAllOrderDetailByChoiceShipPaging(numberPage));
         }
     }
 }
