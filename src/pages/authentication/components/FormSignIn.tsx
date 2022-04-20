@@ -30,9 +30,11 @@ const FormSignIn = () => {
     try {
       console.log(data);
       const res = await authAPI.signin(data);
+      console.log(res);
       clientStorage.getClientStorage().setToken(res.data.token);
       navigate('/', { replace: true });
     } catch (err: any) {
+      console.log(err.response.data);
       setSigninErr(err.response.data);
     }
   };

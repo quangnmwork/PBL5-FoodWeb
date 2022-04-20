@@ -1,15 +1,7 @@
-import {
-  Flex,
-  IconButton,
-  Text,
-  Menu,
-  MenuButton,
-  Avatar,
-  MenuList,
-  MenuItem
-} from '@chakra-ui/react';
+import { Flex, IconButton, Text } from '@chakra-ui/react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { DynamicObject } from '../../models/DynamicObject.model';
+import AvatarCustom from '../Avatar/AvatarCustom';
 interface MobileSidebarProps {
   onOpen: () => void;
   userData?: DynamicObject;
@@ -40,18 +32,7 @@ const MobileSidebar = (props: MobileSidebarProps) => {
       >
         User Dashboard
       </Text>
-      <Menu>
-        <MenuButton py={2} transition="all 0.3s">
-          <Avatar
-            src={props.userData?.avatar || '/assets/user-avatar.jpg'}
-            size={'md'}
-          />
-        </MenuButton>
-        <MenuList>
-          <MenuItem>Thông tin cá nhân</MenuItem>
-          <MenuItem>Đăng xuất</MenuItem>
-        </MenuList>
-      </Menu>
+      <AvatarCustom userData={props.userData} />
     </Flex>
   );
 };
