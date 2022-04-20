@@ -20,11 +20,15 @@ const Navigation = () => {
     >
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
       <SearchBar />
-      <Flex alignItems={'center'}>
-        <Cart />
-        <AvatarCustom py={'2'} transition={'all .3s'} userData={data} />
-      </Flex>
-      {!data ? <ButtonCustom textDisplay={'Đăng nhập'} /> : null}
+
+      {!data ? (
+        <ButtonCustom textDisplay={'Đăng nhập'} />
+      ) : (
+        <Flex alignItems={'center'}>
+          <Cart />
+          <AvatarCustom py={'2'} transition={'all .3s'} userData={data} />
+        </Flex>
+      )}
     </Flex>
   );
 };
