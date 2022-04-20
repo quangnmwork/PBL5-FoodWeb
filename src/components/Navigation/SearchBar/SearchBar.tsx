@@ -1,15 +1,11 @@
-import { Box, Flex, Input, Select } from '@chakra-ui/react';
+import { Box, Flex, Input } from '@chakra-ui/react';
 import React from 'react';
+import NestedMenu from './NestedMenu';
 
 const SearchBar = () => {
   return (
     <Flex>
-      <Box>
-        <Select>
-          <option>Đồ ăn</option>
-          <option>Quán ăn</option>
-        </Select>
-      </Box>
+      <NestedMenu />
       <Box>
         <Input type={'text'}></Input>
       </Box>
