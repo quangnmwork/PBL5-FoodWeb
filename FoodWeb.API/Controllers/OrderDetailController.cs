@@ -126,5 +126,20 @@ namespace FoodWeb.API.Controllers
 
             return Ok(_orderDetailRepository.GetAllOrderDetailByChoiceShipPaging(numberPage));
         }
+
+        [HttpPost("choiceShip")]
+        public ActionResult<IEnumerable<OrderDetail>> ChoiceShip(ChoiceShipDTO choiceShipDTO)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsShipper(Id))
+                return BadRequest("Action only Shipper");
+
+            if(!_orderDetailRepository.CheckChoiceShip(Id, choiceShipDTO))
+                return BadRequest("This order has been choiced");
+
+            _orderDetailRepository.ChoiceShip(Id, choiceShipDTO);
+
+            return Ok(_orderDetailRepository.GetOrderDetailById(choiceShipDTO.IdOrderDetail));
+        }
     }
 }

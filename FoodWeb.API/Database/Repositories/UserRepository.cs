@@ -81,25 +81,25 @@ namespace FoodWeb.API.Database.Repositories
 
         public int GetTotalPageSellers()
         {
-            List<SellerDTO> data = new List<SellerDTO>();
+            List<SellerViewDTO> data = new List<SellerViewDTO>();
             foreach (var user in _context.Users)
             {
                 if (GetNameGroupByNameUser(user.NameUser) == "Seller")
-                    data.Add(_mapper.Map<SellerDTO>(user));
+                    data.Add(_mapper.Map<SellerViewDTO>(user));
             }
             return (int)Math.Ceiling(1.0*data.Count()/PageServiceExtensions.SellerPageSize);
         }
 
-        public IEnumerable<SellerDTO> GetAllSellersPaging(int numberPage)
+        public IEnumerable<SellerViewDTO> GetAllSellersPaging(int numberPage)
         {
             // return _context.Users.Where(u => (GetNameGroupByNameUser(u.NameUser) == "Seller"))
-            //                      .ProjectTo<SellerDTO>(_mapper.ConfigurationProvider);
+            //                      .ProjectTo<SellerViewDTO>(_mapper.ConfigurationProvider);
 
-            List<SellerDTO> data = new List<SellerDTO>();
+            List<SellerViewDTO> data = new List<SellerViewDTO>();
             foreach (var user in _context.Users)
             {
                 if (GetNameGroupByNameUser(user.NameUser) == "Seller")
-                    data.Add(_mapper.Map<SellerDTO>(user));
+                    data.Add(_mapper.Map<SellerViewDTO>(user));
             }
             return data.OrderBy(u => u.IdUser).ToPagedList(numberPage, PageServiceExtensions.SellerPageSize);
 
@@ -122,6 +122,33 @@ namespace FoodWeb.API.Database.Repositories
             var data = _context.Users.FirstOrDefault(u => u.NameUser == userName);
             if(data == null)    return false;
             return true;
+        }
+
+        public int GetTotalPageSellersSearch(SearchDTO searchDTO)
+        {
+            List<SellerViewDTO> data = new List<SellerViewDTO>();
+            foreach (var user in _context.Users)
+            {
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                    data.Add(_mapper.Map<SellerViewDTO>(user));
+            }
+
+            var number = data.Where(u => u.NameUser.ToLower().Contains(searchDTO.KeyName.ToLower())).Count();
+            return (int)Math.Ceiling(1.0*number/PageServiceExtensions.SellerPageSize);
+        }
+
+        public IEnumerable<SellerViewDTO> GetAllSellersSearchPaging(int numberPage, SearchDTO searchDTO)
+        {
+            List<SellerViewDTO> data = new List<SellerViewDTO>();
+            foreach (var user in _context.Users)
+            {
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                    data.Add(_mapper.Map<SellerViewDTO>(user));
+            }
+
+            return data.Where(u => u.NameUser.ToLower().Contains(searchDTO.KeyName.ToLower()))
+                       .OrderBy(u => u.IdUser)
+                       .ToPagedList(numberPage, PageServiceExtensions.SellerPageSize);
         }
     }
 }

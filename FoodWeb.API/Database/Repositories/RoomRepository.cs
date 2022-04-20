@@ -24,6 +24,8 @@ namespace FoodWeb.API.Database.Repositories
                 OrderDetailId = OrderDetailId,
                 NameRoom = nameUser + " " + orderDetail.CodeOrderDetail
             };
+            orderDetail.Room = room;
+            //_context.SaveChanges();
 
             _context.Rooms.Add(room);
             _context.SaveChanges();

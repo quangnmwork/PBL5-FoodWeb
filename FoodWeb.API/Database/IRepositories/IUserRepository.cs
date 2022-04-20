@@ -18,12 +18,16 @@ namespace FoodWeb.API.Database.IRepositories
 
         public void  UpdateProfile(int Id, UserDTO user);
 
-        public IEnumerable<SellerDTO> GetAllSellersPaging(int numberPage);
+        public IEnumerable<SellerViewDTO> GetAllSellersPaging(int numberPage);
 
         public int GetTotalPageSellers();
 
         public ProfileDTO GetProfileUserById(int Id);
 
         public bool CheckExistUserName(string userName);
+
+        public int GetTotalPageSellersSearch(SearchDTO searchDTO);
+
+        public IEnumerable<SellerViewDTO> GetAllSellersSearchPaging(int numberPage, SearchDTO searchDTO);
     }
 }

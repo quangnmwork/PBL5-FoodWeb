@@ -9,11 +9,11 @@ namespace FoodWeb.API.Database.Entities
 
         public DateTime TimeOrderDetail { get; set; }
         
-        public bool? IsShip { get; set; }
+        public bool IsShip { get; set; }
 
         public DateTime? TimeShipDone { get; set; }
 
-        public bool? ChoiceShip { get; set; }
+        public bool ChoiceShip { get; set; }
 
         public string CodeOrderDetail { get; set; }
         

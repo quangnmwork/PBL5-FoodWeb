@@ -30,6 +30,10 @@ namespace FoodWeb.API.Database.Repositories
                 PriceTotalFood = money,
                 IsPayment = false
             };
+            
+            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.IdOrderDetail == IdOrderDetail);
+            orderDetail.Payment = payment;
+            //_context.SaveChanges();
 
             _context.Payments.Add(payment);
             _context.SaveChanges();

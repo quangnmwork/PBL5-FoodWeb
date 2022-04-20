@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FoodWeb.API.DTOs
 {
-    public class SellerDTO
+    public class SellerViewDTO
     {
         [Required]
         public int IdUser { get; set; }
@@ -19,8 +19,6 @@ namespace FoodWeb.API.DTOs
         [StringLength(100)]
         public string Address { get; set; }
 
-        [Required]
-        public double? Money { get; set; }
 
         [Required]
         public string Avatar { get; set; }

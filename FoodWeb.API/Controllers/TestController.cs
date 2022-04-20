@@ -55,13 +55,13 @@ namespace FoodWeb.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet("getCustomer/{Id}")]
-        public ActionResult<CustomerDTO> GetCustomerById(int Id)
-        {
-            var user = _userRepository.GetUserById(Id);
-            if (user == null) return NotFound();
-            return Ok(_mapper.Map<CustomerDTO>(user));
-        }
+        // [HttpGet("getCustomer/{Id}")]
+        // public ActionResult<CustomerDTO> GetCustomerById(int Id)
+        // {
+        //     var user = _userRepository.GetUserById(Id);
+        //     if (user == null) return NotFound();
+        //     return Ok(_mapper.Map<CustomerDTO>(user));
+        // }
 
         [HttpGet("getClaim")]
         public ActionResult<string> GetClaim()

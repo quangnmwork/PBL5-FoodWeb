@@ -68,7 +68,7 @@ namespace FoodWeb.API.Database.Repositories
         public IEnumerable<FoodDTO> GetAllFoodsBySearchPaging(int numberPage, SearchDTO searchDTO)
         {
             return _context.Foods.ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
-                                 .Where(u => u.NameCategory == searchDTO.NameCategory && u.NameFood.Contains(searchDTO.KeyName))
+                                 .Where(u => u.NameCategory == searchDTO.NameCategory && u.NameFood.ToLower().Contains(searchDTO.KeyName.ToLower()))
                                  .OrderBy(u => u.IdFood)
                                  .ToPagedList(numberPage, PageServiceExtensions.FoodPageSize);
         }
@@ -92,7 +92,7 @@ namespace FoodWeb.API.Database.Repositories
         public int GetTotalPageAllFoodsBySearch(SearchDTO searchDTO)
         {
             var numberFood = _context.Foods.ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
-                                           .Where(u => u.NameCategory == searchDTO.NameCategory && u.NameFood.Contains(searchDTO.KeyName))
+                                           .Where(u => u.NameCategory == searchDTO.NameCategory && u.NameFood.ToLower().Contains(searchDTO.KeyName.ToLower()))
                                            .Count();
 
             return (int)Math.Ceiling(1.0*numberFood/PageServiceExtensions.FoodPageSize);

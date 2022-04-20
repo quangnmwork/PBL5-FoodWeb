@@ -63,7 +63,7 @@ namespace FoodWeb.API.Controllers
 
         [HttpGet("getAllSellers/page-{numberPage}")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<SellerDTO>> GetAllSellersPaging(int numberPage)
+        public ActionResult<IEnumerable<SellerViewDTO>> GetAllSellersPaging(int numberPage)
         {
             if(numberPage > _userRepository.GetTotalPageSellers())
                 return NotFound("Page is not exist");
@@ -89,6 +89,23 @@ namespace FoodWeb.API.Controllers
                 return NotFound("Page is not exist");
 
             return Ok(_foodRepository.GetAllFoodsByIdSellerPaging(Id, numberPage));
+        }
+
+        [HttpGet("getTotalPageSellerSearch")]
+        [AllowAnonymous]
+        public ActionResult<int> GetTotalPageSeller(SearchDTO searchDTO)
+        {
+            return Ok(_userRepository.GetTotalPageSellersSearch(searchDTO));
+        }
+
+        [HttpGet("getAllSellerSearch/page-{numberPage}")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<SellerViewDTO>> GetAllSellerSearchPaging(int numberPage, SearchDTO searchDTO)
+        {
+            if(numberPage > _userRepository.GetTotalPageSellersSearch(searchDTO))
+                return NotFound("Page is not exist");
+
+            return Ok(_userRepository.GetAllSellersSearchPaging(numberPage, searchDTO));
         }
     }
 }
