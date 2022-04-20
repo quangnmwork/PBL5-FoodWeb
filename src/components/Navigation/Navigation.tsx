@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
 import AvatarCustom from '../Avatar/AvatarCustom';
 import ButtonCustom from '../Button/ButtonCustom';
@@ -8,7 +9,10 @@ import SearchBar from './SearchBar/SearchBar';
 
 const Navigation = () => {
   const { data, error } = useUser();
-  console.log(error);
+  const navigate = useNavigate();
+  const handlerLoginRouter = () => {
+    navigate('/auth/sign-in', { replace: true });
+  };
   return (
     <Flex
       alignItems={'center'}
@@ -21,8 +25,8 @@ const Navigation = () => {
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
       <SearchBar />
 
-      {!data ? (
-        <ButtonCustom textDisplay={'Đăng nhập'} />
+      {error ? (
+        <ButtonCustom textDisplay={'Đăng nhập'} onClick={handlerLoginRouter} />
       ) : (
         <Flex alignItems={'center'}>
           <Cart />
