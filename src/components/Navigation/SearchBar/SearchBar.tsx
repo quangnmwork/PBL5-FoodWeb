@@ -12,7 +12,7 @@ import NestedMenu from './NestedMenu';
 
 const SearchBar = () => {
   return (
-    <Flex flexBasis={'50%'}>
+    <Flex flexBasis={'45%'}>
       <NestedMenu />
       <Box flexBasis={'80%'}>
         <InputGroup>

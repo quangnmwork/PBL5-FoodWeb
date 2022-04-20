@@ -5,7 +5,7 @@ const Cart = () => {
     <Box marginRight={'1rem'} position={'relative'}>
       <Icon as={AiOutlineShoppingCart} w={8} h={8} />
       <Box
-        right={'-1'}
+        right={'-1.5'}
         top={'-1'}
         position={'absolute'}
         backgroundColor={'main.100'}
@@ -18,6 +18,8 @@ const Cart = () => {
           alignItems={'center'}
           justifyContent={'center'}
           fontSize={'.8em'}
+          color={'white'}
+          fontWeight={'medium'}
         >
           1
         </Text>

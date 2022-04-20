@@ -6,6 +6,9 @@ import {
   Avatar,
   MenuButtonProps
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../hooks/authentication/useUser';
+import clientStorage from '../../utils/clientStorage';
 import { DynamicObject } from './../../models/DynamicObject.model';
 interface AvatarCustomProps extends MenuButtonProps {
   userData?: DynamicObject;
@@ -13,6 +16,15 @@ interface AvatarCustomProps extends MenuButtonProps {
 
 const AvatarCustom = (props: AvatarCustomProps) => {
   const { ...rest } = props;
+  const { mutate } = useUser();
+  const navigate = useNavigate();
+  const handlerLogout = () => {
+    clientStorage.getClientStorage().clearToken();
+    mutate();
+  };
+  const handlerRouter = () => {
+    navigate('/user/profile', { replace: true });
+  };
   return (
     <Menu>
       <MenuButton {...rest}>
@@ -22,8 +34,8 @@ const AvatarCustom = (props: AvatarCustomProps) => {
         />
       </MenuButton>
       <MenuList>
-        <MenuItem>Thông tin cá nhân</MenuItem>
-        <MenuItem>Đăng xuất</MenuItem>
+        <MenuItem onClick={handlerRouter}>Thông tin cá nhân</MenuItem>
+        <MenuItem onClick={handlerLogout}>Đăng xuất</MenuItem>
       </MenuList>
     </Menu>
   );
