@@ -1,4 +1,4 @@
-import { Select } from '@chakra-ui/react';
+import { Flex, Select } from '@chakra-ui/react';
 
 import './NestedMenu.css';
 const categories = [
@@ -25,7 +25,7 @@ const categories = [
 ];
 const NestedMenu = () => {
   return (
-    <div className="container">
+    <Flex flexBasis={'25%'}>
       <Select defaultValue={'Quán ăn'} focusBorderColor={'main.100'}>
         <optgroup label="Địa điểm">
           <option value={'Quán ăn'}>Quán ăn</option>
@@ -38,7 +38,7 @@ const NestedMenu = () => {
           ))}
         </optgroup>
       </Select>
-    </div>
+    </Flex>
   );
 };
 
