@@ -1,16 +1,16 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Image, Flex, Heading } from '@chakra-ui/react';
 import React from 'react';
 
 const HeroSlide = () => {
   return (
-    <Box
-      backgroundImage={'url(/assets/hero-1.svg)'}
-      bgRepeat={'no-repeat'}
-      bgPosition={'center'}
-      width={'100%'}
-      minHeight={'100%'}
-      bgSize={'cover'}
-    ></Box>
+    <Flex>
+      <Box flexBasis={'50%'}>
+        <Image src={'/assets/hero-1.svg'} objectFit={'cover'} height={'60vh'} />
+      </Box>
+      <Box>
+        <Heading as={'h2'}>Thoải mái chọn lựa</Heading>
+      </Box>
+    </Flex>
   );
 };
 

@@ -1,53 +1,29 @@
-import { Box, IconButton, useBreakpointValue } from '@chakra-ui/react';
-import React from 'react';
-import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
-import HeroSlide from './HeroSlide/HeroSlide';
-interface Slider {
-  component: () => JSX.Element;
-}
-// const SliderComponents: Slider[] = { component: HeroSlide };
+import { Flex, Heading, Text } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 const Carousel = () => {
-  const top = useBreakpointValue({ base: '90%', md: '50%' });
-  const side = useBreakpointValue({ base: '30%', md: '40px' });
   return (
-    <Box
-      position={'relative'}
-      height={'60vh'}
-      width={'full'}
-      overflow={'hidden'}
+    <Flex
+      bgImage={'/assets/hero.jpg'}
+      height={'70vh'}
+      bgPosition={'center'}
+      alignItems={'center'}
+      justifyContent={'center'}
     >
-      <IconButton
-        aria-label="left-arrow"
-        variant="ghost"
-        position="absolute"
-        left={side}
-        top={top}
-        transform={'translate(0%, -50%)'}
-        zIndex={2}
+      <Flex
+        flexDirection={'column'}
+        fontFamily={'monospace'}
+        fontSize={'3xl'}
+        alignItems={'center'}
+        as={motion.div}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ delay: '1' }}
       >
-        <BiLeftArrowAlt size="40px" />
-      </IconButton>
-      <IconButton
-        aria-label="right-arrow"
-        variant="ghost"
-        position="absolute"
-        right={side}
-        top={top}
-        transform={'translate(0%, -50%)'}
-        zIndex={2}
-      >
-        <BiRightArrowAlt size="40px" />
-      </IconButton>
-      <Box
-        height={'60vh'}
-        position="relative"
-        backgroundPosition="center"
-        backgroundRepeat="no-repeat"
-        backgroundSize="cover"
-      >
-        <HeroSlide />
-      </Box>
-    </Box>
+        <Heading as={'h2'}>Welcom to Fooder</Heading>
+        <Text>Đặt món ăn nhanh nhất với Fooder</Text>
+      </Flex>
+    </Flex>
   );
 };
 
