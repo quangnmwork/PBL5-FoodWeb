@@ -51,7 +51,7 @@ namespace FoodWeb.API.Database.Repositories
         
         public bool CheckExistListOrderWithIdUser(int IdUser, int IdOrderDetail)
         {
-            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.CustomerId == IdUser && u.IdOrderDetail == IdOrderDetail);
+            var orderDetail = _context.OrderDetails.FirstOrDefault(u => (u.CustomerId == IdUser) && u.IdOrderDetail == IdOrderDetail);
             if(orderDetail == null)
                 return false;
             return true;
@@ -106,16 +106,50 @@ namespace FoodWeb.API.Database.Repositories
             return data;
         }
 
-        public bool CheckChoiceShip(int IdShipper, ChoiceShipDTO choiceShipDTO)
+        public int CheckChoiceShip(int IdShipper, ChoiceShipDTO choiceShipDTO)
         {
             var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.IdOrderDetail == choiceShipDTO.IdOrderDetail);
             if(orderDetail.ChoiceShip){ // nếu đã được chọn ship
-                if(choiceShipDTO.ChoiceShip)    return false;   // yêu cầu chuyển thành chọn ship -> false
+                if(choiceShipDTO.ChoiceShip)    return 1;   // yêu cầu chuyển thành chọn ship -> false
                 else{   // bỏ chọn ship
-                    if(orderDetail.ShipperId != IdShipper)  return false; //Nếu người yêu cầu bỏ ship ko phải là người chọn ship -> false
+                    if(orderDetail.ShipperId != IdShipper)  return 2; //Nếu người yêu cầu bỏ ship ko phải là người chọn ship -> false
                 }   
             }
-            return true;
+
+            var number = _context.OrderDetails.Where(u => u.ShipperId == IdShipper && u.ChoiceShip == true && u.IsShip == false)
+                                              .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider).Count();
+
+            if(number >= CommonServiceExtensions.LimitChoiceOrder)   return 3; // Nếu chọn quá số đơn hàng ship quá giới hạn thì sẽ ko được chọn thêm
+
+            return 0;
+        }
+
+        public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper)
+        {
+            return _context.OrderDetails.Where(u => u.ShipperId == IdShipper && u.ChoiceShip == true && u.IsShip == false)
+                                        .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider);
+        }
+
+        public void TickShip(int IdShipper, int IdOrderDetail)
+        {
+            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.IdOrderDetail == IdOrderDetail);
+            orderDetail.IsShip = true;
+            orderDetail.TimeShipDone = DateTime.Now;
+            
+            var payment = _context.Payments.FirstOrDefault(u => u.OrderDetailId == IdOrderDetail);
+            var user = _context.Users.FirstOrDefault(u => u.IdUser == IdShipper);
+
+            user.Money += payment.PriceShip;
+
+            _context.SaveChanges();
+        }
+
+        public bool CheckTickShip(int IdShipper, int IdOrderDetail)
+        {
+            var orderDetail = _context.OrderDetails.FirstOrDefault(u => u.IdOrderDetail == IdOrderDetail);
+            if(IdShipper == orderDetail.ShipperId)
+                return true;
+            return false;
         }
     }
 }

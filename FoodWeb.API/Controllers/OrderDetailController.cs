@@ -7,6 +7,7 @@ using AutoMapper;
 using FoodWeb.API.Database.Entities;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
+using FoodWeb.API.Extensions;
 using FoodWeb.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace FoodWeb.API.Controllers
             this._orderDetailRepository = orderDetailRepository;
         }
 
-        [HttpPost("createOrder")]
+        [HttpPost("createOrder")]   // customer tạo order
         public ActionResult<OrderDTO> CreateOrder(List<InfoFoodOrderDTO> ListInfoFood)
         {
             OrderDTO orderDTO = new OrderDTO();
@@ -71,7 +72,7 @@ namespace FoodWeb.API.Controllers
             return Ok(orderDTO);
         }
 
-        [HttpGet("getAllOrder/page-{numberPage}")]
+        [HttpGet("getAllOrder/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail (phân trang)
         public ActionResult<IEnumerable<OrderDTO>> GetListOrder(int numberPage)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -84,7 +85,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserPaging(Int32.Parse(Id), numberPage));
         }
 
-        [HttpGet("getTotalPageListOrder")]
+        [HttpGet("getTotalPageListOrder")] // lấy tổng số trang các order detail trong lịch sử customer
         public ActionResult<int> GetTotalPageListOrder()
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -94,20 +95,24 @@ namespace FoodWeb.API.Controllers
             return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserPaging(Int32.Parse(Id)));
         }
 
-        [HttpGet("getListFoodOrder/{IdOrderDetail}")]
+        [HttpGet("getListFoodOrder/{IdOrderDetail}")]   //customer xem chi tiết các food trong order detail mình đã tạo
+                                                        //Shipper xem chi tiết các food trong tất cả các order detail 
         public ActionResult<IEnumerable<InfoFoodOrderDTO>> GetListFoodOrder(int IdOrderDetail)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
-                return BadRequest("Action only customer");
+            if(!_authorizeService.IsCustommer(Int32.Parse(Id)) && !_authorizeService.IsShipper(Int32.Parse(Id)))
+                return BadRequest("Action is customer or shipper");
             
-            if(!_orderDetailRepository.CheckExistListOrderWithIdUser(Int32.Parse(Id), IdOrderDetail))
-                return NotFound("No exist list order");
+            var groupName = _authorizeService.GetGroupById(Int32.Parse(Id));
+            if(groupName == "customer"){
+                if(!_orderDetailRepository.CheckExistListOrderWithIdUser(Int32.Parse(Id), IdOrderDetail))
+                    return NotFound("No exist list order");
+            }
 
             return Ok(_listOrderRepository.GetListFoodOrder(IdOrderDetail));
         }
 
-        [HttpGet("getTotalPageChoiceShip")]
+        [HttpGet("getTotalPageChoiceShip")]     // Lấy tổng số trang các order detail chưa được chọn ship
         public ActionResult<int> GetTotalPageChoiceShip()
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -117,7 +122,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_orderDetailRepository.GetTotalPageOrderDetailByChoiceShip());
         }
 
-        [HttpGet("getListOrderDetailChoiceShip/page-{numberPage}")]
+        [HttpGet("getListOrderDetailChoiceShip/page-{numberPage}")]   // Lấy danh sách các order detail chưa được chọn ship cho shipper
         public ActionResult<IEnumerable<OrderDTO>> GetListOrderDetailChoiceShip(int numberPage)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -127,19 +132,51 @@ namespace FoodWeb.API.Controllers
             return Ok(_orderDetailRepository.GetAllOrderDetailByChoiceShipPaging(numberPage));
         }
 
-        [HttpPost("choiceShip")]
-        public ActionResult<IEnumerable<OrderDetail>> ChoiceShip(ChoiceShipDTO choiceShipDTO)
+        [HttpPost("choiceShip")]    // Shipper click chọn ship
+        public ActionResult<OrderDTO> ChoiceShip(ChoiceShipDTO choiceShipDTO)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if(!_authorizeService.IsShipper(Id))
                 return BadRequest("Action only Shipper");
 
-            if(!_orderDetailRepository.CheckChoiceShip(Id, choiceShipDTO))
+            if(_orderDetailRepository.CheckChoiceShip(Id, choiceShipDTO) == 1){
                 return BadRequest("This order has been choiced");
+            }
+            else if(_orderDetailRepository.CheckChoiceShip(Id, choiceShipDTO) == 2){
+                return Unauthorized("you have not permission");
+            }
+            else if(_orderDetailRepository.CheckChoiceShip(Id, choiceShipDTO) == 3){
+                return BadRequest("The number of orders selected is more than " + CommonServiceExtensions.LimitChoiceOrder);
+            }
 
             _orderDetailRepository.ChoiceShip(Id, choiceShipDTO);
 
             return Ok(_orderDetailRepository.GetOrderDetailById(choiceShipDTO.IdOrderDetail));
+        }
+
+        [HttpGet("getListOrderShipperChoice")]  // Shipper xem được các order detail mình đã chọn ship (nhưng chưa ship)
+        public ActionResult<IEnumerable<OrderDTO>> GetListOrderShipperChoice()
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsShipper(Id))
+                return BadRequest("Action only Shipper");
+            
+            return Ok(_orderDetailRepository.GetListOrderShipperChoice(Id));
+        }
+
+        [HttpGet("tickShip/{IdOrderDetail}")]   // Shipper click đã ship hàng xong
+        public ActionResult<string> TickShip(int IdOrderDetail)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsShipper(Id))
+                return BadRequest("Action only Shipper");
+
+            if(!_orderDetailRepository.CheckTickShip(Id, IdOrderDetail))
+                return Unauthorized("you have not permission");
+
+            _orderDetailRepository.TickShip(Id, IdOrderDetail);
+
+            return Ok(_orderDetailRepository.GetOrderDetailById(IdOrderDetail));
         }
     }
 }

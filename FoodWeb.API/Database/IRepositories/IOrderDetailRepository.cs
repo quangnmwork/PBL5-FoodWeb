@@ -25,6 +25,12 @@ namespace FoodWeb.API.Database.IRepositories
 
         public OrderDTO GetOrderDetailById(int IdOrderDetail);
 
-        public bool CheckChoiceShip(int IdShipper, ChoiceShipDTO choiceShipDTO);
+        public int CheckChoiceShip(int IdShipper, ChoiceShipDTO choiceShipDTO);
+
+        public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper);
+
+        public void TickShip(int IdShipper, int IdOrderDetail);
+
+        public bool CheckTickShip(int IdShipper, int IdOrderDetail);
     }
 }

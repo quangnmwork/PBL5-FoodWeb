@@ -20,7 +20,7 @@ namespace FoodWeb.API.Controllers
 
         }
 
-        [HttpGet("getAllFoods/page-{numberPage}")]
+        [HttpGet("getAllFoods/page-{numberPage}")]  //Lấy tất cả các food có trong csdl (phân trang)
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoods(int numberPage)
         {
             if(numberPage > _foodRepository.GetTotalPageAllFoods())
@@ -29,13 +29,13 @@ namespace FoodWeb.API.Controllers
             return Ok(_foodRepository.GetAllFoodsPaging(numberPage));
         }
 
-        [HttpGet("getTotalPageAllFoods")]
+        [HttpGet("getTotalPageAllFoods")]   // Lấy tổng số trang của tất cả các food
         public ActionResult<int> GetTotalPageAllFoods()
         {
             return Ok(_foodRepository.GetTotalPageAllFoods());
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}")]   // Lấy food theo IdFood
         public ActionResult<FoodDTO> GetFoodById(int Id)
         {
             var food = _foodRepository.GetFoodById(Id);
@@ -43,7 +43,7 @@ namespace FoodWeb.API.Controllers
             return Ok(food);
         }
 
-        [HttpGet("search/page-{numberPage}")]
+        [HttpGet("search/page-{numberPage}")]   // lấy các food được search: category, keyname (phân trang)
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(int numberPage, SearchDTO search)
         {
             if(numberPage > _foodRepository.GetTotalPageAllFoodsBySearch(search))
@@ -54,7 +54,7 @@ namespace FoodWeb.API.Controllers
             return Ok(data);
         }
 
-        [HttpGet("getTotalPageAllFoodsBySearch")]
+        [HttpGet("getTotalPageAllFoodsBySearch")]   // lấy tổng số trang food được search : category, keyname
         public ActionResult<int> GetTotalPageAllFoodsBySearch(SearchDTO search)
         {
             return Ok(_foodRepository.GetTotalPageAllFoodsBySearch(search));

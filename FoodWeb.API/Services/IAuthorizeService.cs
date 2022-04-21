@@ -4,6 +4,8 @@ namespace FoodWeb.API.Services
 {
     public interface IAuthorizeService
     {
+        public string GetGroupById(int Id);
+
         public bool IsCustommer(int Id);
 
         public bool IsShipper(int Id);
