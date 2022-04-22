@@ -1,11 +1,13 @@
 import { Box } from '@chakra-ui/react';
-import Carousel from '../../../components/Hero/Carousel';
+import Hero from '../../../components/Hero/Hero';
 import Navigation from './../../../components/Navigation/Navigation';
+import MainContainer from './MainContainer';
 const HomeContainer = () => {
   return (
-    <Box>
+    <Box bgColor={'bgMain.100'}>
       <Navigation />
-      <Carousel />
+      <Hero />
+      <MainContainer />
     </Box>
   );
 };
