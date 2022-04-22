@@ -11,5 +11,8 @@ export default {
   },
   getSellers(pageNumber: number) {
     return axiosClient.get(`${path}/getAllSellers/page-${pageNumber}`);
+  },
+  getTotalPageSellers() {
+    return axiosClient.get(`${path}/getTotalPageAllSellers`);
   }
 };
