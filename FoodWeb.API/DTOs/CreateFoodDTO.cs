@@ -1,25 +1,31 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FoodWeb.API.DTOs
 {
-    public class FoodDTO
+    public class CreateFoodDTO
     {
-        public int IdFood { get; set; }
-
+        [Required]
+        [MaxLength(150)]
         public string NameFood { get; set; }
         
+        [Required]
         public double PriceFood { get; set;}
 
-        public DateTime TimeCreate { get; set; }
+        [Required]
+        public bool isHidden { get; set; }
 
+        [Required]
         public string DescriptionFood { get; set; }
 
+        [Required]
         public string ImageFood { get; set; }
         
-        public string NameCategory { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
         
     }
 }

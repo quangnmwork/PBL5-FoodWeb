@@ -137,9 +137,19 @@ namespace FoodWeb.API.Database.Repositories
             orderDetail.TimeShipDone = DateTime.Now;
             
             var payment = _context.Payments.FirstOrDefault(u => u.OrderDetailId == IdOrderDetail);
-            var user = _context.Users.FirstOrDefault(u => u.IdUser == IdShipper);
 
-            user.Money += payment.PriceShip;
+            //shipper được tăng tiền
+            var shipper = _context.Users.FirstOrDefault(u => u.IdUser == IdShipper);
+            shipper.Money += payment.PriceShip;  
+
+            //seller được tăng tiền
+            var listOrderDetail = _context.ListOrders.Where(u => u.OrderDetailId == IdOrderDetail);
+            foreach(var item in listOrderDetail){
+                var food = _context.Foods.FirstOrDefault(u => u.IdFood == item.FoodId);
+                var seller = _context.Users.FirstOrDefault(u => u.IdUser == food.UserId);
+
+                seller.Money += food.PriceFood*item.Number;
+            }
 
             _context.SaveChanges();
         }

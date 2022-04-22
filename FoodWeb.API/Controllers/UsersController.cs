@@ -78,7 +78,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_foodRepository.GetToTalAllFoodsByIdSeller(Id));
         }
 
-        [HttpGet("{Id}/foods/page-{numberPage}")]   //Lấy các food của 1 seller (có phân trang)
+        [HttpGet("{Id}/foods/page-{numberPage}")]   //Lấy các food của 1 seller (có phân trang) dành cho các viewer, customer, shipper
         [AllowAnonymous]
         public ActionResult<IEnumerable<FoodDTO>> GetFoodByIdSeller(int Id, int numberPage)
         {
@@ -91,9 +91,9 @@ namespace FoodWeb.API.Controllers
             return Ok(_foodRepository.GetAllFoodsByIdSellerPaging(Id, numberPage));
         }
 
-        [HttpGet("getTotalPageSellerSearch")]   //Lấy tổng số trang các seller được search: keyname
+        [HttpGet("getTotalPageSellerSearch")]   //Lấy tổng số trang các seller được search: keyname dành cho các viewer, customer, shipper
         [AllowAnonymous]
-        public ActionResult<int> GetTotalPageSeller(SearchDTO searchDTO)
+        public ActionResult<int> GetTotalPageSellerSearch(SearchDTO searchDTO)
         {
             return Ok(_userRepository.GetTotalPageSellersSearch(searchDTO));
         }
@@ -108,5 +108,6 @@ namespace FoodWeb.API.Controllers
             return Ok(_userRepository.GetAllSellersSearchPaging(numberPage, searchDTO));
         }
 
+        
     }
 }

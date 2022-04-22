@@ -14,14 +14,19 @@ namespace FoodWeb.API.Profiles
         {
             CreateMap<User, UserDTO>();
 
-            CreateMap<UserDTO, User>()
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<UserDTO, User>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Category, CategoryDTO>();
 
             CreateMap<User, SellerViewDTO>();
 
             CreateMap<Food, FoodDTO>().ForMember(dest => dest.NameCategory, opt => opt.MapFrom(src => src.Category.NameCategory));
+
+            CreateMap<Food, FoodForSellerDTO>().ForMember(dest => dest.NameCategory, opt => opt.MapFrom(src => src.Category.NameCategory));
+
+            CreateMap<EditFoodDTO, Food>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<CreateFoodDTO, Food>();
 
             CreateMap<User, ProfileDTO>();
 

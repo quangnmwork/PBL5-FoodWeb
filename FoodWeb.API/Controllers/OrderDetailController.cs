@@ -165,14 +165,14 @@ namespace FoodWeb.API.Controllers
         }
 
         [HttpGet("tickShip/{IdOrderDetail}")]   // Shipper click đã ship hàng xong
-        public ActionResult<string> TickShip(int IdOrderDetail)
+        public ActionResult<OrderDTO> TickShip(int IdOrderDetail)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if(!_authorizeService.IsShipper(Id))
                 return BadRequest("Action only Shipper");
 
             if(!_orderDetailRepository.CheckTickShip(Id, IdOrderDetail))
-                return Unauthorized("you have not permission");
+                return Unauthorized("You have not permission");
 
             _orderDetailRepository.TickShip(Id, IdOrderDetail);
 
