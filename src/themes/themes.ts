@@ -1,5 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
-
+import Card from './CustomComponent/Card';
 const customThemes = extendTheme({
   colors: {
     main: {
@@ -15,6 +15,9 @@ const customThemes = extendTheme({
     },
     bgMain: {
       100: '#eeeeee'
+    },
+    borderColor: {
+      100: '#adadad'
     },
     mainScheme: {
       100: '#9ae6b4',
@@ -45,7 +48,8 @@ const customThemes = extendTheme({
           backGroundColor: 'main.100'
         }
       }
-    }
+    },
+    Card
   }
 });
 export default customThemes;
