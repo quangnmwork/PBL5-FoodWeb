@@ -16,7 +16,12 @@ interface SellerPagnitationItemProps {
 
 const SellerPagnitationItem = (props: SellerPagnitationItemProps) => {
   return (
-    <CustomCard data-id={props.seller.idUser} cursor={'pointer'} role={'group'}>
+    <CustomCard
+      data-id={props.seller.idUser}
+      cursor={'pointer'}
+      role={'group'}
+      title={`${props.seller.nameUser},${props.seller.address}`}
+    >
       <Flex flexDirection={'column'}>
         <Skeleton isLoaded={!props.isLoading}>
           <Box overflow={'hidden'}>

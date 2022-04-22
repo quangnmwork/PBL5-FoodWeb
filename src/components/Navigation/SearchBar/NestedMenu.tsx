@@ -1,28 +1,7 @@
 import { Flex, Select } from '@chakra-ui/react';
+import { categories } from '../../../utils/constants';
 
 import './NestedMenu.css';
-const categories = [
-  {
-    idCategory: 1,
-    nameCategory: 'Đồ ăn'
-  },
-  {
-    idCategory: 2,
-    nameCategory: 'Đồ uống'
-  },
-  {
-    idCategory: 3,
-    nameCategory: 'Đồ chay'
-  },
-  {
-    idCategory: 4,
-    nameCategory: 'Bánh kem'
-  },
-  {
-    idCategory: 5,
-    nameCategory: 'Tráng miệng'
-  }
-];
 const NestedMenu = () => {
   return (
     <Flex flexBasis={'20%'}>

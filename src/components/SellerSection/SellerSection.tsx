@@ -37,7 +37,7 @@ const SellerSection = () => {
   };
 
   return (
-    <Box border={'1px solid'} borderColor={'borderColor.100'}>
+    <Box border={'1px solid'} borderColor={'main.100'}>
       <Flex bgColor={'white'} alignItems={'center'} px={'1rem'} py={'.5rem'}>
         <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
         <Text as="p" fontWeight={'bold'} fontSize={'xl'}>
