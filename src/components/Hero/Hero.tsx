@@ -1,6 +1,6 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-const Carousel = () => {
+const Hero = () => {
   return (
     <Flex
       bgImage={'/assets/hero.jpg'}
@@ -27,4 +27,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default Hero;

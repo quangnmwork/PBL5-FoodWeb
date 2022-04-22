@@ -13,6 +13,9 @@ const customThemes = extendTheme({
       800: '#258e4a',
       900: '#238646'
     },
+    bgMain: {
+      100: '#eeeeee'
+    },
     mainScheme: {
       100: '#9ae6b4',
       200: '#85e0a5',

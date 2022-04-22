@@ -21,6 +21,7 @@ const Navigation = () => {
       borderBottomWidth={'1px'}
       borderBottomStyle={'solid'}
       borderBottomColor={'main.100'}
+      bgColor={'white'}
     >
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
       <SearchBar />

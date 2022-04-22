@@ -8,5 +8,8 @@ export default {
   },
   updateUserProfile(data: DynamicObject) {
     return axiosClient.patch(`${path}/EditProfile`, data);
+  },
+  getSellers(pageNumber: number) {
+    return axiosClient.get(`${path}/getAllSellers/page-${pageNumber}`);
   }
 };
