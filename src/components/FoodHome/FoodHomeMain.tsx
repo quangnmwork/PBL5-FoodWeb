@@ -30,16 +30,13 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
     [loading, hasMore]
   );
   useEffect(() => {
-    containerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (pageNumber > 1) {
+      containerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [props.activeCategory]);
   return (
-    <Flex
-      flexDirection={'column'}
-      alignItems={'center'}
-      flexBasis={'90%'}
-      ref={containerRef}
-    >
-      <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
+    <Flex flexDirection={'column'} alignItems={'center'} flexBasis={'90%'}>
+      <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'} ref={containerRef}>
         {foods.map((food, index) => {
           if (foods.length === index + 1) {
             return (
