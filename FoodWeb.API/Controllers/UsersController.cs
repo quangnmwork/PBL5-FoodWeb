@@ -29,7 +29,6 @@ namespace FoodWeb.API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IAuthorizeService _authorizeService;
         private readonly IFoodRepository _foodRepository;
-        private readonly IConfiguration _config;
         private readonly Cloudinary _cloudinary;
 
         public UsersController(IUserRepository userRepository,
@@ -40,7 +39,7 @@ namespace FoodWeb.API.Controllers
             this._foodRepository = foodRepository;
             this._userRepository = userRepository;
             this._authorizeService = authorizeService;
-            Console.WriteLine(config.GetValue<String>("CLOUD_NAME") + config.GetValue<String>("API_KEY"));
+            // Console.WriteLine(config.GetValue<String>("CLOUD_NAME") + config.GetValue<String>("API_KEY"));
             CloudinaryDotNet.Account account = new CloudinaryDotNet.Account(
                 config.GetValue<String>("CLOUD_NAME"),
                 config.GetValue<String>("API_KEY"),
@@ -65,11 +64,11 @@ namespace FoodWeb.API.Controllers
         {
             var userDTO = new UserDTO();
             foreach (var i in HttpContext.Request.Form){
-                Console.WriteLine(i);
-                Console.WriteLine(userDTO.GetType().GetProperty(i.Key));
+                // Console.WriteLine(i);
+                // Console.WriteLine(userDTO.GetType().GetProperty(i.Key));
                 userDTO.GetType().GetProperty(i.Key).SetValue(userDTO,i.Value.ToString());
             }
-            Console.WriteLine(userDTO.ToString());
+            // Console.WriteLine(userDTO.ToString());
             
 
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -80,9 +79,9 @@ namespace FoodWeb.API.Controllers
 
             var avatarFile = HttpContext.Request.Form.Files.GetFile("Avatar");
             if (avatarFile!=null){
-                Console.WriteLine("Lenght " +avatarFile.Length);
+                // Console.WriteLine("Lenght " +avatarFile.Length);
                 userDTO.Avatar = UploadImage(avatarFile);
-                Console.WriteLine("Link " +userDTO.Avatar);
+                // Console.WriteLine("Link " +userDTO.Avatar);
             }
             _userRepository.UpdateProfile(Int32.Parse(Id), userDTO);
             return Ok(_userRepository.GetProfileUserById(Int32.Parse(Id)));
