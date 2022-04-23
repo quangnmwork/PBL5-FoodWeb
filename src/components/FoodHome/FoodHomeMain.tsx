@@ -35,8 +35,15 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
     }
   }, [props.activeCategory]);
   return (
-    <Flex flexDirection={'column'} alignItems={'center'} flexBasis={'90%'}>
-      <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'} ref={containerRef}>
+    <Flex
+      flexDirection={'column'}
+      alignItems={'center'}
+      flexBasis={'90%'}
+      ref={containerRef}
+      position={'sticky'}
+      top={'5rem'}
+    >
+      <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
         {foods.map((food, index) => {
           if (foods.length === index + 1) {
             return (
