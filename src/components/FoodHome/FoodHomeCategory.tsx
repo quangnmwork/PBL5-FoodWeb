@@ -13,7 +13,7 @@ const FoodHomeCategory = (props: FoodHomeCategoryProps) => {
   //   props.passDataToParent(currentCategory);
   // }, []);
   return (
-    <Box bgColor={'white'} flexBasis={'20rem'} position={'sticky'} top={'5rem'}>
+    <Box bgColor={'white'} flexBasis={'15rem'} position={'sticky'} top={'5rem'}>
       <Flex
         as={'div'}
         alignItems={'center'}

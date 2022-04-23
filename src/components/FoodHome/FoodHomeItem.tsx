@@ -4,7 +4,8 @@ import {
   Image,
   Box,
   SkeletonText,
-  Text
+  Text,
+  Divider
 } from '@chakra-ui/react';
 import React from 'react';
 import { Food } from '../../models/Food.model';
@@ -42,8 +43,11 @@ const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
           <SkeletonText isLoaded={props.food ? true : false}>
             <Text isTruncated={true}>{props.food.descriptionFood}</Text>
           </SkeletonText>
+          <Divider />
           <SkeletonText isLoaded={props.food ? true : false}>
-            <Text isTruncated={true}>{props.food.priceFood}</Text>
+            <Text isTruncated={true} textColor="red">
+              {props.food.priceFood}₫
+            </Text>
           </SkeletonText>
         </Box>
       </Flex>
