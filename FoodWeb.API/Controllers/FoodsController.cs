@@ -78,20 +78,32 @@ namespace FoodWeb.API.Controllers
         }
 
         [HttpGet("search/page-{numberPage}")]   // lấy các food được search: category, keyname (phân trang)
-        public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(int numberPage, SearchDTO search)
+        public ActionResult<IEnumerable<FoodDTO>> GetAllFoodsBySearch(int numberPage)
         {
-            if(numberPage > _foodRepository.GetTotalPageAllFoodsBySearch(search))
+            SearchDTO searchDTO = new SearchDTO{
+                NameCategory = HttpContext.Request.Query["nameCategory"],
+                KeyName = HttpContext.Request.Query["keyName"]
+            };
+
+            string nameCategory = HttpContext.Request.Query["nameCategory"];
+            string keyName = HttpContext.Request.Query["keyName"];
+            if(numberPage > _foodRepository.GetTotalPageAllFoodsBySearch(searchDTO))
                 return NotFound("Page is not exist");
 
-            var data = _foodRepository.GetAllFoodsBySearchPaging(numberPage, search);
+            var data = _foodRepository.GetAllFoodsBySearchPaging(numberPage, searchDTO);
             if (data == null) return NotFound();
             return Ok(data);
         }
 
         [HttpGet("getTotalPageAllFoodsBySearch")]   // lấy tổng số trang food được search : category, keyname
-        public ActionResult<int> GetTotalPageAllFoodsBySearch(SearchDTO search)
+        public ActionResult<int> GetTotalPageAllFoodsBySearch()
         {
-            return Ok(_foodRepository.GetTotalPageAllFoodsBySearch(search));
+            SearchDTO searchDTO = new SearchDTO{
+                NameCategory = HttpContext.Request.Query["nameCategory"],
+                KeyName = HttpContext.Request.Query["keyName"]
+            };
+
+            return Ok(_foodRepository.GetTotalPageAllFoodsBySearch(searchDTO));
         }
 
         [HttpGet("getTotalPageListFoodOfSeller")]  // Lấy các food của 1 seller (có phân trang) dành cho seller

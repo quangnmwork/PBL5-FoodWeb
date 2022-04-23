@@ -8,6 +8,8 @@ namespace FoodWeb.API.DTOs
 {
     public class ProfileDTO
     {
+        public int IdUser { get; set; }
+        
         public string NameUser { get; set; }
 
         public string Phone { get; set; }

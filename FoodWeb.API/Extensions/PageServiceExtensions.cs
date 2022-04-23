@@ -18,5 +18,7 @@ namespace FoodWeb.API.Extensions
         public const int OrderDetailHistoryPageSize = 10; //List order detail của 1 customer trong phần lịch sử
 
         public const int OrderDetailChoiceShipPageSize = 10; // list order detail để shipper chọn ship
+
+        public const int ProfilePageSize = 10; // List user do admin quản lý
     }
 }

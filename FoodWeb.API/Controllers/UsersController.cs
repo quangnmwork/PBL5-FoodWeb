@@ -93,15 +93,23 @@ namespace FoodWeb.API.Controllers
 
         [HttpGet("getTotalPageSellerSearch")]   //Lấy tổng số trang các seller được search: keyname dành cho các viewer, customer, shipper
         [AllowAnonymous]
-        public ActionResult<int> GetTotalPageSellerSearch(SearchDTO searchDTO)
+        public ActionResult<int> GetTotalPageSellerSearch()
         {
+            SearchDTO searchDTO = new SearchDTO{
+                KeyName = HttpContext.Request.Query["keyName"]
+            };
+
             return Ok(_userRepository.GetTotalPageSellersSearch(searchDTO));
         }
 
         [HttpGet("getAllSellerSearch/page-{numberPage}")]   //Lấy ra các seller được search: keyname
         [AllowAnonymous]
-        public ActionResult<IEnumerable<SellerViewDTO>> GetAllSellerSearchPaging(int numberPage, SearchDTO searchDTO)
+        public ActionResult<IEnumerable<SellerViewDTO>> GetAllSellerSearchPaging(int numberPage)
         {
+            SearchDTO searchDTO = new SearchDTO{
+                KeyName = HttpContext.Request.Query["keyName"]
+            };
+            
             if(numberPage > _userRepository.GetTotalPageSellersSearch(searchDTO))
                 return NotFound("Page is not exist");
 
