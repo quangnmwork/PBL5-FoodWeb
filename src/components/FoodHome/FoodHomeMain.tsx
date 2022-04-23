@@ -1,13 +1,22 @@
-import { SimpleGrid } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import useFoodFetch from '../../hooks/foods/useFoodFetch';
+import FoodHomeItem from './FoodHomeItem';
 
-const FoodHomeMain = () => {
+interface FoodHomeMainProps {
+  activeCategory: string;
+}
+
+const FoodHomeMain = (props: FoodHomeMainProps) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { foods, loading, error, hasMore } = useFoodFetch('Đồ ăn', '', 1);
-  console.log(foods);
+  const containerRef = createRef<HTMLDivElement>();
+  const { foods, loading, hasMore } = useFoodFetch(
+    props.activeCategory,
+    '',
+    pageNumber
+  );
   const observer = useRef<null | IntersectionObserver>(null);
-  const lastBookElementRef = useCallback(
+  const lastFoodElementRef = useCallback(
     (node: any) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
@@ -20,22 +29,39 @@ const FoodHomeMain = () => {
     },
     [loading, hasMore]
   );
+  useEffect(() => {
+    containerRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [props.activeCategory]);
   return (
-    <SimpleGrid ml={'2rem'} columns={5}>
-      {foods.map((food, index) => {
-        if (foods.length === index + 1) {
-          return (
-            <div ref={lastBookElementRef} key={food.idFood}>
-              {food.nameFood}
-            </div>
-          );
-        } else {
-          return <div key={food.idFood}>{food.nameFood}</div>;
-        }
-      })}
-      <div>{loading && 'Loading...'}</div>
-      <div>{error && 'Error'}</div>
-    </SimpleGrid>
+    <Flex
+      flexDirection={'column'}
+      alignItems={'center'}
+      flexBasis={'90%'}
+      ref={containerRef}
+    >
+      <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
+        {foods.map((food, index) => {
+          if (foods.length === index + 1) {
+            return (
+              <FoodHomeItem ref={lastFoodElementRef} food={food} key={index} />
+            );
+          } else {
+            return <FoodHomeItem food={food} key={index} />;
+          }
+        })}
+        {/* <div>{error && 'Error'}</div> */}
+      </SimpleGrid>
+      <Flex justifyContent={'center'} width={'100%'} mt={'2rem'}>
+        {loading && (
+          <Spinner
+            color={'main.200'}
+            thickness="5px"
+            speed={'0.65s'}
+            size={'md'}
+          />
+        )}
+      </Flex>
+    </Flex>
   );
 };
 

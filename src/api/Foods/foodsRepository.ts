@@ -11,7 +11,7 @@ export default {
     numberPage: number
   ) {
     return axiosClient.get(`${path}/search/page-${numberPage}`, {
-      data: { nameCategory: category, keyName: keyName }
+      params: { nameCategory: category, keyName: keyName }
     });
   }
 };

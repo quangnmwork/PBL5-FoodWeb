@@ -13,7 +13,8 @@ const useFoodFetch = (
   const [hasMore, setHasMore] = useState<boolean>(false);
   useEffect(() => {
     setFoods([]);
-  }, [keyName]);
+  }, [keyName, category]);
+
   useEffect(() => {
     setLoading(true);
     setError(false);
@@ -33,7 +34,7 @@ const useFoodFetch = (
     return () => {
       fetch = false;
     };
-  }, [pageNumber, keyName]);
+  }, [pageNumber, keyName, category]);
   return { loading, error, foods, hasMore };
 };
 
