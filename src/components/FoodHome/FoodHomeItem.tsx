@@ -12,7 +12,6 @@ import React from 'react';
 import { Food } from '../../models/Food.model';
 import CustomCard from '../Card/CustomCard';
 import { AiFillTags } from 'react-icons/ai';
-import { motion } from 'framer-motion';
 interface FoodHomeItemProps {
   food: Food;
 }
@@ -24,11 +23,6 @@ const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
       cursor={'pointer'}
       role={'group'}
       title={`${props.food.nameFood},${props.food.timeCreate}`}
-      as={motion.div}
-      initial={{ opacity: 0, y: 5 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -5 }}
-      transition={{ delay: '0.5' }}
     >
       <Flex flexDirection={'column'} ref={ref}>
         <Skeleton isLoaded={props.food ? true : false}>
