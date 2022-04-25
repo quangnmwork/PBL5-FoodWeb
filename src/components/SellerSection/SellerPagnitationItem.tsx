@@ -6,6 +6,7 @@ import {
   Skeleton,
   SkeletonText
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { Seller } from '../../models/User.model';
 import CustomCard from '../Card/CustomCard';
 
@@ -15,12 +16,16 @@ interface SellerPagnitationItemProps {
 }
 
 const SellerPagnitationItem = (props: SellerPagnitationItemProps) => {
+  const navigate = useNavigate();
   return (
     <CustomCard
       data-id={props.seller.idUser}
       cursor={'pointer'}
       role={'group'}
       title={`${props.seller.nameUser},${props.seller.address}`}
+      onClick={() => {
+        navigate(`/seller/${props.seller.idUser}`, { replace: true });
+      }}
     >
       <Flex flexDirection={'column'}>
         <Skeleton isLoaded={!props.isLoading}>
