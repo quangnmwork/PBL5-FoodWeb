@@ -4,14 +4,16 @@ using FoodWeb.API.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodWeb.API.Database.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220425092849_Increase address length")]
+    partial class Increaseaddresslength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,17 +143,11 @@ namespace FoodWeb.API.Database.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DescriptionBan")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("EnableGroupDetail")
                         .HasColumnType("bit");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("TimeEnable")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("IdGroupDetail");
 
