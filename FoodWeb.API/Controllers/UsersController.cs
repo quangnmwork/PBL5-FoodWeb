@@ -134,13 +134,26 @@ namespace FoodWeb.API.Controllers
             SearchDTO searchDTO = new SearchDTO{
                 KeyName = HttpContext.Request.Query["keyName"]
             };
-            
+
             if(numberPage > _userRepository.GetTotalPageSellersSearch(searchDTO))
                 return NotFound("Page is not exist");
 
             return Ok(_userRepository.GetAllSellersSearchPaging(numberPage, searchDTO));
         }
 
-        
+        [HttpGet("getSellerById/{Id}")]
+        [AllowAnonymous]
+        public ActionResult<SellerViewDTO> GetSellerById(int Id)
+        {
+            if(!_authorizeService.IsSeller(Id))
+                return NotFound("seller is not exist");
+
+            var seller = _userRepository.GetSellerById(Id);
+
+            if(seller == null)
+                return NotFound("seller is not exist");
+            
+            return Ok(seller);
+        }
     }
 }

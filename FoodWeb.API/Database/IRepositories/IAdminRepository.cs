@@ -10,5 +10,9 @@ namespace FoodWeb.API.Database.IRepositories
         public int GetToTalPageAllProfileByNameGroup(string nameGroup);
 
         public IEnumerable<ProfileDTO> GetAllProfileByNameGroupPaging(int numberPage, string nameGroup);
+
+        public int GetTotalPageListUsersSearchPaging(SearchDTO searchDTO);
+
+        public IEnumerable<ProfileDTO> GetListUsersSearchPaging(int numberPage, SearchDTO searchDTO);
     }
 }

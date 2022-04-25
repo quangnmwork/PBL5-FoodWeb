@@ -1,3 +1,5 @@
+using System;
+
 namespace FoodWeb.API.Database.Entities
 {
     public class GroupDetail
@@ -5,6 +7,10 @@ namespace FoodWeb.API.Database.Entities
         public int IdGroupDetail { get; set; }     
 
         public bool EnableGroupDetail { get; set; }
+
+        public DateTime? TimeEnable { get; set; }
+
+        public string DescriptionBan { get; set; }
 
         public int AccountId { get; set; }
         public virtual Account Account { get; set; }

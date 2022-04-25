@@ -44,5 +44,7 @@ namespace FoodWeb.API.Database.IRepositories
         public void DeleteFood(int IdFood);
 
         public FoodForSellerDTO EditFood(int IdFood, EditFoodDTO editFoodDTO);
+
+        public bool CheckIsHidden(int IdFood);
     }
 }

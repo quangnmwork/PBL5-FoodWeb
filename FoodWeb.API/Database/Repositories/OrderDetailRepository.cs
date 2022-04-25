@@ -40,15 +40,22 @@ namespace FoodWeb.API.Database.Repositories
             return orderDetail;
         }
 
-        public IEnumerable<OrderDTO> GetAllOrderDetailByIdUserPaging(int IdUser, int numberPage)
+        public IEnumerable<OrderDTO> GetAllOrderDetailByIdUserShippedPaging(int IdUser, int numberPage)
         {
-            return _context.OrderDetails.Where(u => u.CustomerId == IdUser)
+            return _context.OrderDetails.Where(u => u.CustomerId == IdUser && u.IsShip == true)
                                         .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
                                         .OrderByDescending(u => u.TimeOrderDetail)
                                         .ToPagedList(numberPage, PageServiceExtensions.OrderDetailHistoryPageSize);
         }
 
-        
+        public IEnumerable<OrderDTO> GetAllOrderDetailByIdUserNotShippedYetPaging(int IdUser, int numberPage)
+        {
+            return _context.OrderDetails.Where(u => u.CustomerId == IdUser && u.IsShip == false)
+                                        .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider)
+                                        .OrderByDescending(u => u.TimeOrderDetail)
+                                        .ToPagedList(numberPage, PageServiceExtensions.OrderDetailHistoryPageSize);
+        }
+
         public bool CheckExistListOrderWithIdUser(int IdUser, int IdOrderDetail)
         {
             var orderDetail = _context.OrderDetails.FirstOrDefault(u => (u.CustomerId == IdUser) && u.IdOrderDetail == IdOrderDetail);
@@ -57,9 +64,15 @@ namespace FoodWeb.API.Database.Repositories
             return true;
         }
 
-        public int GetTotalPageOrderDetailByIdUserPaging(int IdUser)
+        public int GetTotalPageOrderDetailByIdUserShippedPaging(int IdUser)
         {
-            var number = _context.OrderDetails.Where(u => u.CustomerId == IdUser).Count();
+            var number = _context.OrderDetails.Where(u => u.CustomerId == IdUser && u.IsShip == true).Count();
+            return (int)Math.Ceiling(1.0*number/PageServiceExtensions.OrderDetailHistoryPageSize);
+        }
+
+        public int GetTotalPageOrderDetailByIdUserNotShippedYetPaging(int IdUser)
+        {
+            var number = _context.OrderDetails.Where(u => u.CustomerId == IdUser && u.IsShip == false).Count();
             return (int)Math.Ceiling(1.0*number/PageServiceExtensions.OrderDetailHistoryPageSize);
         }
 
