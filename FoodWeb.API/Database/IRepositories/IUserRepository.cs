@@ -30,6 +30,6 @@ namespace FoodWeb.API.Database.IRepositories
 
         public IEnumerable<SellerViewDTO> GetAllSellersSearchPaging(int numberPage, SearchDTO searchDTO);
 
-        
+        public SellerViewDTO GetSellerById(int IdSeller);
     }
 }

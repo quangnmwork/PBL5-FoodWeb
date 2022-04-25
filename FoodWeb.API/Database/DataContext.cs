@@ -57,6 +57,8 @@ namespace FoodWeb.API.Database
             builder.Entity<GroupDetail>(b => {
                 b.HasKey(s => s.IdGroupDetail);
                 b.Property(s => s.EnableGroupDetail).IsRequired(true);
+                b.Property(s => s.TimeEnable).IsRequired(false);
+                b.Property(s => s.DescriptionBan).IsRequired(false);
                 b.HasOne(s => s.Account).WithMany(s => s.GroupDetails).HasForeignKey(s => s.AccountId).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(s => s.Group).WithMany(s => s.GroupDetails).HasForeignKey(s => s.GroupId).OnDelete(DeleteBehavior.NoAction);
             });

@@ -141,6 +141,19 @@ namespace FoodWeb.API.Controllers
             return Ok(_userRepository.GetAllSellersSearchPaging(numberPage, searchDTO));
         }
 
-        
+        [HttpGet("getSellerById/{Id}")]
+        [AllowAnonymous]
+        public ActionResult<SellerViewDTO> GetSellerById(int Id)
+        {
+            if(!_authorizeService.IsSeller(Id))
+                return NotFound("seller is not exist");
+
+            var seller = _userRepository.GetSellerById(Id);
+
+            if(seller == null)
+                return NotFound("seller is not exist");
+            
+            return Ok(seller);
+        }
     }
 }

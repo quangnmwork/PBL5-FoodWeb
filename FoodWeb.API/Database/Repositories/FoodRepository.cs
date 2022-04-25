@@ -157,5 +157,12 @@ namespace FoodWeb.API.Database.Repositories
             var category = _context.Categorys.FirstOrDefault(u => u.IdCategory == food.CategoryId);
             return _mapper.Map<Food, FoodForSellerDTO>(food);
         }
+
+        public bool CheckIsHidden(int IdFood)
+        {
+            var food = _context.Foods.FirstOrDefault(u => u.IdFood == IdFood);
+            if(food == null)    return true;
+            return food.isHidden;
+        }
     }
 }

@@ -53,6 +53,11 @@ namespace FoodWeb.API.Controllers
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
                 return BadRequest("Action only customer");
 
+            foreach(var infoFood in ListInfoFood){
+                if(_foodRepository.CheckIsHidden(infoFood.IdFood))
+                    return BadRequest("Not found food or food is hidden");
+            }
+
             var CodeOrderDetail = DateTime.Now.ToString("ddMMyyyy-HHmmss-fff");
             
             var orderDetail = _orderDetailRepository.CreateOrderDetail(Int32.Parse(Id), CodeOrderDetail);
@@ -112,7 +117,7 @@ namespace FoodWeb.API.Controllers
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
                 return BadRequest("Action only customer");
             
-            if(numberPage > _orderDetailRepository.GetTotalPageOrderDetailByIdUserShippedPaging(Int32.Parse(Id)))
+            if(numberPage > _orderDetailRepository.GetTotalPageOrderDetailByIdUserNotShippedYetPaging(Int32.Parse(Id)))
                 return NotFound("Page is not exist");
 
             return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserNotShippedYetPaging(Int32.Parse(Id), numberPage));
