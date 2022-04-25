@@ -16,7 +16,7 @@ const FoodDetailDescription = (props: Partial<Food>) => {
         </Text>
       </Flex>
       <Box>
-        <Text pl={'1rem'} pt={'.5rem'}>
+        <Text pl={'1rem'} py={'.5rem'}>
           {props.descriptionFood || 'Không có mô tả nào'}
         </Text>
       </Box>
