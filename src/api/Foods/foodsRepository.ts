@@ -13,5 +13,8 @@ export default {
     return axiosClient.get(`${path}/search/page-${numberPage}`, {
       params: { nameCategory: category, keyName: keyName }
     });
+  },
+  getFoodById(id: string) {
+    return axiosClient.get(`${path}/${id}`);
   }
 };

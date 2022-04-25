@@ -11,7 +11,7 @@ interface FoodHomeMainProps {
 const FoodHomeMain = (props: FoodHomeMainProps) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const containerRef = createRef<HTMLDivElement>();
-  const { foods, loading, hasMore } = useFoodFetch(
+  const { foods, loading, hasMore, error } = useFoodFetch(
     props.activeCategory,
     props.keyName || '',
     pageNumber
@@ -40,6 +40,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
       containerRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [props.activeCategory, props.keyName]);
+  // console.log('Eror', error);
   return (
     <Flex
       flexDirection={'column'}
@@ -50,7 +51,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
       top={'5rem'}
     >
       <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
-        {foods.length > 0 ? (
+        {!error && foods.length ? (
           foods.map((food, index) => {
             if (foods.length === index + 1) {
               return (
@@ -67,7 +68,6 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
         ) : (
           <Box fontWeight={'bold'}>Không có kết quả tìm thấy</Box>
         )}
-        {/* <div>{error && 'Error'}</div> */}
       </SimpleGrid>
       <Flex justifyContent={'center'} width={'100%'} mt={'2rem'}>
         {loading || (

@@ -12,17 +12,23 @@ import React from 'react';
 import { Food } from '../../models/Food.model';
 import CustomCard from '../Card/CustomCard';
 import { AiFillTags } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+
 interface FoodHomeItemProps {
   food: Food;
 }
 
 const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
+  const navigate = useNavigate();
   return (
     <CustomCard
       data-id={props.food.idFood}
       cursor={'pointer'}
       role={'group'}
       title={`${props.food.nameFood},${props.food.timeCreate}`}
+      onClick={() => {
+        navigate(`/food/${props.food.idFood}`, { replace: true });
+      }}
     >
       <Flex flexDirection={'column'} ref={ref}>
         <Skeleton isLoaded={props.food ? true : false}>
