@@ -12,7 +12,18 @@ export default {
   getSellers(pageNumber: number) {
     return axiosClient.get(`${path}/getAllSellers/page-${pageNumber}`);
   },
+  getSellerById(idSeller: number) {
+    return axiosClient.get(`${path}/getSellerById/${idSeller}`);
+  },
   getTotalPageSellers() {
     return axiosClient.get(`${path}/getTotalPageAllSellers`);
+  },
+  getTotalFoodPagesOfSeller(idSeller: number) {
+    return axiosClient.get(
+      `${path}/${idSeller}/foods/getTotalPageFoodByIdSeller`
+    );
+  },
+  getAllFoodsOfSeller(idSeller: number, pageNumber: number) {
+    return axiosClient.get(`${path}/${idSeller}/foods/page-${pageNumber}`);
   }
 };

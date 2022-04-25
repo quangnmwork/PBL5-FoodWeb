@@ -21,7 +21,7 @@ const FoodMain = () => {
       mounted = false;
     };
   }, []);
-  console.log(food);
+
   return (
     <>
       <CustomCard
