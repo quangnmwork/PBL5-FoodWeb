@@ -150,5 +150,7 @@ namespace FoodWeb.API.Database.Repositories
                        .OrderBy(u => u.IdUser)
                        .ToPagedList(numberPage, PageServiceExtensions.SellerPageSize);
         }
+
+
     }
 }

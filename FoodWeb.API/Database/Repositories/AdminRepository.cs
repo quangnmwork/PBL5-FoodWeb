@@ -57,5 +57,34 @@ namespace FoodWeb.API.Database.Repositories
             return data.OrderBy(u => u.IdUser)
                        .ToPagedList(numberPage, PageServiceExtensions.ProfilePageSize);
         }
+
+        public int GetTotalPageListUsersSearchPaging(SearchDTO searchDTO)
+        {
+            List<ProfileDTO> data = new List<ProfileDTO>();
+            foreach(var user in _context.Users){
+                if(_authorizeService.GetGroupById(user.IdUser).ToLower() == searchDTO.NameGroup.ToLower())
+                    data.Add(_mapper.Map<ProfileDTO>(user));
+            }
+
+            int number = data.Where(u => u.NameUser.ToLower().Contains(searchDTO.NameUser.ToLower()) 
+                                         && u.Address.ToLower().Contains(searchDTO.Address.ToLower()) 
+                                         && u.Phone.ToLower().Contains(searchDTO.Phone.ToLower())).Count();
+
+            return (int)Math.Ceiling(1.0*number / PageServiceExtensions.ProfilePageSize);
+            
+        }
+
+        public IEnumerable<ProfileDTO> GetListUsersSearchPaging(int numberPage, SearchDTO searchDTO)
+        {
+            List<ProfileDTO> data = new List<ProfileDTO>();
+            foreach(var user in _context.Users){
+                if(_authorizeService.GetGroupById(user.IdUser).ToLower() == searchDTO.NameGroup.ToLower())
+                    data.Add(_mapper.Map<ProfileDTO>(user));
+            }
+
+            return data.Where(u => u.NameUser.ToLower().Contains(searchDTO.NameUser.ToLower()) 
+                                         && u.Address.ToLower().Contains(searchDTO.Address.ToLower()) 
+                                         && u.Phone.ToLower().Contains(searchDTO.Phone.ToLower()));
+        }
     }
 }
