@@ -1,0 +1,29 @@
+[{
+        "NameUser": "Shipper1",
+        "Phone": "0123456789",
+        "Address": "DHBK",
+        "Avatar": "",
+        "Money": "337482"
+    },
+    {
+        "NameUser": "Shipper2",
+        "Phone": "0123456789",
+        "Address": "DHBK",
+        "Avatar": "",
+        "Money": "912401"
+    },
+    {
+        "NameUser": "Shipper3",
+        "Phone": "0123456789",
+        "Address": "DHBK",
+        "Avatar": "",
+        "Money": "50479"
+    },
+    {
+        "NameUser": "Shipper4",
+        "Phone": "0123456789",
+        "Address": "DHBK",
+        "Avatar": "",
+        "Money": "838976"
+    }
+]

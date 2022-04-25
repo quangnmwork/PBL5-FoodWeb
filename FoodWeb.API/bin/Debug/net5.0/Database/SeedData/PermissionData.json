@@ -1,0 +1,33 @@
+[{
+    "IdPermission": 1,
+    "NamePermission": "View Food",
+    "EnablePermission": true
+}, {
+    "IdPermission": 2,
+    "NamePermission": "Create Order",
+    "EnablePermission": true
+}, {
+    "IdPermission": 3,
+    "NamePermission": "Chat",
+    "EnablePermission": true
+}, {
+    "IdPermission": 4,
+    "NamePermission": "View Ship",
+    "EnablePermission": true
+}, {
+    "IdPermission": 5,
+    "NamePermission": "Create Food",
+    "EnablePermission": true
+}, {
+    "IdPermission": 6,
+    "NamePermission": "Delete Food",
+    "EnablePermission": true
+}, {
+    "IdPermission": 7,
+    "NamePermission": "Edit Food",
+    "EnablePermission": true
+}, {
+    "IdPermission": 8,
+    "NamePermission": "Hidden Food",
+    "EnablePermission": true
+}]
