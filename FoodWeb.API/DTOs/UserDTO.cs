@@ -16,5 +16,9 @@ namespace FoodWeb.API.Database.Entities
 
         public string Avatar { get; set; }
 
+        public override string ToString()
+        {
+            return NameUser + " " + Phone + " " + Avatar + "\n" + Address;
+        }
     }
 }

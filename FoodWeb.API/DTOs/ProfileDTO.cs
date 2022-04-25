@@ -21,5 +21,10 @@ namespace FoodWeb.API.DTOs
         public string Avatar { get; set; }
 
         public string NameGroup { get; set; }
+
+        public override string ToString()
+        {
+            return IdUser + " " + NameUser + " " + Phone + " " + Avatar + "\n" + Address + " " + Money;
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace FoodWeb.API.Extensions
             
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthorizeService, AuthorizeService>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
