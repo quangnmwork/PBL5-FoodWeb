@@ -109,7 +109,7 @@ namespace FoodWeb.API.Controllers
             SearchDTO searchDTO = new SearchDTO{
                 KeyName = HttpContext.Request.Query["keyName"]
             };
-            
+
             if(numberPage > _userRepository.GetTotalPageSellersSearch(searchDTO))
                 return NotFound("Page is not exist");
 

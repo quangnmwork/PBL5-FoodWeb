@@ -72,27 +72,50 @@ namespace FoodWeb.API.Controllers
             return Ok(orderDTO);
         }
 
-        [HttpGet("getAllOrder/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail (phân trang)
+        [HttpGet("getAllOrderShipped/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail đã nhận ship (phân trang)
         public ActionResult<IEnumerable<OrderDTO>> GetListOrder(int numberPage)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
                 return BadRequest("Action only customer");
             
-            if(numberPage > _orderDetailRepository.GetTotalPageOrderDetailByIdUserPaging(Int32.Parse(Id)))
+            if(numberPage > _orderDetailRepository.GetTotalPageOrderDetailByIdUserShippedPaging(Int32.Parse(Id)))
                 return NotFound("Page is not exist");
 
-            return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserPaging(Int32.Parse(Id), numberPage));
+            return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserShippedPaging(Int32.Parse(Id), numberPage));
         }
 
-        [HttpGet("getTotalPageListOrder")] // lấy tổng số trang các order detail trong lịch sử customer
-        public ActionResult<int> GetTotalPageListOrder()
+        [HttpGet("getTotalPageListOrderShipped")] // lấy tổng số trang các order detail trong lịch sử customer
+        public ActionResult<int> GetTotalPageListOrderShipped()
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
                 return BadRequest("Action only customer");
 
-            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserPaging(Int32.Parse(Id)));
+            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserShippedPaging(Int32.Parse(Id)));
+        }
+
+        [HttpGet("getTotalPageListOrderNotShippedYet")] // lấy tổng số trang các order detail trong lịch sử customer
+        public ActionResult<int> GetTotalPageListOrderNotShippedYet()
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
+                return BadRequest("Action only customer");
+
+            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserNotShippedYetPaging(Int32.Parse(Id)));
+        }
+
+        [HttpGet("getAllOrderNotShippedYet/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail đã nhận ship (phân trang)
+        public ActionResult<IEnumerable<OrderDTO>> GetListOrderNotShippedYet(int numberPage)
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
+                return BadRequest("Action only customer");
+            
+            if(numberPage > _orderDetailRepository.GetTotalPageOrderDetailByIdUserShippedPaging(Int32.Parse(Id)))
+                return NotFound("Page is not exist");
+
+            return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserNotShippedYetPaging(Int32.Parse(Id), numberPage));
         }
 
         [HttpGet("getListFoodOrder/{IdOrderDetail}")]   //customer xem chi tiết các food trong order detail mình đã tạo
