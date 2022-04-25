@@ -74,7 +74,7 @@ namespace FoodWeb.API.Database
                 b.HasKey(s => s.IdUser);
                 b.Property(s => s.NameUser).HasMaxLength(100).IsRequired(true);
                 b.Property(s => s.Phone).HasMaxLength(10).IsRequired(true);
-                b.Property(s => s.Address).HasMaxLength(100).IsRequired(true);
+                b.Property(s => s.Address).HasMaxLength(150).IsRequired(true);
                 b.Property(s => s.Money).IsRequired(false);
                 b.Property(s => s.Avatar).IsRequired(false);
                 b.HasOne(s => s.Account).WithOne(s => s.User).HasForeignKey<Account>(s => s.UserId);

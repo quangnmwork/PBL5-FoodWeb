@@ -7,6 +7,7 @@ using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
 using FoodWeb.API.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodWeb.API.Controllers
@@ -17,22 +18,37 @@ namespace FoodWeb.API.Controllers
     {
         private readonly IFoodRepository _foodRepository;
         private readonly IAuthorizeService _authorizeService;
+        private readonly ICloudinaryService _cloudinary;
 
         public FoodsController(IFoodRepository foodRepository,
-                               IAuthorizeService authorizeService)
+                               IAuthorizeService authorizeService,
+                               ICloudinaryService cloudinary)
         {
             this._foodRepository = foodRepository;
             this._authorizeService = authorizeService;
+            this._cloudinary = cloudinary;
         }
 
         [HttpPost("createFood")]
         [Authorize]
-        public ActionResult<FoodForSellerDTO> CreateFood(CreateFoodDTO createFoodDTO) // seller thêm mới một món ăn
+        public ActionResult<FoodForSellerDTO> CreateFood(IFormFileCollection formFiles) // seller thêm mới một món ăn
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if(!_authorizeService.IsSeller(Id))
                 return BadRequest("Action only seller");
-
+            var createFoodDTO = new CreateFoodDTO(){
+                NameFood = HttpContext.Request.Form["NameFood"],
+                PriceFood = Double.Parse(HttpContext.Request.Form["PriceFood"]),
+                isHidden = Boolean.Parse(HttpContext.Request.Form["isHidden"]),
+                DescriptionFood = HttpContext.Request.Form["DescriptionFood"],
+                CategoryId = Int32.Parse(HttpContext.Request.Form["CategoryId"]),
+            };
+            var imageFoodFile = HttpContext.Request.Form.Files.GetFile("ImageFood");
+            if (imageFoodFile!=null){
+                // Console.WriteLine("Lenght " +imageFoodFile.Length);
+                createFoodDTO.ImageFood = _cloudinary.UploadImage("Foods",imageFoodFile);
+                // Console.WriteLine("Link " +createFoodDTO.ImageFood);
+            }
             var food = _foodRepository.CreateFood(Id, createFoodDTO);
 
             return Ok(food);
