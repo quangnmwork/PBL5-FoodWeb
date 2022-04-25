@@ -46,7 +46,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_adminRepository.GetAllProfileByNameGroupPaging(numberPage, nameGroup));
         }
 
-        [HttpGet("{nameGroup}/search/getToTalPage")]
+        [HttpGet("{nameGroup}/search/getToTalPage")]    // lấy số trang search theo name, phone, address, group của các user (customer, shipper, seller)
         public ActionResult<int> GetToTalListUsersSearchPaging(string nameGroup, int numberPage)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -63,7 +63,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_adminRepository.GetTotalPageListUsersSearchPaging(searchDTO));
         }
 
-        [HttpGet("{nameGroup}/search/page-{numberPage}")]
+        [HttpGet("{nameGroup}/search/page-{numberPage}")]   // search theo name, phone, address, group của các user(customer, shipper, seller) phân trang
         public ActionResult<IEnumerable<ProfileDTO>> GetListUsersSearchPaging(string nameGroup, int numberPage)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);

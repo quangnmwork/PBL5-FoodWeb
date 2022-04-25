@@ -77,7 +77,17 @@ namespace FoodWeb.API.Controllers
             return Ok(orderDTO);
         }
 
-        [HttpGet("getAllOrderShipped/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail đã nhận ship (phân trang)
+        [HttpGet("getTotalPageListOrderShipped")] // lấy tổng số trang các order detail trong lịch sử customer (các order detail đã ship)
+        public ActionResult<int> GetTotalPageListOrderShipped()
+        {
+            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
+                return BadRequest("Action only customer");
+
+            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserShippedPaging(Int32.Parse(Id)));
+        }
+
+        [HttpGet("getAllOrderShipped/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail đã ship (phân trang)
         public ActionResult<IEnumerable<OrderDTO>> GetListOrder(int numberPage)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -90,17 +100,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_orderDetailRepository.GetAllOrderDetailByIdUserShippedPaging(Int32.Parse(Id), numberPage));
         }
 
-        [HttpGet("getTotalPageListOrderShipped")] // lấy tổng số trang các order detail trong lịch sử customer
-        public ActionResult<int> GetTotalPageListOrderShipped()
-        {
-            var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if(!_authorizeService.IsCustommer(Int32.Parse(Id)))
-                return BadRequest("Action only customer");
-
-            return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserShippedPaging(Int32.Parse(Id)));
-        }
-
-        [HttpGet("getTotalPageListOrderNotShippedYet")] // lấy tổng số trang các order detail trong lịch sử customer
+        [HttpGet("getTotalPageListOrderNotShippedYet")] // lấy tổng số trang các order detail chưa ship (shipper chưa ship tới)
         public ActionResult<int> GetTotalPageListOrderNotShippedYet()
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -110,7 +110,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_orderDetailRepository.GetTotalPageOrderDetailByIdUserNotShippedYetPaging(Int32.Parse(Id)));
         }
 
-        [HttpGet("getAllOrderNotShippedYet/page-{numberPage}")]  //customer vào lịch sử lấy tất cả các order detail đã nhận ship (phân trang)
+        [HttpGet("getAllOrderNotShippedYet/page-{numberPage}")]  //customer vào lấy tất cả các order detail shipper chưa ship tới (phân trang)
         public ActionResult<IEnumerable<OrderDTO>> GetListOrderNotShippedYet(int numberPage)
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;

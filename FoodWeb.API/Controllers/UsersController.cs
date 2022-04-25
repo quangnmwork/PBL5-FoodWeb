@@ -141,7 +141,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_userRepository.GetAllSellersSearchPaging(numberPage, searchDTO));
         }
 
-        [HttpGet("getSellerById/{Id}")]
+        [HttpGet("getSellerById/{Id}")]     // Lấy seller theo Id
         [AllowAnonymous]
         public ActionResult<SellerViewDTO> GetSellerById(int Id)
         {
