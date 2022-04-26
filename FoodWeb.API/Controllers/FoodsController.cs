@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper.Internal;
+using AutoMapper.Internal.Mappers;
 using FoodWeb.API.Database.IRepositories;
 using FoodWeb.API.DTOs;
 using FoodWeb.API.Services;
@@ -177,7 +180,7 @@ namespace FoodWeb.API.Controllers
 
         [HttpPatch("editFood/{IdFood}")]    //Seller edit món ăn
         [Authorize]
-        public ActionResult<FoodForSellerDTO> EditFood(int IdFood, EditFoodDTO editFoodDTO)
+        public ActionResult<FoodForSellerDTO> EditFood(int IdFood ,IFormFileCollection formFiles)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if(!_authorizeService.IsSeller(Id))
@@ -185,7 +188,19 @@ namespace FoodWeb.API.Controllers
             
             if(!_foodRepository.CheckGetFoodForSeller(Id, IdFood))
                 return Unauthorized("You have not permission");
-            
+            var editFoodDTO = new EditFoodDTO();
+            foreach (var i in HttpContext.Request.Form){
+                // Console.WriteLine(i);
+                var type = editFoodDTO.GetType().GetProperty(i.Key);
+                // Console.WriteLine(type.PropertyType);
+                type.SetMemberValue(editFoodDTO,Convert.ChangeType(i.Value.ToString(), type.PropertyType));
+            }
+            var avatarFile = HttpContext.Request.Form.Files.GetFile("ImageFood");
+            if (avatarFile!=null){
+                // Console.WriteLine("Lenght " +avatarFile.Length);
+                editFoodDTO.ImageFood = _cloudinary.UploadImage("Users",avatarFile);
+                // Console.WriteLine("Link " +editFoodDTO.ImageFood);
+            }
             var food = _foodRepository.EditFood(IdFood, editFoodDTO);
 
             return Ok(food);
