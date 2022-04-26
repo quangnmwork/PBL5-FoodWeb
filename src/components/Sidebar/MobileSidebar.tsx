@@ -1,5 +1,6 @@
 import { Flex, IconButton, Text } from '@chakra-ui/react';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 import { DynamicObject } from '../../models/DynamicObject.model';
 import AvatarCustom from '../Avatar/AvatarCustom';
 interface MobileSidebarProps {
@@ -24,14 +25,17 @@ const MobileSidebar = (props: MobileSidebarProps) => {
         aria-label="open menu"
         icon={<HiOutlineMenuAlt2 />}
       />
-      <Text
-        display={{ base: 'flex', md: 'none' }}
-        fontSize="xl"
-        fontWeight="bold"
-        color={'main.100'}
-      >
-        User Dashboard
-      </Text>
+      <Link to={'/'} replace={true}>
+        <Text
+          display={{ base: 'flex', md: 'none' }}
+          fontSize="xl"
+          fontWeight="bold"
+          color={'main.100'}
+          cursor={'pointer'}
+        >
+          User Dashboard
+        </Text>
+      </Link>
       <AvatarCustom userData={props.userData} />
     </Flex>
   );

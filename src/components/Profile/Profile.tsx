@@ -15,7 +15,7 @@ import ButtonCustom from '../Button/ButtonCustom';
 import FormInput from '../Form/FormInput';
 import { useForm } from 'react-hook-form';
 import { signinInput, signupInput } from '../../models/Authentication.model';
-import { createRef } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { userAPI } from '../../api/repositoryFactory';
 
 interface ProfileProps {
@@ -31,12 +31,14 @@ const Profile = (props: ProfileProps) => {
   const userName = createRef<HTMLInputElement>();
   const address = createRef<HTMLInputElement>();
   const phone = createRef<HTMLInputElement>();
+  const [selectAvatar, setSelectAvatar] = useState<File | undefined>();
+  const [currentAvatar, setCurrentAvatar] = useState<string>();
   const toast = useToast();
   console.log(props.userData);
   const updateUserProfileHandler = async (data: signupInput | signinInput) => {
     try {
       const submitData = data as Partial<signupInput>;
-      console.log('Submit data', submitData.nameUser, props.userData?.nameUser);
+      const formData = new FormData();
       if (!submitData.nameUser?.length) {
         delete submitData.nameUser;
       }
@@ -49,8 +51,20 @@ const Profile = (props: ProfileProps) => {
       if (!submitData.address?.length) {
         delete submitData.address;
       }
-      console.log(submitData);
-      const res = await userAPI.updateUserProfile(submitData);
+      if (selectAvatar) {
+        formData.append('Avatar', selectAvatar);
+      }
+      if (submitData.nameUser) {
+        formData.append('NameUser', submitData.nameUser);
+      }
+      if (submitData.phone) {
+        formData.append('Phone', submitData.phone);
+      }
+      if (submitData.address) {
+        formData.append('Address', submitData.address);
+      }
+      console.log(formData);
+      const res = await userAPI.updateUserProfile(formData);
       if (res.status == 200) {
         toast({
           status: 'success',
@@ -69,6 +83,21 @@ const Profile = (props: ProfileProps) => {
       });
     }
   };
+  const onImageUploadChanging = (event: any) => {
+    const currentTarget = event.target as HTMLInputElement;
+    console.log(currentTarget);
+    if (!currentTarget.files || currentTarget.files.length == 0) {
+      setSelectAvatar(undefined);
+      return;
+    } else setSelectAvatar(currentTarget.files[0]);
+    const url = URL.createObjectURL(currentTarget.files[0]);
+    setCurrentAvatar(url);
+  };
+  useEffect(() => {
+    if (!selectAvatar) return;
+    return () => URL.revokeObjectURL(URL.createObjectURL(selectAvatar));
+  }, [selectAvatar]);
+
   return (
     <Flex
       direction={'column'}
@@ -87,7 +116,7 @@ const Profile = (props: ProfileProps) => {
         <>
           <Box alignSelf={'center'} mb={'1rem'}>
             <Avatar
-              src={props.userData?.avatar || '/assets/user-avatar.jpg'}
+              src={currentAvatar || props.userData?.avatar}
               borderColor={'main.100'}
               borderWidth={'1px'}
               size={'xl'}
@@ -115,7 +144,13 @@ const Profile = (props: ProfileProps) => {
                     />
                   </FormLabel>
                 </Box>
-                <Input type={'file'} id="avatar" display={'none'} />
+                <Input
+                  type={'file'}
+                  id="avatar"
+                  display={'none'}
+                  accept="image/*"
+                  onChange={onImageUploadChanging}
+                />
               </AvatarBadge>
             </Avatar>
           </Box>

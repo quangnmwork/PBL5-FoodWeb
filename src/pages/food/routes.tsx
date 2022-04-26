@@ -6,7 +6,7 @@ const FoodRoutes: RoutesConfig[] = [
     path: '/food/:id',
     component: <FoodContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: true,
+    needProtected: false,
     specificRole: ['Customer']
   }
 ];

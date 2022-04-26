@@ -5,6 +5,7 @@ import {
   AiOutlineSetting,
   AiOutlineShoppingCart
 } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 import SidebarItem from './SidebarItem';
 
@@ -41,9 +42,16 @@ const SidebarContent = ({ onClose, ...rest }: SidebarContentProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="xl" fontWeight="bold" color={'main.100'}>
-          User Dashboard
-        </Text>
+        <Link to={'/'} replace={true}>
+          <Text
+            fontSize="xl"
+            fontWeight="bold"
+            color={'main.100'}
+            cursor={'pointer'}
+          >
+            User Dashboard
+          </Text>
+        </Link>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {SidebarItems.map((sidebar) => (
