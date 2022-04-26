@@ -24,9 +24,11 @@ const FoodDetail = (props: Partial<Food>) => {
     event.preventDefault();
     const food = {
       id: props.idFood?.toString() || '1',
-      numberFood: parseInt(numberButtonRef.current?.value || '-1')
+      numberFood: parseInt(numberButtonRef.current?.value || '-1'),
+      imageFood: props.imageFood || '',
+      nameFood: props.nameFood || ''
     };
-    console.log(food);
+    // console.log(food);
     if (food.numberFood > 0) {
       cart.addFood(food);
     }

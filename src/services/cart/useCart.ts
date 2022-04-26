@@ -5,6 +5,8 @@ import { DynamicObject } from '../../models/DynamicObject.model';
 
 interface FoodCart {
   id: string;
+  nameFood: string;
+  imageFood: string;
   numberFood: number;
 }
 interface CartState {
