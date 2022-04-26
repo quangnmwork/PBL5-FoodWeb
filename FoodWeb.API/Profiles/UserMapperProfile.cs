@@ -24,7 +24,20 @@ namespace FoodWeb.API.Profiles
 
             CreateMap<Food, FoodForSellerDTO>().ForMember(dest => dest.NameCategory, opt => opt.MapFrom(src => src.Category.NameCategory));
 
-            CreateMap<EditFoodDTO, Food>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<EditFoodDTO, Food>().ForAllMembers(
+                opts => opts.Condition(
+                    (src, dest, srcMember) => (
+                        srcMember != null && 
+                        (
+                            Int32.TryParse(srcMember.ToString(), out _ ) == false || 
+                            (
+                                Int32.TryParse(srcMember.ToString(), out _ ) == true && 
+                                Int32.Parse(srcMember.ToString())!= 0
+                            ) 
+                        )
+                    )
+                )
+            );
 
             CreateMap<CreateFoodDTO, Food>();
 
