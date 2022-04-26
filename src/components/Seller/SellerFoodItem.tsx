@@ -16,7 +16,8 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
         id: props.food.idFood.toString(),
         numberFood: 1,
         imageFood: props.food.imageFood || '',
-        nameFood: props.food.nameFood || ''
+        nameFood: props.food.nameFood || '',
+        priceFood: props.food.priceFood || 0
       };
       cart.addFood(food);
     };
