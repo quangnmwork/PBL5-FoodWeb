@@ -26,7 +26,8 @@ const FoodDetail = (props: Partial<Food>) => {
       id: props.idFood?.toString() || '1',
       numberFood: parseInt(numberButtonRef.current?.value || '-1'),
       imageFood: props.imageFood || '',
-      nameFood: props.nameFood || ''
+      nameFood: props.nameFood || '',
+      priceFood: props.priceFood || 0
     };
     // console.log(food);
     if (food.numberFood > 0) {
