@@ -1,6 +1,7 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Flex, Text, Box, Image, IconButton } from '@chakra-ui/react';
 import React from 'react';
+import { useCart } from '../../services/cart/useCart';
 import { Food } from './../../models/Food.model';
 interface SellerFoodItemProps {
   food: Food;
@@ -8,6 +9,17 @@ interface SellerFoodItemProps {
 
 const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
   (props, ref) => {
+    const cart = useCart();
+    const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      const food = {
+        id: props.food.idFood.toString(),
+        numberFood: 1,
+        imageFood: props.food.imageFood || '',
+        nameFood: props.food.nameFood || ''
+      };
+      cart.addFood(food);
+    };
     return (
       <Flex
         as="div"
@@ -42,6 +54,7 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
             aria-label="Search database"
             icon={<AddIcon />}
             size={'xs'}
+            onClick={addCartHandler}
           />
         </Flex>
       </Flex>

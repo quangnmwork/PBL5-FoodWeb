@@ -24,7 +24,7 @@ const ButtonNumber = React.forwardRef<HTMLInputElement, ButtonNumberProps>(
         setValue(value - 1);
       }
     };
-    console.log(value);
+    // console.log(value);
     return (
       <Flex alignItems={'center'}>
         <IconButton
