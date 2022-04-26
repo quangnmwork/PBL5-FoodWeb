@@ -6,7 +6,7 @@ const SellerRoutes: RoutesConfig[] = [
     path: '/seller/:id',
     component: <SellerContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: true,
+    needProtected: false,
     specificRole: ['Customer']
   }
 ];
