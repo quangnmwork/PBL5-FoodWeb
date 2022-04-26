@@ -14,5 +14,7 @@ namespace FoodWeb.API.Database.IRepositories
         public int GetTotalPageListUsersSearchPaging(SearchDTO searchDTO);
 
         public IEnumerable<ProfileDTO> GetListUsersSearchPaging(int numberPage, SearchDTO searchDTO);
+
+        public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper);
     }
 }

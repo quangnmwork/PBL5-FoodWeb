@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FoodWeb.API.Database.Migrations
+namespace FoodWeb.API.database.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220419153904_Add_IdShipper_OrderDetail")]
-    partial class Add_IdShipper_OrderDetail
+    [Migration("20220426043343_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,11 +143,17 @@ namespace FoodWeb.API.Database.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DescriptionBan")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("EnableGroupDetail")
                         .HasColumnType("bit");
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("TimeEnable")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("IdGroupDetail");
 
@@ -190,8 +196,7 @@ namespace FoodWeb.API.Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("ChoiceShip")
-                        .IsRequired()
+                    b.Property<bool>("ChoiceShip")
                         .HasColumnType("bit");
 
                     b.Property<string>("CodeOrderDetail")
@@ -201,11 +206,10 @@ namespace FoodWeb.API.Database.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsShip")
-                        .IsRequired()
+                    b.Property<bool>("IsShip")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ShipperId")
+                    b.Property<int?>("ShipperId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TimeOrderDetail")
@@ -360,8 +364,8 @@ namespace FoodWeb.API.Database.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
@@ -462,9 +466,7 @@ namespace FoodWeb.API.Database.Migrations
 
                     b.HasOne("FoodWeb.API.Database.Entities.User", "Shipper")
                         .WithMany("OrderDetailShippers")
-                        .HasForeignKey("ShipperId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ShipperId");
 
                     b.Navigation("Customer");
 

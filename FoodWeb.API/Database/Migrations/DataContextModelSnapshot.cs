@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FoodWeb.API.Database.Migrations
+namespace FoodWeb.API.database.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -464,8 +464,7 @@ namespace FoodWeb.API.Database.Migrations
 
                     b.HasOne("FoodWeb.API.Database.Entities.User", "Shipper")
                         .WithMany("OrderDetailShippers")
-                        .HasForeignKey("ShipperId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ShipperId");
 
                     b.Navigation("Customer");
 

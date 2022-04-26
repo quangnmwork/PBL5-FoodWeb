@@ -82,5 +82,18 @@ namespace FoodWeb.API.Controllers
 
             return Ok(_adminRepository.GetListUsersSearchPaging(numberPage, searchDTO));
         }
+
+        [HttpGet("getChoiceShip/{IdShipper}")]  // Admin xem các đơn hàng hiện shipper đang nhận ship
+        public ActionResult<IEnumerable<OrderDTO>> GetListOrderShipperChoice(int IdShipper)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsAdmin(Id))
+                return BadRequest("Action only admin");
+            
+            if(!_authorizeService.IsShipper(IdShipper))
+                return NotFound();
+
+            return Ok(_adminRepository.GetListOrderShipperChoice(Id));
+        }
     }
 }

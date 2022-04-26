@@ -86,5 +86,11 @@ namespace FoodWeb.API.Database.Repositories
                                          && u.Address.ToLower().Contains(searchDTO.Address.ToLower()) 
                                          && u.Phone.ToLower().Contains(searchDTO.Phone.ToLower()));
         }
+
+        public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper)
+        {
+            return _context.OrderDetails.Where(u => u.ShipperId == IdShipper && u.ChoiceShip == true && u.IsShip == false)
+                                        .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider);
+        }
     }
 }

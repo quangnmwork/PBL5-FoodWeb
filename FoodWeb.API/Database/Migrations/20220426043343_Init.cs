@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FoodWeb.API.Database.Migrations
+namespace FoodWeb.API.database.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,9 +51,9 @@ namespace FoodWeb.API.Database.Migrations
                 {
                     IdUser = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameUser = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Money = table.Column<double>(type: "float", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -96,7 +96,7 @@ namespace FoodWeb.API.Database.Migrations
                 {
                     IdAccount = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
@@ -119,7 +119,7 @@ namespace FoodWeb.API.Database.Migrations
                 {
                     IdFood = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameFood = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    NameFood = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     PriceFood = table.Column<double>(type: "float", nullable: false),
                     TimeCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DescriptionFood = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -150,19 +150,27 @@ namespace FoodWeb.API.Database.Migrations
                     IdOrderDetail = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TimeOrderDetail = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsShip = table.Column<bool>(type: "bit", nullable: true),
+                    IsShip = table.Column<bool>(type: "bit", nullable: false),
                     TimeShipDone = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ChoiceShip = table.Column<bool>(type: "bit", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    ChoiceShip = table.Column<bool>(type: "bit", nullable: false),
+                    CodeOrderDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    ShipperId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderDetails", x => x.IdOrderDetail);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_OrderDetails_Users_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Users",
                         principalColumn: "IdUser");
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Users_ShipperId",
+                        column: x => x.ShipperId,
+                        principalTable: "Users",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +180,8 @@ namespace FoodWeb.API.Database.Migrations
                     IdGroupDetail = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EnableGroupDetail = table.Column<bool>(type: "bit", nullable: false),
+                    TimeEnable = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DescriptionBan = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccountId = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -221,7 +231,7 @@ namespace FoodWeb.API.Database.Migrations
                 {
                     IdPayment = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TimePayment = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimePayment = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PriceTotalFood = table.Column<double>(type: "float", nullable: false),
                     PriceShip = table.Column<double>(type: "float", nullable: false),
                     IsPayment = table.Column<bool>(type: "bit", nullable: false),
@@ -319,9 +329,14 @@ namespace FoodWeb.API.Database.Migrations
                 column: "OrderDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_UserId",
+                name: "IX_OrderDetails_CustomerId",
                 table: "OrderDetails",
-                column: "UserId");
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderDetails_ShipperId",
+                table: "OrderDetails",
+                column: "ShipperId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payments_OrderDetailId",

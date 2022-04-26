@@ -24,6 +24,8 @@ namespace FoodWeb.API.Services
         public string GetGroupById(int Id)
         {
             var user = _userRepository.GetUserById(Id);
+            if(user == null)    return null;
+            
             var account = _accountRepository.GetAccountByUserId(user.IdUser);
             var detailGroup = _groupDetailRepository.GetGroupDetailByIdAccount(account.IdAccount);
             var group = _groupRepository.GetGroupById(detailGroup.GroupId);

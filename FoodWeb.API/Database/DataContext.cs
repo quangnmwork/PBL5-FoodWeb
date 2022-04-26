@@ -127,7 +127,7 @@ namespace FoodWeb.API.Database
                 b.Property(s => s.ChoiceShip).IsRequired(true);
                 b.Property(s => s.CodeOrderDetail).IsRequired(true);
                 b.HasOne(s => s.Customer).WithMany(s => s.OrderDetailCustomers).HasForeignKey(s => s.CustomerId).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(s => s.Shipper).WithMany(s => s.OrderDetailShippers).HasForeignKey(s => s.ShipperId).OnDelete(DeleteBehavior.NoAction).IsRequired(false);
+                b.HasOne(s => s.Shipper).WithMany(s => s.OrderDetailShippers).HasForeignKey(s => s.ShipperId).IsRequired(false);
                 b.HasOne(s => s.Payment).WithOne(s => s.OrderDetail).HasForeignKey<Payment>(s => s.OrderDetailId).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(s => s.Room).WithOne(s => s.OrderDetail).HasForeignKey<Room>(s => s.OrderDetailId).OnDelete(DeleteBehavior.NoAction);
             });
