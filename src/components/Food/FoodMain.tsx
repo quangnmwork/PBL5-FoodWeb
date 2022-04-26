@@ -44,6 +44,7 @@ const FoodMain = () => {
             nameFood={food?.nameFood}
             priceFood={food?.priceFood}
             nameCategory={food?.nameCategory}
+            idFood={food?.idFood}
           />
         </Flex>
       </CustomCard>
