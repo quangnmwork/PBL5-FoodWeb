@@ -18,12 +18,15 @@ namespace FoodWeb.API.Controllers
     {
         private readonly IAuthorizeService _authorizeService;
         private readonly IAdminRepository _adminRepository;
+        private readonly IFoodRepository _foodRepository;
 
         public AdminController(IAuthorizeService authorizeService,
-                               IAdminRepository adminRepository)
+                               IAdminRepository adminRepository,
+                               IFoodRepository foodRepository)
         {
             this._authorizeService = authorizeService;
             this._adminRepository = adminRepository;
+            this._foodRepository = foodRepository;
         }
 
         [HttpGet("{nameGroup}/getToTalPage")]
@@ -93,7 +96,97 @@ namespace FoodWeb.API.Controllers
             if(!_authorizeService.IsShipper(IdShipper))
                 return NotFound();
 
-            return Ok(_adminRepository.GetListOrderShipperChoice(Id));
+            return Ok(_adminRepository.GetListOrderShipperChoice(IdShipper));
         }
+
+        [HttpGet("getTotalPageListFoodOfSeller/{IdSeller}")]  // Lấy các food của 1 seller (có phân trang) dành cho admin
+        public ActionResult<int> GetTotalPageListFoodOfSeller(int IdSeller)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsAdmin(Id)){
+                return BadRequest("Action only admin");
+            }
+
+            if(!_authorizeService.IsSeller(IdSeller)){
+                return NotFound();
+            }
+
+            return Ok(_foodRepository.GetTotalPageFoodByIdSellerForSeller(IdSeller));
+        }
+
+        [HttpGet("getListFood/{IdSeller}/page-{numberPage}")]  // Lấy các food của 1 seller (có phân trang) dành cho admin
+        public ActionResult<IEnumerable<FoodForSellerDTO>> GetListFoodOfSeller(int IdSeller, int numberPage)
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(!_authorizeService.IsAdmin(Id)){
+                return BadRequest("Action only admin");
+            }
+
+            if(!_authorizeService.IsSeller(IdSeller)){
+                return NotFound();
+            }
+
+            return Ok(_foodRepository.GetAllFoodByIdSellerForSellerPaging(IdSeller, numberPage));
+        }
+
+        [HttpPost("ban")]
+        public ActionResult<GroupDetailDTO> BanUser(BanDTO banDTO)
+        {
+            var groupDetail = new GroupDetailDTO();
+            int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(!_authorizeService.IsAdmin(IdAdmin))
+                return BadRequest("Action only admin");
+
+            if(!_authorizeService.IsSeller(banDTO.IdUser) && !_authorizeService.IsShipper(banDTO.IdUser))
+                return NotFound();
+
+            if(_authorizeService.IsShipper(banDTO.IdUser)){
+                if(_adminRepository.GetListOrderShipperChoice(banDTO.IdUser).ToList().Count() != 0){
+                    return BadRequest("This shipper is currently delivering");
+                }
+
+                groupDetail = _adminRepository.BanGroup(banDTO);
+            }
+
+            if(_authorizeService.IsSeller(banDTO.IdUser)){
+                groupDetail = _adminRepository.BanGroup(banDTO);
+            }
+
+            return Ok(groupDetail);
+        }
+
+        [HttpPost("unBan/{Id}")]
+        public ActionResult<GroupDetailDTO> UnBanUser(int Id)
+        {
+            var groupDetail = new GroupDetailDTO();
+            int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(!_authorizeService.IsAdmin(IdAdmin))
+                return BadRequest("Action only admin");
+
+            if(!_authorizeService.IsSeller(Id) && !_authorizeService.IsShipper(Id))
+                return NotFound();
+
+            groupDetail = _adminRepository.UnBanGroup(Id);
+
+            return Ok(groupDetail);
+        }
+
+        [HttpPatch("editBan")]
+        public ActionResult<GroupDetailDTO> EditBanUser(BanDTO banDTO)
+        {
+            int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(!_authorizeService.IsAdmin(IdAdmin))
+                return BadRequest("Action only admin");
+
+            if(!_authorizeService.IsSeller(banDTO.IdUser) && !_authorizeService.IsShipper(banDTO.IdUser))
+                return NotFound();
+            
+            var groupDetail = _adminRepository.EditBanGroup(banDTO);
+            return Ok(groupDetail);
+        }
+        
     }
 }

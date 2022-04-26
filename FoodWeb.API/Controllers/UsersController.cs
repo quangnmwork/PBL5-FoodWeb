@@ -28,16 +28,22 @@ namespace FoodWeb.API.Controllers
         private readonly IAuthorizeService _authorizeService;
         private readonly IFoodRepository _foodRepository;
         private readonly ICloudinaryService _cloudinary;
+        private readonly IAdminRepository _adminRepository;
+        private readonly IGroupDetailRepository _groupDetailRepository;
 
         public UsersController(IUserRepository userRepository,
                                IAuthorizeService authorizeService,
                                IFoodRepository foodRepository,
-                               ICloudinaryService cloudinary)
+                               ICloudinaryService cloudinary,
+                               IAdminRepository adminRepository,
+                               IGroupDetailRepository groupDetailRepository)
         {
             this._foodRepository = foodRepository;
             this._userRepository = userRepository;
             this._authorizeService = authorizeService;
             this._cloudinary = cloudinary;
+            this._adminRepository = adminRepository;
+            this._groupDetailRepository = groupDetailRepository;
         }
 
         [HttpGet("GetProfileUser")]   //Lấy profile của user
@@ -154,6 +160,20 @@ namespace FoodWeb.API.Controllers
                 return NotFound("seller is not exist");
             
             return Ok(seller);
+        }
+
+        [HttpPost("checkBan")]
+        public ActionResult<GroupDetailDTO> CheckBan()
+        {
+            int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var groupDetail = _groupDetailRepository.GetGroupDetailByIdUser(Id);
+
+            if(groupDetail.EnableGroupDetail)   return Ok(groupDetail);
+
+            if(DateTime.Now > groupDetail.TimeEnable)
+                groupDetail = _adminRepository.UnBanGroup(Id);
+
+            return Ok(groupDetail);
         }
     }
 }

@@ -41,6 +41,17 @@ namespace FoodWeb.API.Profiles
                                                     .ForMember(dest => dest.NumberFood, opt => opt.MapFrom(src => src.Number));
 
             CreateMap<Payment, PaymentDTO>();
+
+            CreateMap<GroupDetail, GroupDetailDTO>().ForMember(dest => dest.IdAccount, opt => opt.MapFrom(src => src.AccountId));
+
+            CreateMap<BanDTO, GroupDetail>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null && 
+                        (
+                            DateTime.TryParse(srcMember.ToString(), out _ ) == false || 
+                            (
+                                DateTime.TryParse(srcMember.ToString(), out _ ) == true && 
+                                DateTime.Parse(srcMember.ToString()).ToString("yyyy-MM-ddTHH:mm:ss") != "0001-01-01T00:00:00"
+                            ) 
+                        )));
         }
     }
 }

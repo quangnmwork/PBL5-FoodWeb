@@ -19,6 +19,8 @@ namespace FoodWeb.API.DTOs
 
         public bool isHidden { get; set; }
 
+        public bool isAdminHidden { get; set; }
+
         public string DescriptionFood { get; set; }
 
         public string ImageFood { get; set; }

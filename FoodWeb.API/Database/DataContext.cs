@@ -101,6 +101,8 @@ namespace FoodWeb.API.Database
                 b.Property(s => s.PriceFood).IsRequired(true);
                 b.Property(s => s.TimeCreate).IsRequired(true);
                 b.Property(s => s.DescriptionFood).IsRequired(true);
+                b.Property(s => s.isHidden).IsRequired(true);
+                b.Property(s => s.isAdminHidden).IsRequired(true);
                 b.Property(s => s.ImageFood).IsRequired(true);
                 b.HasOne(s => s.User).WithMany(s => s.Foods).HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(s => s.Category).WithMany(s => s.Foods).HasForeignKey(s => s.CategoryId).OnDelete(DeleteBehavior.NoAction);

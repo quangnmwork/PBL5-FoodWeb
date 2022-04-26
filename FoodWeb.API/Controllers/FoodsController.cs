@@ -53,6 +53,12 @@ namespace FoodWeb.API.Controllers
 
             return Ok(food);
         }
+        
+        [HttpGet("getTotalPageAllFoods")]   // Lấy tổng số trang của tất cả các food dành cho viewer
+        public ActionResult<int> GetTotalPageAllFoods()
+        {
+            return Ok(_foodRepository.GetTotalPageAllFoods());
+        }
 
         [HttpGet("getAllFoods/page-{numberPage}")]  //Lấy tất cả các food có trong csdl (phân trang) dành cho viewer
         public ActionResult<IEnumerable<FoodDTO>> GetAllFoods(int numberPage)
@@ -61,12 +67,6 @@ namespace FoodWeb.API.Controllers
                 return NotFound("Page is not exist");
 
             return Ok(_foodRepository.GetAllFoodsPaging(numberPage));
-        }
-
-        [HttpGet("getTotalPageAllFoods")]   // Lấy tổng số trang của tất cả các food dành cho viewer
-        public ActionResult<int> GetTotalPageAllFoods()
-        {
-            return Ok(_foodRepository.GetTotalPageAllFoods());
         }
 
         [HttpGet("{Id}")]   // Lấy food theo IdFood dành cho vierwer, customer, shipper
@@ -160,7 +160,7 @@ namespace FoodWeb.API.Controllers
             return food;
         }
 
-        [HttpDelete("DeleteFood/{IdFood}")]
+        [HttpDelete("DeleteFood/{IdFood}")]     // Seller xóa món ăn
         [Authorize]
         public ActionResult<string> DeleteFood(int IdFood)
         {
@@ -175,7 +175,7 @@ namespace FoodWeb.API.Controllers
             return Ok("Delete Success");
         }
 
-        [HttpPatch("editFood/{IdFood}")]
+        [HttpPatch("editFood/{IdFood}")]    //Seller edit món ăn
         [Authorize]
         public ActionResult<FoodForSellerDTO> EditFood(int IdFood, EditFoodDTO editFoodDTO)
         {

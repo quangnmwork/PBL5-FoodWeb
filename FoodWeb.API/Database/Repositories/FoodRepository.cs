@@ -29,7 +29,7 @@ namespace FoodWeb.API.Database.Repositories
 
             food.UserId = IdSeller;
             food.TimeCreate = DateTime.Now;
-            
+
             _context.Foods.Add(food);
             _context.SaveChanges();
 
@@ -38,13 +38,13 @@ namespace FoodWeb.API.Database.Repositories
 
         public int GetTotalPageAllFoods()
         {
-            int number = _context.Foods.Where(u => u.isHidden == false).Count();
+            int number = _context.Foods.Where(u => u.isHidden == false && u.isAdminHidden == false).Count();
             return (int)Math.Ceiling(1.0*number/PageServiceExtensions.FoodPageSize);
         }
 
         public IEnumerable<FoodDTO> GetAllFoodsPaging(int numberPage)
         {
-            return _context.Foods.Where(u => u.isHidden == false)
+            return _context.Foods.Where(u => u.isHidden == false && u.isAdminHidden == false)
                                  .ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
                                  .OrderBy(u => u.IdFood)
                                  .ToPagedList(numberPage, PageServiceExtensions.FoodPageSize);
@@ -66,7 +66,7 @@ namespace FoodWeb.API.Database.Repositories
 
         public int GetTotalPageAllFoodsBySearch(SearchDTO searchDTO)
         {
-            var numberFood = _context.Foods.Where(u => u.isHidden == false && u.NameFood.ToLower().Contains(searchDTO.KeyName.ToLower()))
+            var numberFood = _context.Foods.Where(u => u.isHidden == false && u.isAdminHidden == false && u.NameFood.ToLower().Contains(searchDTO.KeyName.ToLower()))
                                            .ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
                                            .Where(u => u.NameCategory == searchDTO.NameCategory)
                                            .Count();
@@ -76,7 +76,7 @@ namespace FoodWeb.API.Database.Repositories
 
         public IEnumerable<FoodDTO> GetAllFoodsBySearchPaging(int numberPage, SearchDTO searchDTO)
         {
-            return _context.Foods.Where(u => u.isHidden == false && u.NameFood.ToLower().Contains(searchDTO.KeyName.ToLower()))
+            return _context.Foods.Where(u => u.isAdminHidden == false && u.isHidden == false && u.NameFood.ToLower().Contains(searchDTO.KeyName.ToLower()))
                                  .ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
                                  .Where(u => u.NameCategory == searchDTO.NameCategory)
                                  .OrderBy(u => u.IdFood)
@@ -85,7 +85,7 @@ namespace FoodWeb.API.Database.Repositories
 
         public FoodDTO GetFoodById(int Id)
         {
-            return _context.Foods.Where(s => s.IdFood == Id && s.isHidden == false)
+            return _context.Foods.Where(s => s.IdFood == Id && s.isHidden == false && s.isAdminHidden == false)
                                  .ProjectTo<FoodDTO>(_mapper.ConfigurationProvider)
                                  .FirstOrDefault();
         }
@@ -162,7 +162,10 @@ namespace FoodWeb.API.Database.Repositories
         {
             var food = _context.Foods.FirstOrDefault(u => u.IdFood == IdFood);
             if(food == null)    return true;
-            return food.isHidden;
+            if(food.isHidden || food.isAdminHidden)
+                return true;
+            
+            return false;
         }
     }
 }

@@ -42,7 +42,8 @@ namespace FoodWeb.API.Database.Repositories
             //     data.Fo
             // }
 
-            return _context.ListOrders.Where(u => u.OrderDetailId == IdOrderDetail).ProjectTo<InfoFoodOrderDTO>(_mapper.ConfigurationProvider);
+            return _context.ListOrders.Where(u => u.OrderDetailId == IdOrderDetail)
+                                      .ProjectTo<InfoFoodOrderDTO>(_mapper.ConfigurationProvider);
         }
     }
 }

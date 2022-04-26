@@ -16,6 +16,9 @@ namespace FoodWeb.API.Database.Entities
         public string DescriptionFood { get; set; }
 
         public bool isHidden { get; set; }
+
+        public bool isAdminHidden { get; set; }
+
         public string ImageFood { get; set; }
         
         public int UserId { get; set; }

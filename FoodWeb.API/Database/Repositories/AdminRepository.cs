@@ -92,5 +92,70 @@ namespace FoodWeb.API.Database.Repositories
             return _context.OrderDetails.Where(u => u.ShipperId == IdShipper && u.ChoiceShip == true && u.IsShip == false)
                                         .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider);
         }
+
+        // public GroupDetailDTO BanShipper(BanDTO banDTO)
+        // {
+        //     var user = _context.Users.FirstOrDefault(u => u.IdUser == banDTO.IdUser);
+        //     var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
+        //     var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
+
+        //     groupDetail.EnableGroupDetail = false;
+        //     groupDetail.TimeEnable = banDTO.TimeEnable;
+        //     groupDetail.DescriptionBan = banDTO.DescriptionBan;
+
+        //     _context.SaveChanges();
+        //     return _mapper.Map<GroupDetailDTO>(groupDetail);
+        // }
+
+        public GroupDetailDTO BanGroup(BanDTO banDTO)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.IdUser == banDTO.IdUser);
+            var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
+            var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
+
+            groupDetail.EnableGroupDetail = false;
+            groupDetail.TimeEnable = banDTO.TimeEnable;
+            groupDetail.DescriptionBan = banDTO.DescriptionBan;
+
+            var foods = _context.Foods.Where(u => u.UserId == banDTO.IdUser);
+            foreach(var food in foods){
+                food.isAdminHidden = true;
+            }
+            
+            _context.SaveChanges();
+            return _mapper.Map<GroupDetailDTO>(groupDetail);
+        }
+
+        public GroupDetailDTO UnBanGroup(int Id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.IdUser == Id);
+            var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
+            var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
+
+            groupDetail.EnableGroupDetail = true;
+            groupDetail.TimeEnable = null;
+            groupDetail.DescriptionBan = null;
+
+            var foods = _context.Foods.Where(u => u.UserId == Id);
+            foreach(var food in foods){
+                food.isAdminHidden = false;
+            }
+
+            _context.SaveChanges();
+
+            return _mapper.Map<GroupDetailDTO>(groupDetail);
+        }
+
+        public GroupDetailDTO EditBanGroup(BanDTO banDTO)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.IdUser == banDTO.IdUser);
+            var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
+            var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
+
+            _mapper.Map(banDTO, groupDetail);
+            _context.SaveChanges();
+
+            return _mapper.Map<GroupDetailDTO>(groupDetail);
+        }
     }
 }

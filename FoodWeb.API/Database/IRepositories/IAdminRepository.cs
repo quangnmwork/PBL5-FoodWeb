@@ -16,5 +16,13 @@ namespace FoodWeb.API.Database.IRepositories
         public IEnumerable<ProfileDTO> GetListUsersSearchPaging(int numberPage, SearchDTO searchDTO);
 
         public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper);
+
+        //public GroupDetailDTO BanShipper(BanDTO banDTO);
+
+        public GroupDetailDTO BanGroup(BanDTO banDTO);
+
+        public GroupDetailDTO UnBanGroup(int Id);
+
+        public GroupDetailDTO EditBanGroup(BanDTO banDTO);
     }
 }

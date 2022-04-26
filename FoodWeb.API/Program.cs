@@ -31,6 +31,8 @@ namespace FoodWeb.API
             await seed.SeedAccounts();
             await seed.SeedGroupDetail();
             host.Run();
+
+            //Console.WriteLine(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
