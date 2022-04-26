@@ -1,6 +1,8 @@
 import { Box, Text, Icon } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { useCart } from '../../../services/cart/useCart';
 const Cart = () => {
+  const cart = useCart();
   return (
     <Box marginRight={'1rem'} position={'relative'}>
       <Icon as={AiOutlineShoppingCart} w={8} h={8} />
@@ -21,7 +23,7 @@ const Cart = () => {
           color={'white'}
           fontWeight={'medium'}
         >
-          1
+          {cart.getLengthCartProducs()}
         </Text>
       </Box>
     </Box>

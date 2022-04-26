@@ -8,14 +8,30 @@ import {
   Td,
   TableContainer
 } from '@chakra-ui/react';
+import React from 'react';
 import { AiFillTags } from 'react-icons/ai';
 import { IoTodaySharp } from 'react-icons/io5';
 import { MdAttachMoney } from 'react-icons/md';
 import { Food } from '../../models/Food.model';
 import ButtonNumber from '../Button/ButtonNumber';
-import FoodOrderButton from './FoodOrderButton';
+import ButtonCustom from '../Button/ButtonCustom';
+import { useCart } from '../../services/cart/useCart';
 
 const FoodDetail = (props: Partial<Food>) => {
+  const numberButtonRef = React.createRef<HTMLInputElement>();
+  const cart = useCart();
+  const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const food = {
+      id: props.idFood?.toString() || '1',
+      numberFood: parseInt(numberButtonRef.current?.value || '-1')
+    };
+    console.log(food);
+    if (food.numberFood > 0) {
+      cart.addFood(food);
+    }
+  };
+
   return (
     <Flex
       flexDirection={'column'}
@@ -64,13 +80,17 @@ const FoodDetail = (props: Partial<Food>) => {
             <Tr>
               <Td padding={'0'}>Số lượng</Td>
               <Td>
-                <ButtonNumber />
+                <ButtonNumber ref={numberButtonRef} />
               </Td>
             </Tr>
           </Tbody>
         </Table>
       </TableContainer>
-      <FoodOrderButton />
+      <ButtonCustom
+        textDisplay={'Thêm vào giỏ hàng'}
+        borderRadius={'0'}
+        onClick={addCartHandler}
+      />
     </Flex>
   );
 };

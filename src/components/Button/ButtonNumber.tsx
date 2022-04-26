@@ -34,15 +34,17 @@ const ButtonNumber = React.forwardRef<HTMLInputElement, ButtonNumberProps>(
             handlerCurrentValue(false);
           }}
         ></IconButton>
-
-        <Box>
+        <Box minWidth={'30%'}>
           <Input
             ref={ref}
             defaultValue={value}
-            value={value}
             htmlSize={value.toString().length}
+            value={value || '1'}
             padding={'0'}
             textAlign={'center'}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setValue(parseInt(event.target.value));
+            }}
           />
         </Box>
         <IconButton
