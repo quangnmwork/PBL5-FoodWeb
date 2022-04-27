@@ -4,10 +4,13 @@ import {
   Heading,
   Stack,
   Text,
-  useColorModeValue as mode
+  useColorModeValue as mode,
+  useToast
 } from '@chakra-ui/react';
 import * as React from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import { useState } from 'react';
+import { orderAPI } from '../../api/repositoryFactory';
+
 import { useCart } from '../../services/cart/useCart';
 
 type OrderSummaryItemProps = {
@@ -30,6 +33,36 @@ const OrderSummaryItem = (props: OrderSummaryItemProps) => {
 
 export const CartOrderSummary = () => {
   const cart = useCart();
+  const toast = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
+  const orderHandler = async (
+    event: React.SyntheticEvent<HTMLButtonElement>
+  ) => {
+    try {
+      event.preventDefault();
+      setLoading(true);
+      const res = await orderAPI.createOrderDetail(cart.getCartForOrder());
+      if (res.status == 200) {
+        setLoading(false);
+        toast({
+          status: 'success',
+          title: 'Đặt hàng thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      }
+    } catch (error: any) {
+      setLoading(false);
+      toast({
+        status: 'error',
+        title: 'Có lỗi xảy ra vui lòng thử lại',
+        position: 'bottom-right',
+        duration: 1500,
+        variant: 'subtle'
+      });
+    }
+  };
   return (
     <Stack
       spacing="8"
@@ -41,15 +74,18 @@ export const CartOrderSummary = () => {
       <Heading size="md">Đơn hàng</Heading>
 
       <Stack spacing="6">
+        <OrderSummaryItem label="Đơn giá">
+          <Text>{cart.getTotalMoney()}</Text>
+        </OrderSummaryItem>
         <OrderSummaryItem label="Phí ship">
-          <Text>Phí ship</Text>
+          <Text>{(cart.getTotalMoney() * 1) / 10}</Text>
         </OrderSummaryItem>
         <Flex justify="space-between">
           <Text fontSize="lg" fontWeight="semibold">
             Tổng cộng
           </Text>
           <Text fontSize="xl" fontWeight="bold">
-            {cart.getTotalMoney()}
+            {cart.getTotalMoney() + (cart.getTotalMoney() * 1) / 10}
           </Text>
         </Flex>
       </Stack>
@@ -57,9 +93,10 @@ export const CartOrderSummary = () => {
         colorScheme="main"
         size="lg"
         fontSize="md"
-        rightIcon={<FaArrowRight />}
+        onClick={orderHandler}
+        isLoading={loading}
       >
-        Checkout
+        Thanh toán
       </Button>
     </Stack>
   );

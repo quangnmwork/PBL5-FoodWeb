@@ -23,7 +23,7 @@ const FoodDetail = (props: Partial<Food>) => {
   const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const food = {
-      id: props.idFood?.toString() || '1',
+      idFood: props.idFood?.toString() || '1',
       numberFood: parseInt(numberButtonRef.current?.value || '-1'),
       imageFood: props.imageFood || '',
       nameFood: props.nameFood || '',

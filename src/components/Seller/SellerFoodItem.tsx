@@ -13,7 +13,7 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
     const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
       event.preventDefault();
       const food = {
-        id: props.food.idFood.toString(),
+        idFood: props.food.idFood.toString(),
         numberFood: 1,
         imageFood: props.food.imageFood || '',
         nameFood: props.food.nameFood || '',

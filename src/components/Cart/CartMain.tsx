@@ -20,7 +20,7 @@ const CartMain = () => {
         <Flex flexDirection={'column'} flexBasis={'100%'} gap={'1rem'}>
           {cart.getCart().map((cartItem, index) => (
             <CartItem
-              id={cartItem.id}
+              id={cartItem.idFood}
               imageFood={cartItem.imageFood}
               key={index}
               nameFood={cartItem.nameFood}
