@@ -8,14 +8,34 @@ import {
   Td,
   TableContainer
 } from '@chakra-ui/react';
+import React from 'react';
 import { AiFillTags } from 'react-icons/ai';
 import { IoTodaySharp } from 'react-icons/io5';
 import { MdAttachMoney } from 'react-icons/md';
 import { Food } from '../../models/Food.model';
 import ButtonNumber from '../Button/ButtonNumber';
-import FoodOrderButton from './FoodOrderButton';
+import ButtonCustom from '../Button/ButtonCustom';
+import { useCart } from '../../services/cart/useCart';
+import { convertDateTime } from '../../utils/convertDateTime';
 
 const FoodDetail = (props: Partial<Food>) => {
+  const numberButtonRef = React.createRef<HTMLInputElement>();
+  const cart = useCart();
+  const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const food = {
+      idFood: props.idFood?.toString() || '1',
+      numberFood: parseInt(numberButtonRef.current?.value || '-1'),
+      imageFood: props.imageFood || '',
+      nameFood: props.nameFood || '',
+      priceFood: props.priceFood || 0
+    };
+    // console.log(food);
+    if (food.numberFood > 0) {
+      cart.addFood(food);
+    }
+  };
+
   return (
     <Flex
       flexDirection={'column'}
@@ -59,18 +79,22 @@ const FoodDetail = (props: Partial<Food>) => {
                   </Text>
                 </Flex>
               </Td>
-              <Td>metres (m)</Td>
+              <Td>{convertDateTime(props.timeCreate)}</Td>
             </Tr>
             <Tr>
               <Td padding={'0'}>Số lượng</Td>
               <Td>
-                <ButtonNumber />
+                <ButtonNumber ref={numberButtonRef} />
               </Td>
             </Tr>
           </Tbody>
         </Table>
       </TableContainer>
-      <FoodOrderButton />
+      <ButtonCustom
+        textDisplay={'Thêm vào giỏ hàng'}
+        borderRadius={'0'}
+        onClick={addCartHandler}
+      />
     </Flex>
   );
 };

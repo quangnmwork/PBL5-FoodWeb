@@ -1,6 +1,8 @@
 import { Routes } from 'react-router-dom';
 import RenderRoutes from '../../utils/RenderRoutes';
+import { RoutesNotFound } from '../404/routes';
 import AuthRoutes from '../authentication/routes';
+import { CartRoutes } from '../cart/routes';
 import FoodRoutes from '../food/routes';
 import HomeRoutes from '../home/routes';
 import SellerRoutes from '../seller/routes';
@@ -13,6 +15,8 @@ const OverallLayout = () => {
       {RenderRoutes(UserRoutes)}
       {RenderRoutes(SellerRoutes)}
       {RenderRoutes(FoodRoutes)}
+      {RenderRoutes(CartRoutes)}
+      {RenderRoutes(RoutesNotFound)}
     </Routes>
   );
   // return <Navigation />;
