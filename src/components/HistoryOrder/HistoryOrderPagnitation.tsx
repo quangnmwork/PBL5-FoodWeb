@@ -9,6 +9,9 @@ import HistoryOrderList from './HistoryOrderList';
 interface HistoryOrderPagnitationProps {
   isShipped: string;
 }
+function isNumeric(num: any) {
+  return !isNaN(num);
+}
 
 const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -47,6 +50,14 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
       }
     }
   };
+  const pageOnClick = (event: any) => {
+    if (isNumeric(parseInt(event.event.target.textContent))) {
+      setCurrentPage(parseInt(event.event.target.textContent));
+    } else {
+      if (event.event.target.textContent == '>') goToPage(true);
+      else goToPage(false);
+    }
+  };
   return (
     <Stack
       direction={'column'}
@@ -65,9 +76,6 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
               aria-label="next"
               fontSize={'1.2rem'}
               icon={<ChevronRightIcon />}
-              onClick={() => {
-                goToPage(false);
-              }}
             />
           }
           previousLabel={
@@ -77,14 +85,12 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
               aria-label="prev"
               fontSize={'1.2rem'}
               icon={<ChevronLeftIcon />}
-              onClick={() => {
-                goToPage(true);
-              }}
             />
           }
           pageCount={totalPage || 1}
           containerClassName={'container'}
           pageLinkClassName={'page-link'}
+          onClick={pageOnClick}
         />
       ) : null}
     </Stack>
