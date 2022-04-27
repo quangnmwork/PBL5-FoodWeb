@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import { persist } from 'zustand/middleware';
 
 interface FoodCart {
-  id: string;
+  idFood: string;
   nameFood: string;
   imageFood: string;
   numberFood: number;
@@ -17,6 +17,7 @@ interface CartState {
   updateCart: (idFood: string, quantity: number) => void;
   getTotalMoney: () => number;
   deleteFood: (idFood: string) => void;
+  getCartForOrder: () => Pick<FoodCart, 'idFood' | 'numberFood'>[];
 }
 export const useCart = create<CartState>()(
   persist(
@@ -26,10 +27,10 @@ export const useCart = create<CartState>()(
       addFood: (food: FoodCart) => {
         const { foods } = get();
         const newArrayFoods = foods.slice();
-        const newFood = lodash.find(foods, { id: food.id });
+        const newFood = lodash.find(foods, { idFood: food.idFood });
         if (newFood) {
           newArrayFoods.map((foodItem) => {
-            if (foodItem.id == newFood.id) {
+            if (foodItem.idFood == newFood.idFood) {
               foodItem.numberFood += food.numberFood;
             }
           });
@@ -42,7 +43,7 @@ export const useCart = create<CartState>()(
         const { foods } = get();
         set({
           foods: lodash.remove(foods, (food) => {
-            return food.id != idFood;
+            return food.idFood != idFood;
           })
         });
       },
@@ -63,10 +64,10 @@ export const useCart = create<CartState>()(
       updateCart: (idFood: string, quantity: number) => {
         const { foods } = get();
         const newArrayFoods = foods.slice();
-        const newFood = lodash.find(foods, { id: idFood });
+        const newFood = lodash.find(foods, { idFood: idFood });
         if (newFood) {
           newArrayFoods.map((food) => {
-            if (food.id == newFood.id) {
+            if (food.idFood == newFood.idFood) {
               food.numberFood = quantity;
             }
           });
@@ -84,6 +85,15 @@ export const useCart = create<CartState>()(
           },
           0
         );
+      },
+      getCartForOrder: () => {
+        const { foods } = get();
+        const cartOrder: Pick<FoodCart, 'idFood' | 'numberFood'>[] = [];
+        foods.forEach((food) => {
+          cartOrder.push({ idFood: food.idFood, numberFood: food.numberFood });
+        });
+
+        return cartOrder;
       }
     }),
     {
