@@ -93,31 +93,31 @@ namespace FoodWeb.API.Database.Repositories
                                         .ProjectTo<OrderDTO>(_mapper.ConfigurationProvider);
         }
 
-        // public GroupDetailDTO BanShipper(BanDTO banDTO)
+        // public GroupDetailDTO BanShipper(BanUserDTO BanUserDTO)
         // {
-        //     var user = _context.Users.FirstOrDefault(u => u.IdUser == banDTO.IdUser);
+        //     var user = _context.Users.FirstOrDefault(u => u.IdUser == BanUserDTO.IdUser);
         //     var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
         //     var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
 
         //     groupDetail.EnableGroupDetail = false;
-        //     groupDetail.TimeEnable = banDTO.TimeEnable;
-        //     groupDetail.DescriptionBan = banDTO.DescriptionBan;
+        //     groupDetail.TimeEnable = BanUserDTO.TimeEnable;
+        //     groupDetail.DescriptionBan = BanUserDTO.DescriptionBan;
 
         //     _context.SaveChanges();
         //     return _mapper.Map<GroupDetailDTO>(groupDetail);
         // }
 
-        public GroupDetailDTO BanGroup(BanDTO banDTO)
+        public GroupDetailDTO BanGroup(BanUserDTO BanUserDTO)
         {
-            var user = _context.Users.FirstOrDefault(u => u.IdUser == banDTO.IdUser);
+            var user = _context.Users.FirstOrDefault(u => u.IdUser == BanUserDTO.IdUser);
             var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
             var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
 
             groupDetail.EnableGroupDetail = false;
-            groupDetail.TimeEnable = banDTO.TimeEnable;
-            groupDetail.DescriptionBan = banDTO.DescriptionBan;
+            groupDetail.TimeEnable = BanUserDTO.TimeEnable;
+            groupDetail.DescriptionBan = BanUserDTO.DescriptionBan;
 
-            var foods = _context.Foods.Where(u => u.UserId == banDTO.IdUser);
+            var foods = _context.Foods.Where(u => u.UserId == BanUserDTO.IdUser);
             foreach(var food in foods){
                 food.isAdminHidden = true;
             }
@@ -146,16 +146,46 @@ namespace FoodWeb.API.Database.Repositories
             return _mapper.Map<GroupDetailDTO>(groupDetail);
         }
 
-        public GroupDetailDTO EditBanGroup(BanDTO banDTO)
+        public GroupDetailDTO EditBanGroup(BanUserDTO BanUserDTO)
         {
-            var user = _context.Users.FirstOrDefault(u => u.IdUser == banDTO.IdUser);
+            var user = _context.Users.FirstOrDefault(u => u.IdUser == BanUserDTO.IdUser);
             var account = _context.Accounts.FirstOrDefault(u => u.UserId == user.IdUser);
             var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
 
-            _mapper.Map(banDTO, groupDetail);
+            _mapper.Map(BanUserDTO, groupDetail);
             _context.SaveChanges();
 
             return _mapper.Map<GroupDetailDTO>(groupDetail);
+        }
+
+        public IEnumerable<PermissionDetailDTO> GetListPermissionDetail()
+        {
+            return _context.PermissionDetails.ProjectTo<PermissionDetailDTO>(_mapper.ConfigurationProvider);
+        }
+
+        public PermissionDetailDTO SetBanPermission(BanPermissionDTO banPermissionDTO)
+        {
+            var permissionDetail = _context.PermissionDetails.FirstOrDefault(u => u.CodePermissionDetail == banPermissionDTO.CodePermissionDetail);
+            if(permissionDetail == null)    return null;
+
+            var group = _context.Groups.FirstOrDefault(u => u.IdGroup == permissionDetail.GroupId);
+            var permission = _context.Permissions.FirstOrDefault(u => u.IdPermission == permissionDetail.PermissionId);
+            
+            permissionDetail.EnablePermissionDetail = banPermissionDTO.EnableGroupDetail;
+
+            _context.SaveChanges();
+            return _mapper.Map<PermissionDetail, PermissionDetailDTO>(permissionDetail);
+        }
+
+        public PermissionDetailDTO GetPermissionDetailByCode(string code)
+        {
+            var permissionDetail = _context.PermissionDetails.FirstOrDefault(u => u.CodePermissionDetail == code);
+            if(permissionDetail == null)    return null;
+            
+            var group = _context.Groups.FirstOrDefault(u => u.IdGroup == permissionDetail.GroupId);
+            var permission = _context.Permissions.FirstOrDefault(u => u.IdPermission == permissionDetail.PermissionId);
+
+            return _mapper.Map<PermissionDetailDTO>(permissionDetail);
         }
     }
 }

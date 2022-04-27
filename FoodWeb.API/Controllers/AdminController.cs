@@ -129,8 +129,8 @@ namespace FoodWeb.API.Controllers
             return Ok(_foodRepository.GetAllFoodByIdSellerForSellerPaging(IdSeller, numberPage));
         }
 
-        [HttpPost("ban")]
-        public ActionResult<GroupDetailDTO> BanUser(BanDTO banDTO)
+        [HttpPost("banUser")]   // ban chức năng của seller, shipper
+        public ActionResult<GroupDetailDTO> BanUser(BanUserDTO BanUserDTO)
         {
             var groupDetail = new GroupDetailDTO();
             int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -138,25 +138,25 @@ namespace FoodWeb.API.Controllers
             if(!_authorizeService.IsAdmin(IdAdmin))
                 return BadRequest("Action only admin");
 
-            if(!_authorizeService.IsSeller(banDTO.IdUser) && !_authorizeService.IsShipper(banDTO.IdUser))
+            if(!_authorizeService.IsSeller(BanUserDTO.IdUser) && !_authorizeService.IsShipper(BanUserDTO.IdUser))
                 return NotFound();
 
-            if(_authorizeService.IsShipper(banDTO.IdUser)){
-                if(_adminRepository.GetListOrderShipperChoice(banDTO.IdUser).ToList().Count() != 0){
+            if(_authorizeService.IsShipper(BanUserDTO.IdUser)){
+                if(_adminRepository.GetListOrderShipperChoice(BanUserDTO.IdUser).ToList().Count() != 0){
                     return BadRequest("This shipper is currently delivering");
                 }
 
-                groupDetail = _adminRepository.BanGroup(banDTO);
+                groupDetail = _adminRepository.BanGroup(BanUserDTO);
             }
 
-            if(_authorizeService.IsSeller(banDTO.IdUser)){
-                groupDetail = _adminRepository.BanGroup(banDTO);
+            if(_authorizeService.IsSeller(BanUserDTO.IdUser)){
+                groupDetail = _adminRepository.BanGroup(BanUserDTO);
             }
 
             return Ok(groupDetail);
         }
 
-        [HttpPost("unBan/{Id}")]
+        [HttpPost("unBanUser/{Id}")]  // mở ban chức năng của seller, shipper
         public ActionResult<GroupDetailDTO> UnBanUser(int Id)
         {
             var groupDetail = new GroupDetailDTO();
@@ -173,20 +173,52 @@ namespace FoodWeb.API.Controllers
             return Ok(groupDetail);
         }
 
-        [HttpPatch("editBan")]
-        public ActionResult<GroupDetailDTO> EditBanUser(BanDTO banDTO)
+        [HttpPatch("editBanUser")]  // chỉnh sửa ban chức năng của seller, shipper
+        public ActionResult<GroupDetailDTO> EditBanUser(BanUserDTO BanUserDTO)
         {
             int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if(!_authorizeService.IsAdmin(IdAdmin))
                 return BadRequest("Action only admin");
 
-            if(!_authorizeService.IsSeller(banDTO.IdUser) && !_authorizeService.IsShipper(banDTO.IdUser))
+            if(!_authorizeService.IsSeller(BanUserDTO.IdUser) && !_authorizeService.IsShipper(BanUserDTO.IdUser))
                 return NotFound();
             
-            var groupDetail = _adminRepository.EditBanGroup(banDTO);
+            var groupDetail = _adminRepository.EditBanGroup(BanUserDTO);
             return Ok(groupDetail);
         }
         
+        [HttpGet("getListPermissionDetail")]       //Lấy list các permission detail
+        public ActionResult<IEnumerable<PermissionDetailDTO>> GetListPermissionDetail()
+        {
+            int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(!_authorizeService.IsAdmin(IdAdmin))
+                return BadRequest("Action only admin");
+            
+            return Ok(_adminRepository.GetListPermissionDetail());
+        }
+
+        [HttpPost("setBanGroup")]
+        public ActionResult<IEnumerable<PermissionDetailDTO>> SetBanGroup(BanPermissionDTO banPermissionDTO)
+        {
+            int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(!_authorizeService.IsAdmin(IdAdmin))
+                return BadRequest("Action only admin");
+            
+            var permissionDetail = _adminRepository.SetBanPermission(banPermissionDTO);
+            if(permissionDetail == null)    return NotFound("Permission detail no exist");
+            return Ok(permissionDetail);
+        }
+
+        [HttpGet("getPermissionDetailByCode/{Code}")]
+        [AllowAnonymous]
+        public ActionResult<PermissionDetailDTO> GetPermissionDetailByCode(string code)
+        {
+            var permissionDetail = _adminRepository.GetPermissionDetailByCode(code);
+            if(permissionDetail == null)    return NotFound("Permission detail no exist");
+            return Ok(permissionDetail);
+        }
     }
 }

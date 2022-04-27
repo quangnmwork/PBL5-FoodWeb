@@ -17,12 +17,19 @@ namespace FoodWeb.API.Database.IRepositories
 
         public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper);
 
-        //public GroupDetailDTO BanShipper(BanDTO banDTO);
+        //public GroupDetailDTO BanShipper(BanUserDTO BanUserDTO);
 
-        public GroupDetailDTO BanGroup(BanDTO banDTO);
+        public GroupDetailDTO BanGroup(BanUserDTO BanUserDTO);
 
         public GroupDetailDTO UnBanGroup(int Id);
 
-        public GroupDetailDTO EditBanGroup(BanDTO banDTO);
+        public GroupDetailDTO EditBanGroup(BanUserDTO BanUserDTO);
+
+        public IEnumerable<PermissionDetailDTO> GetListPermissionDetail();
+
+        public PermissionDetailDTO SetBanPermission(BanPermissionDTO banPermissionDTO);
+
+        public PermissionDetailDTO GetPermissionDetailByCode(string code);
+
     }
 }

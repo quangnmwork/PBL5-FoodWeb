@@ -1,6 +1,37 @@
 [{
-    "GroupId": 1,
+    "GroupId": 2,
     "PermissionId": 1,
-    "DescriptionPermissionDetail": "Viewer view all seller, food",
+    "DescriptionPermissionDetail": "Customer create order detail",
+    "CodePermissionDetail": "Create_Order",
+    "EnablePermissionDetail": true
+}, {
+    "GroupId": 3,
+    "PermissionId": 2,
+    "DescriptionPermissionDetail": "Shipper choice order detail",
+    "CodePermissionDetail": "Choice_Ship",
+    "EnablePermissionDetail": true
+}, {
+    "GroupId": 4,
+    "PermissionId": 3,
+    "DescriptionPermissionDetail": "Seller create food",
+    "CodePermissionDetail": "Create_Food",
+    "EnablePermissionDetail": true
+}, {
+    "GroupId": 4,
+    "PermissionId": 4,
+    "DescriptionPermissionDetail": "Seller hidden food",
+    "CodePermissionDetail": "Hidden_Food",
+    "EnablePermissionDetail": true
+}, {
+    "GroupId": 4,
+    "PermissionId": 5,
+    "DescriptionPermissionDetail": "Seller delete food",
+    "CodePermissionDetail": "Delete_Food",
+    "EnablePermissionDetail": true
+}, {
+    "GroupId": 4,
+    "PermissionId": 6,
+    "DescriptionPermissionDetail": "Seller edit food",
+    "CodePermissionDetail": "Edit_Food",
     "EnablePermissionDetail": true
 }]

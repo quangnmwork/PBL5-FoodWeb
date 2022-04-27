@@ -6,6 +6,8 @@ namespace FoodWeb.API.Database.Entities
 
         public string DescriptionPermissionDetail { get; set; }
 
+        public string CodePermissionDetail { get; set; }
+
         public bool EnablePermissionDetail { get; set; }
 
         public int GroupId { get; set; }

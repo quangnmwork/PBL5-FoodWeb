@@ -67,6 +67,7 @@ namespace FoodWeb.API.Database
                 b.HasKey(s => s.IdPermissionDetail);
                 b.Property(s => s.DescriptionPermissionDetail).IsRequired(true);
                 b.Property(s => s.EnablePermissionDetail).IsRequired(true);
+                b.Property(s => s.CodePermissionDetail).IsRequired(true);
                 b.HasOne(s => s.Permission).WithMany(s => s.PermissionDetails).HasForeignKey(s => s.PermissionId);
                 b.HasOne(s => s.Group).WithMany(s => s.PermissionDetails).HasForeignKey(s => s.GroupId);
             });

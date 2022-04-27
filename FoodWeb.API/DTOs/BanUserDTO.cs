@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FoodWeb.API.DTOs
 {
-    public class BanDTO
+    public class BanUserDTO
     {
         [Required]
         public int IdUser { get; set; }

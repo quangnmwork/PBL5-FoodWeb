@@ -57,7 +57,7 @@ namespace FoodWeb.API.Profiles
 
             CreateMap<GroupDetail, GroupDetailDTO>().ForMember(dest => dest.IdAccount, opt => opt.MapFrom(src => src.AccountId));
 
-            CreateMap<BanDTO, GroupDetail>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null && 
+            CreateMap<BanUserDTO, GroupDetail>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null && 
                         (
                             DateTime.TryParse(srcMember.ToString(), out _ ) == false || 
                             (
@@ -65,6 +65,9 @@ namespace FoodWeb.API.Profiles
                                 DateTime.Parse(srcMember.ToString()).ToString("yyyy-MM-ddTHH:mm:ss") != "0001-01-01T00:00:00"
                             ) 
                         )));
+
+            CreateMap<PermissionDetail, PermissionDetailDTO>().ForMember(dest => dest.NameGroup, opt => opt.MapFrom(src => src.Group.NameGroup))
+                                                              .ForMember(dest => dest.NamePermission, opt => opt.MapFrom(src => src.Permission.NamePermission));
         }
     }
 }
