@@ -5,16 +5,13 @@ import {
   Th,
   Thead,
   Tr,
-  Td,
-  Tag,
-  Text,
-  TagLabel,
-  Button
+  Text
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { orderAPI } from '../../api/repositoryFactory';
 import { Order } from '../../models/Order.model';
-import { convertDateTime } from '../../utils/convertDateTime';
+
+import HistoryFoodOrderDetail from './HistoryFoodOrderDetail';
 
 interface HistoryOrderListProps {
   numberPage: number;
@@ -61,22 +58,10 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
             </Thead>
             <Tbody>
               {orders.map((orderDetail) => (
-                <Tr key={orderDetail.idOrderDetail}>
-                  <Td>{orderDetail.idOrderDetail}</Td>
-                  <Td>
-                    {convertDateTime(new Date(orderDetail.timeOrderDetail))}
-                  </Td>
-                  <Td>
-                    <Tag colorScheme={orderDetail.isShip ? 'main' : 'red'}>
-                      <TagLabel>
-                        {orderDetail.isShip ? 'Đã ship' : 'Chưa ship'}
-                      </TagLabel>
-                    </Tag>
-                  </Td>
-                  <Td>
-                    <Button size={'xs'}>Xem chi tiết</Button>
-                  </Td>
-                </Tr>
+                <HistoryFoodOrderDetail
+                  key={orderDetail.idOrderDetail}
+                  orderDetail={orderDetail}
+                />
               ))}
             </Tbody>
           </Table>

@@ -17,5 +17,8 @@ export default {
   },
   getTotalPageOrderShipped() {
     return axiosClient.get(`${path}/getTotalPageListOrderShipped`);
+  },
+  getAllFoodByOrderId(orderDetailId: number) {
+    return axiosClient.get(`${path}/getListFoodOrder/${orderDetailId}`);
   }
 };
