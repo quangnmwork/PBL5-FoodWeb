@@ -24,7 +24,7 @@ const SidebarItems = [
   {
     icon: AiOutlineShoppingCart,
     iconText: 'Quản lý đơn hàng',
-    linkTo: '/user/orders'
+    linkTo: '/user/history-order'
   }
 ];
 interface SidebarContentProps extends BoxProps {

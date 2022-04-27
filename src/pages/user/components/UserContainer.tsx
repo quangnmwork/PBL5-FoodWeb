@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import HistoryOrderMain from '../../../components/HistoryOrder/HistoryOrderMain';
 import Profile from '../../../components/Profile/Profile';
 import ProfileSecurity from '../../../components/Profile/ProfileSecurity';
 import Sidebar from '../../../components/Sidebar/Sidebar';
@@ -14,6 +15,7 @@ const UserContainer = () => {
         <Profile userData={data} />
       ) : null}
       {location.pathname == '/user/security' ? <ProfileSecurity /> : null}
+      {location.pathname == '/user/history-order' ? <HistoryOrderMain /> : null}
     </Sidebar>
   );
 };
