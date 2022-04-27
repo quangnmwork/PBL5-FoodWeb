@@ -16,6 +16,7 @@ import { Food } from '../../models/Food.model';
 import ButtonNumber from '../Button/ButtonNumber';
 import ButtonCustom from '../Button/ButtonCustom';
 import { useCart } from '../../services/cart/useCart';
+import { convertDateTime } from '../../utils/convertDateTime';
 
 const FoodDetail = (props: Partial<Food>) => {
   const numberButtonRef = React.createRef<HTMLInputElement>();
@@ -78,7 +79,7 @@ const FoodDetail = (props: Partial<Food>) => {
                   </Text>
                 </Flex>
               </Td>
-              <Td>metres (m)</Td>
+              <Td>{convertDateTime(props.timeCreate)}</Td>
             </Tr>
             <Tr>
               <Td padding={'0'}>Số lượng</Td>

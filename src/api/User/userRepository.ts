@@ -1,4 +1,3 @@
-import { DynamicObject } from '../../models/DynamicObject.model';
 import axiosClient from '../repository';
 const path = 'Users';
 

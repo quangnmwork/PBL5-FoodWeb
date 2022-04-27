@@ -17,7 +17,7 @@ const UserRoutes: RoutesConfig[] = [
     specificRole: ['Shipper', 'Customer']
   },
   {
-    path: '/user/order',
+    path: '/user/history-order',
     component: <UserContainer />,
     redirectWhenAlreadyHasUser: false,
     needProtected: true,

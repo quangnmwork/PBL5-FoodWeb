@@ -1,0 +1,28 @@
+.container {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+.page-link {
+  background-color: #eceeec;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.page-link-active {
+  background-color: #85e0a5;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0rem 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
