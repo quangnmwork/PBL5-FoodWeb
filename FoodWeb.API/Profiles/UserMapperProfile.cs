@@ -51,6 +51,7 @@ namespace FoodWeb.API.Profiles
 
             CreateMap<ListOrder, InfoFoodOrderDTO>().ForMember(dest => dest.IdFood, opt => opt.MapFrom(src => src.FoodId))
                                                     .ForMember(dest => dest.NameFood, opt => opt.MapFrom(src => src.Food.NameFood))
+                                                    .ForMember(dest => dest.ImageFood, opt => opt.MapFrom(src => src.Food.ImageFood))
                                                     .ForMember(dest => dest.NumberFood, opt => opt.MapFrom(src => src.Number));
 
             CreateMap<Payment, PaymentDTO>();
