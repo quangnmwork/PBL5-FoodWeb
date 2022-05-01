@@ -41,6 +41,9 @@ export const CartOrderSummary = () => {
     try {
       event.preventDefault();
       setLoading(true);
+      if (!cart.getLengthCartProducs()) {
+        throw new Error('Đơn hàng không được trống');
+      }
       const res = await orderAPI.createOrderDetail(cart.getCartForOrder());
       if (res.status == 200) {
         setLoading(false);
@@ -54,13 +57,23 @@ export const CartOrderSummary = () => {
       }
     } catch (error: any) {
       setLoading(false);
-      toast({
-        status: 'error',
-        title: 'Có lỗi xảy ra vui lòng thử lại',
-        position: 'bottom-right',
-        duration: 1500,
-        variant: 'subtle'
-      });
+      if (error.message) {
+        toast({
+          status: 'error',
+          title: `${error.message}`,
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      } else {
+        toast({
+          status: 'error',
+          title: 'Có lỗi xảy ra vui lòng thử lại',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      }
     }
   };
   return (
