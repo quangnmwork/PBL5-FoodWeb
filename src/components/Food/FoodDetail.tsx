@@ -6,7 +6,9 @@ import {
   Tbody,
   Tr,
   Td,
-  TableContainer
+  TableContainer,
+  useDisclosure,
+  Button
 } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillTags } from 'react-icons/ai';
@@ -17,22 +19,30 @@ import ButtonNumber from '../Button/ButtonNumber';
 import ButtonCustom from '../Button/ButtonCustom';
 import { useCart } from '../../services/cart/useCart';
 import { convertDateTime } from '../../utils/convertDateTime';
+import ModalCustom from '../Modal/ModalCustom';
+import { useUser } from '../../hooks/authentication/useUser';
+import { useNavigate } from 'react-router-dom';
 
 const FoodDetail = (props: Partial<Food>) => {
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
+  const { data } = useUser(false);
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const food = {
-      idFood: props.idFood?.toString() || '1',
-      numberFood: parseInt(numberButtonRef.current?.value || '-1'),
-      imageFood: props.imageFood || '',
-      nameFood: props.nameFood || '',
-      priceFood: props.priceFood || 0
-    };
-    // console.log(food);
-    if (food.numberFood > 0) {
-      cart.addFood(food);
+    if (data) {
+      const food = {
+        idFood: props.idFood?.toString() || '1',
+        numberFood: parseInt(numberButtonRef.current?.value || '-1'),
+        imageFood: props.imageFood || '',
+        nameFood: props.nameFood || '',
+        priceFood: props.priceFood || 0
+      };
+      // console.log(food);
+      if (food.numberFood > 0) {
+        cart.addFood(food);
+      }
     }
   };
 
@@ -93,7 +103,24 @@ const FoodDetail = (props: Partial<Food>) => {
       <ButtonCustom
         textDisplay={'Thêm vào giỏ hàng'}
         borderRadius={'0'}
-        onClick={addCartHandler}
+        onClick={data ? addCartHandler : onOpen}
+      />
+      <ModalCustom
+        body={<p>Bạn cần phải đăng nhập trước khi đặt món</p>}
+        isOpen={isOpen}
+        onClose={onClose}
+        header={<p>Chú ý</p>}
+        footer={
+          <Button
+            ml={'.5rem'}
+            variant={'outline'}
+            onClick={() => {
+              navigate('/auth/sign-in', { replace: true });
+            }}
+          >
+            Đăng nhập ngay
+          </Button>
+        }
       />
     </Flex>
   );

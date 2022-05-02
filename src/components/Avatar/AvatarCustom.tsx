@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
+import { useCart } from '../../services/cart/useCart';
 import clientStorage from '../../utils/clientStorage';
 import { DynamicObject } from './../../models/DynamicObject.model';
 interface AvatarCustomProps extends MenuButtonProps {
@@ -16,11 +17,14 @@ interface AvatarCustomProps extends MenuButtonProps {
 
 const AvatarCustom = (props: AvatarCustomProps) => {
   const { ...rest } = props;
+  const cart = useCart();
   const { mutate } = useUser();
   const navigate = useNavigate();
   const handlerLogout = () => {
     clientStorage.getClientStorage().clearToken();
     mutate();
+    cart.resetCart();
+    navigate(0);
   };
   const handlerRouter = () => {
     navigate('/user/profile', { replace: true });
