@@ -2,6 +2,7 @@ import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { orderAPI } from '../../api/repositoryFactory';
 import CustomCard from '../Card/CustomCard';
+import './CustomScrollBar.css';
 
 interface HistoryOrderModalProps {
   orderDetailId: number;
@@ -25,9 +26,9 @@ const HistoryOrderModal = (props: HistoryOrderModalProps) => {
   }, []);
   console.log(foodsDetail);
   return (
-    <Box>
+    <Box maxHeight={'20rem'} overflowY={'auto'} id={'modal'} px={'.5rem'}>
       {foodsDetail.map((food) => (
-        <CustomCard key={food.idFood} px={'1rem'} py={'.5rem'}>
+        <CustomCard key={food.idFood} px={'1rem'} py={'.5rem'} my={'.5rem'}>
           <Flex justifyContent={'space-between'}>
             <Flex>
               <Avatar src={food.imageFood || '/assets/no-image.png'} />
