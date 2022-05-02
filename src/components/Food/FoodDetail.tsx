@@ -26,12 +26,12 @@ import { useNavigate } from 'react-router-dom';
 const FoodDetail = (props: Partial<Food>) => {
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
-  const { data } = useUser(false);
+  const { data, error } = useUser(false);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (data) {
+    if (data && !error) {
       const food = {
         idFood: props.idFood?.toString() || '1',
         numberFood: parseInt(numberButtonRef.current?.value || '-1'),
@@ -103,7 +103,7 @@ const FoodDetail = (props: Partial<Food>) => {
       <ButtonCustom
         textDisplay={'Thêm vào giỏ hàng'}
         borderRadius={'0'}
-        onClick={data ? addCartHandler : onOpen}
+        onClick={!error ? addCartHandler : onOpen}
       />
       <ModalCustom
         body={<p>Bạn cần phải đăng nhập trước khi đặt món</p>}

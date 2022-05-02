@@ -24,7 +24,7 @@ const AvatarCustom = (props: AvatarCustomProps) => {
     clientStorage.getClientStorage().clearToken();
     mutate();
     cart.resetCart();
-    navigate(0);
+    navigate('/', { replace: true });
   };
   const handlerRouter = () => {
     navigate('/user/profile', { replace: true });

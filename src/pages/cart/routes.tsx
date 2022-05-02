@@ -5,6 +5,7 @@ export const CartRoutes: RoutesConfig[] = [
     component: <CartContainer />,
     needProtected: true,
     path: '/my-cart',
-    redirectWhenAlreadyHasUser: false
+    redirectWhenAlreadyHasUser: false,
+    specificRole: ['Customer']
   }
 ];
