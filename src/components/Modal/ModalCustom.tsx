@@ -9,10 +9,12 @@ import {
   Button,
   UseDisclosureProps
 } from '@chakra-ui/react';
+import React from 'react';
 
 interface ModalCustomProps extends UseDisclosureProps {
   body?: React.ReactNode;
   header?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 const ModalCustom = (props: ModalCustomProps) => {
@@ -26,6 +28,7 @@ const ModalCustom = (props: ModalCustomProps) => {
           <ModalBody>{props.body}</ModalBody>
           <ModalFooter>
             <Button onClick={props.onClose}>Đóng</Button>
+            {props.footer}
           </ModalFooter>
         </ModalContent>
       </Modal>
