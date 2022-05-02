@@ -21,12 +21,12 @@ interface SellerFoodItemProps {
 const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
   (props, ref) => {
     const cart = useCart();
-    const { data } = useUser(false);
+    const { data, error } = useUser(false);
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      if (data) {
+      if (data && !error) {
         const food = {
           idFood: props.food.idFood.toString(),
           numberFood: 1,
@@ -74,7 +74,7 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
             aria-label="Search database"
             icon={<AddIcon />}
             size={'xs'}
-            onClick={data ? addCartHandler : onOpen}
+            onClick={!error ? addCartHandler : onOpen}
           />
         </Flex>
         <ModalCustom

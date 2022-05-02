@@ -6,15 +6,13 @@ const HomeRoutes: RoutesConfig[] = [
     path: '/',
     component: <HomeContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: false,
-    specificRole: ['Customer']
+    needProtected: false
   },
   {
     path: '/search',
     component: <SearchContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: false,
-    specificRole: ['Customer']
+    needProtected: false
   }
 ];
 export default HomeRoutes;
