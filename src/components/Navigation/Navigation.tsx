@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
+
 import AvatarCustom from '../Avatar/AvatarCustom';
 import ButtonCustom from '../Button/ButtonCustom';
 import Logo from '../Logo/Logo';

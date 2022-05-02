@@ -12,10 +12,12 @@ interface SidebarProps {
 
 const Sidebar = (props: SidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(props.userData);
   return (
     <Box minHeight={'100%'}>
       <SidebarContent
         onClose={onClose}
+        userData={props.userData}
         display={{ base: 'none', md: 'block' }}
       />
       <Drawer
@@ -28,7 +30,7 @@ const Sidebar = (props: SidebarProps) => {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent onClose={onClose} userData={props.userData} />
         </DrawerContent>
       </Drawer>
       <MobileSidebar onOpen={onOpen} userData={props.userData} />

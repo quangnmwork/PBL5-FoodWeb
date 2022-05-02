@@ -26,7 +26,7 @@ import { useNavigate } from 'react-router-dom';
 const FoodDetail = (props: Partial<Food>) => {
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
-  const { data, error } = useUser(false);
+  const { data, error } = useUser();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
