@@ -21,7 +21,7 @@ interface SellerFoodItemProps {
 const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
   (props, ref) => {
     const cart = useCart();
-    const { data, error } = useUser(false);
+    const { data, error } = useUser();
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {

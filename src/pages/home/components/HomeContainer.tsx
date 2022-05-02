@@ -11,7 +11,7 @@ const HomeContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
   const { data, error } = useUser();
   console.log(data);
-  if (data.nameGroup !== 'Customer' && !error) {
+  if (data?.nameGroup !== 'Customer' && !error) {
     return <Navigate to={'/user/profile'} replace={true} />;
   }
 
