@@ -7,14 +7,14 @@ const UserRoutes: RoutesConfig[] = [
     component: <UserContainer />,
     redirectWhenAlreadyHasUser: false,
     needProtected: true,
-    specificRole: ['Shipper', 'Customer']
+    specificRole: ['Shipper', 'Customer', 'Seller', 'Admin']
   },
   {
     path: '/user/security',
     component: <UserContainer />,
     redirectWhenAlreadyHasUser: false,
     needProtected: true,
-    specificRole: ['Shipper', 'Customer']
+    specificRole: ['Shipper', 'Customer', 'Seller', 'Admin']
   },
   {
     path: '/user/history-order',
@@ -36,6 +36,13 @@ const UserRoutes: RoutesConfig[] = [
     redirectWhenAlreadyHasUser: false,
     needProtected: true,
     specificRole: ['Shipper']
+  },
+  {
+    path: '/user/my-foods',
+    component: <UserContainer />,
+    redirectWhenAlreadyHasUser: false,
+    needProtected: true,
+    specificRole: ['Seller']
   }
 ];
 export default UserRoutes;

@@ -6,7 +6,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   UseDisclosureProps
 } from '@chakra-ui/react';
 import React from 'react';
@@ -26,10 +25,7 @@ const ModalCustom = (props: ModalCustomProps) => {
           <ModalHeader>{props.header}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>{props.body}</ModalBody>
-          <ModalFooter>
-            <Button onClick={props.onClose}>Đóng</Button>
-            {props.footer}
-          </ModalFooter>
+          <ModalFooter>{props.footer}</ModalFooter>
         </ModalContent>
       </Modal>
     </>
