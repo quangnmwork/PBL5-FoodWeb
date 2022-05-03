@@ -14,7 +14,8 @@ import CustomCard from '../Card/CustomCard';
 
 import ModalCustom from '../Modal/ModalCustom';
 import SellerFoodItemModal from './SellerFoodItemModal';
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
+import SellerFoodItemDelete from './SellerFoodItemDelete';
 
 interface FoodHomeItemProps {
   food: Food;
@@ -64,9 +65,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           footer={
             <Flex gap={'.5rem'}>
               <Button leftIcon={<EditIcon />}>Chỉnh sửa</Button>
-              <Button leftIcon={<DeleteIcon />} colorScheme={'red'}>
-                Xoá món ăn
-              </Button>
+              <SellerFoodItemDelete idFood={props.food.idFood} />
             </Flex>
           }
         />

@@ -6,5 +6,8 @@ export default {
   },
   getListFoods(numberPage: number) {
     return axiosClient.get(`${path}/getListFood/page-${numberPage}`);
+  },
+  deleteFood(idFood: number) {
+    return axiosClient.delete(`${path}/DeleteFood/${idFood}`);
   }
 };

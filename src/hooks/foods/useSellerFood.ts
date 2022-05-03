@@ -28,7 +28,7 @@ const useSellerFood = (pageNumber: number) => {
     return () => {
       fetch = false;
     };
-  }, []);
+  }, [pageNumber]);
   return { error, loading, foods, hasMore };
 };
 export default useSellerFood;
