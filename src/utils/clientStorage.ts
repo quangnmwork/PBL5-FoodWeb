@@ -7,6 +7,9 @@ class clientStorage {
     }
     return clientStorage._clientStorage;
   }
+  getToken() {
+    return localStorage.getItem(process.env.REACT_APP_NAME_TOKEN!);
+  }
   setToken(token: string) {
     localStorage.setItem(process.env.REACT_APP_NAME_TOKEN!, `Bearer ${token}`);
   }

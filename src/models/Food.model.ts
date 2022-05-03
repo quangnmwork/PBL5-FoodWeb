@@ -6,4 +6,6 @@ export interface Food {
   descriptionFood: string;
   imageFood: string;
   nameCategory: string;
+  isHidden?: boolean;
+  isAdminHidden?: boolean;
 }

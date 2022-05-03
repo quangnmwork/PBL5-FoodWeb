@@ -3,6 +3,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import HistoryOrderMain from '../../../components/HistoryOrder/HistoryOrderMain';
 import Profile from '../../../components/Profile/Profile';
 import ProfileSecurity from '../../../components/Profile/ProfileSecurity';
+import SellerFoodsManage from '../../../components/SellerProfile/SellerFoodsManage';
+
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import { useUser } from '../../../hooks/authentication/useUser';
 
@@ -19,6 +21,11 @@ const UserContainer = () => {
           {location.pathname == '/user/security' ? <ProfileSecurity /> : null}
           {location.pathname == '/user/history-order' ? (
             <HistoryOrderMain />
+          ) : null}
+          {location.pathname == '/user/my-foods' &&
+          data &&
+          data.nameGroup == 'Seller' ? (
+            <SellerFoodsManage />
           ) : null}
         </Sidebar>
       ) : (
