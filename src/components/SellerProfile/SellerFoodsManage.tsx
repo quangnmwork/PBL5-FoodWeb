@@ -1,5 +1,5 @@
 import { Text, Flex, SimpleGrid, Divider } from '@chakra-ui/react';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 import useSellerFood from '../../hooks/foods/useSellerFood';
 import SellerFoodItemManage from './SellerFoodItemManage';
@@ -7,8 +7,12 @@ import SellerFoodPost from './SellerFoodPost';
 
 const SellerFoodsManage = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { foods, loading, hasMore, error } = useSellerFood(pageNumber);
-  const [reiceiveFood, setReiceveFood] = useState<number>();
+  const [reiceiveFood, setReiceveFood] = useState<number>(0);
+  const { foods, loading, hasMore, error } = useSellerFood(
+    pageNumber,
+    reiceiveFood
+  );
+
   // console.log(foods);
   const observer = useRef<null | IntersectionObserver>(null);
   const lastFoodElementRef = useCallback(
@@ -24,6 +28,10 @@ const SellerFoodsManage = () => {
     },
     [loading, hasMore]
   );
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    setPageNumber(1);
+  }, [reiceiveFood]);
 
   return (
     <Flex flexDirection={'column'}>
