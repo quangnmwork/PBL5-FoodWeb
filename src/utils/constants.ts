@@ -20,3 +20,9 @@ export const categories = [
     nameCategory: 'Tráng miệng'
   }
 ];
+export const returnIdCategory = (nameCategory: string) => {
+  categories.forEach((category) => {
+    if (category.nameCategory == nameCategory) return category.idCategory;
+  });
+  return 1;
+};

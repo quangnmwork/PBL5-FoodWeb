@@ -10,6 +10,9 @@ export default {
   getFood(idFood: number) {
     return axiosClient.get(`${path}/forSeller/${idFood}`);
   },
+  createFood(foodData: FormData) {
+    return axiosClient.post(`${path}/createFood`, foodData);
+  },
   deleteFood(idFood: number) {
     return axiosClient.delete(`${path}/DeleteFood/${idFood}`);
   },
