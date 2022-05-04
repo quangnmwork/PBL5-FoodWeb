@@ -24,7 +24,7 @@ const useFoodFetch = (
       .then((res) => {
         if (fetch) {
           setFoods((prevFoods) => {
-            console.log([...new Set([...prevFoods, ...res.data])]);
+            // console.log([...new Set([...prevFoods, ...res.data])]);
             return [...new Set([...prevFoods, ...res.data])];
           });
           setHasMore(res.data.length > 0);

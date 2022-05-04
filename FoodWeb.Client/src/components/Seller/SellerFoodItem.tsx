@@ -1,7 +1,18 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { Flex, Text, Box, Image, IconButton } from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  Box,
+  Image,
+  IconButton,
+  useDisclosure,
+  Button
+} from '@chakra-ui/react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../hooks/authentication/useUser';
 import { useCart } from '../../services/cart/useCart';
+import ModalCustom from '../Modal/ModalCustom';
 import { Food } from './../../models/Food.model';
 interface SellerFoodItemProps {
   food: Food;
@@ -10,16 +21,22 @@ interface SellerFoodItemProps {
 const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
   (props, ref) => {
     const cart = useCart();
+    const { data, error } = useUser();
+    const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      const food = {
-        idFood: props.food.idFood.toString(),
-        numberFood: 1,
-        imageFood: props.food.imageFood || '',
-        nameFood: props.food.nameFood || '',
-        priceFood: props.food.priceFood || 0
-      };
-      cart.addFood(food);
+      if (data && !error) {
+        const food = {
+          idFood: props.food.idFood.toString(),
+          numberFood: 1,
+          imageFood: props.food.imageFood || '',
+          nameFood: props.food.nameFood || '',
+          priceFood: props.food.priceFood || 0
+        };
+        cart.addFood(food);
+      } else {
+      }
     };
     return (
       <Flex
@@ -50,14 +67,33 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
           </Text>
         </Box>
         <Flex justifyContent={'space-evenly'} flexBasis={'30%'}>
-          <Text color={'main.800'}>{props.food.priceFood}₫</Text>
+          <Text color={'main.800'} width={'100%'}>
+            {props.food.priceFood}₫
+          </Text>
           <IconButton
             aria-label="Search database"
             icon={<AddIcon />}
             size={'xs'}
-            onClick={addCartHandler}
+            onClick={!error ? addCartHandler : onOpen}
           />
         </Flex>
+        <ModalCustom
+          body={<p>Bạn cần phải đăng nhập trước khi đặt món</p>}
+          isOpen={isOpen}
+          onClose={onClose}
+          header={<p>Chú ý</p>}
+          footer={
+            <Button
+              ml={'.5rem'}
+              variant={'outline'}
+              onClick={() => {
+                navigate('/auth/sign-in', { replace: true });
+              }}
+            >
+              Đăng nhập ngay
+            </Button>
+          }
+        />
       </Flex>
     );
   }

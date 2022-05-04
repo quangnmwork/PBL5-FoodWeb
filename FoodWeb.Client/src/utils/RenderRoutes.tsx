@@ -32,6 +32,7 @@ const RenderRoutes = (routesConfig: RoutesConfig[]) => {
       // );
       // console.log('Object', checkObjectExist(data));
       // console.log('Redirect', redirectWhenAlreadyHasUser);
+
       if (needProtected && data && !error && specificRole) {
         return (
           <Route

@@ -18,6 +18,7 @@ interface CartState {
   getTotalMoney: () => number;
   deleteFood: (idFood: string) => void;
   getCartForOrder: () => Pick<FoodCart, 'idFood' | 'numberFood'>[];
+  resetCart: () => void;
 }
 export const useCart = create<CartState>()(
   persist(
@@ -94,8 +95,12 @@ export const useCart = create<CartState>()(
         });
 
         return cartOrder;
+      },
+      resetCart: () => {
+        set({ foods: [] as FoodCart[] });
       }
     }),
+
     {
       name: 'cart',
       getStorage: () => sessionStorage

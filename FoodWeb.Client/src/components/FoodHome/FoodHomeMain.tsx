@@ -51,7 +51,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
       top={'5rem'}
     >
       <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
-        {!error && foods.length ? (
+        {!error && foods.length && !loading ? (
           foods.map((food, index) => {
             if (foods.length === index + 1) {
               return (

@@ -7,11 +7,11 @@ import { userAPI } from '../../api/repositoryFactory';
 const fetcher = (_: string) => userAPI.getUserProfile().then((res) => res.data);
 
 export const useUser = () => {
+  // console.log(`${process.env.REACT_APP_DOMAIN}Users/GetProfileUser`);
   const { data, error, mutate } = useSWR(
     `${process.env.REACT_APP_DOMAIN}Users/GetProfileUser`,
     fetcher,
-    { refreshInterval: 1000 }
+    { refreshInterval: 500 }
   );
-
   return { data, error, mutate };
 };
