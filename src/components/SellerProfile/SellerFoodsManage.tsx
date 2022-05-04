@@ -8,7 +8,7 @@ import SellerFoodItemManage from './SellerFoodItemManage';
 const SellerFoodsManage = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { foods, loading, hasMore, error } = useSellerFood(pageNumber);
-  console.log(foods);
+  // console.log(foods);
   const observer = useRef<null | IntersectionObserver>(null);
   const lastFoodElementRef = useCallback(
     (node: any) => {
