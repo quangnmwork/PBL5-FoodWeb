@@ -27,7 +27,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
   (props, ref) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { data } = useFood(props.food.idFood);
-    console.log(data);
+
     return (
       <CustomCard
         data-id={props.food.idFood}
@@ -40,7 +40,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           <Skeleton isLoaded={props.food ? true : false}>
             <Box overflow={'hidden'}>
               <Image
-                src={data.imageFood || props.food.imageFood}
+                src={data?.imageFood || props.food.imageFood}
                 alt={props.food.imageFood}
                 boxSize={'8rem'}
                 width={'100%'}
@@ -53,7 +53,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           <Box px={'.5rem'} pt={'.7rem'}>
             <SkeletonText isLoaded={props.food ? true : false}>
               <Text isTruncated={true}>
-                {data.nameFood || props.food.nameFood}
+                {data?.nameFood || props.food.nameFood}
               </Text>
             </SkeletonText>
           </Box>
