@@ -17,6 +17,7 @@ import SellerFoodItemModal from './SellerFoodItemModal';
 
 import SellerFoodItemDelete from './SellerFoodItemDelete';
 import SellerFoodItemEdit from './SellerFoodItemEdit';
+import { useFood } from '../../hooks/foods/useFood';
 
 interface FoodHomeItemProps {
   food: Food;
@@ -25,6 +26,8 @@ interface FoodHomeItemProps {
 const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
   (props, ref) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { data } = useFood(props.food.idFood);
+    console.log(data);
     return (
       <CustomCard
         data-id={props.food.idFood}
@@ -37,7 +40,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           <Skeleton isLoaded={props.food ? true : false}>
             <Box overflow={'hidden'}>
               <Image
-                src={props.food.imageFood}
+                src={data.imageFood || props.food.imageFood}
                 alt={props.food.imageFood}
                 boxSize={'8rem'}
                 width={'100%'}
@@ -49,7 +52,9 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           </Skeleton>
           <Box px={'.5rem'} pt={'.7rem'}>
             <SkeletonText isLoaded={props.food ? true : false}>
-              <Text isTruncated={true}>{props.food.nameFood}</Text>
+              <Text isTruncated={true}>
+                {data.nameFood || props.food.nameFood}
+              </Text>
             </SkeletonText>
           </Box>
           <Box width={'25%'} alignSelf={'center'} mx={'.5rem'} my={'.2rem'}>
@@ -62,10 +67,10 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           header={<p>Chi tiết món ăn</p>}
           onClose={onClose}
           isOpen={isOpen}
-          body={<SellerFoodItemModal food={props.food} />}
+          body={<SellerFoodItemModal food={data || props.food} />}
           footer={
             <Flex gap={'.5rem'}>
-              <SellerFoodItemEdit food={props.food} />
+              <SellerFoodItemEdit food={data || props.food} />
               <SellerFoodItemDelete idFood={props.food.idFood} />
             </Flex>
           }
