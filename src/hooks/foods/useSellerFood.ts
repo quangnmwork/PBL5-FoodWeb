@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { sellerAPI } from '../../api/repositoryFactory';
 import { Food } from '../../models/Food.model';
 
-const useSellerFood = (pageNumber: number) => {
+const useSellerFood = (pageNumber: number, id?: number) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [foods, setFoods] = useState<Food[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(false);
-
   useEffect(() => {
     setFoods([]);
-  }, []);
+  }, [id]);
+
   useEffect(() => {
     setLoading(true);
     setError(false);
@@ -28,7 +28,7 @@ const useSellerFood = (pageNumber: number) => {
     return () => {
       fetch = false;
     };
-  }, [pageNumber]);
+  }, [pageNumber, id]);
   return { error, loading, foods, hasMore };
 };
 export default useSellerFood;
