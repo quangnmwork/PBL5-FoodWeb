@@ -18,5 +18,11 @@ export default {
   },
   editFood(idFood: number, foodData: FormData) {
     return axiosClient.patch(`${path}/editFood/${idFood}`, foodData);
+  },
+  hiddenFood(idFood: number, isHidden: boolean) {
+    return axiosClient.post(`${path}/setHiddenFood`, {
+      idFood: idFood,
+      isHidden: isHidden
+    });
   }
 };
