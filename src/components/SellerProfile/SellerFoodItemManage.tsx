@@ -6,7 +6,8 @@ import {
   SkeletonText,
   Text,
   Button,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react';
 import React from 'react';
 import { Food } from '../../models/Food.model';
@@ -18,6 +19,7 @@ import SellerFoodItemModal from './SellerFoodItemModal';
 import SellerFoodItemDelete from './SellerFoodItemDelete';
 import SellerFoodItemEdit from './SellerFoodItemEdit';
 import { useFood } from '../../hooks/foods/useFood';
+import { sellerAPI } from '../../api/repositoryFactory';
 
 interface FoodHomeItemProps {
   food: Food;
@@ -26,15 +28,40 @@ interface FoodHomeItemProps {
 const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
   (props, ref) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { data } = useFood(props.food.idFood);
+    const { data, mutate } = useFood(props.food.idFood);
+    const toast = useToast();
+    console.log(data);
 
+    const onHidden = async () => {
+      try {
+        const res = await sellerAPI.hiddenFood(data.idFood, !data.isHidden);
+        console.log(res);
+        mutate();
+        toast({
+          status: 'success',
+          title: 'Ẩn món ăn thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      } catch (error: any) {
+        toast({
+          status: 'error',
+          title: 'Có lỗi xảy ra vui lòng thử lại',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      }
+    };
     return (
       <CustomCard
         data-id={props.food.idFood}
         cursor={'pointer'}
         role={'group'}
         title={`${props.food.nameFood},${props.food.timeCreate}`}
-        onClick={onOpen}
+        filter={'auto'}
+        brightness={data.isHidden ? '80%' : '100%'}
       >
         <Flex flexDirection={'column'} ref={ref}>
           <Skeleton isLoaded={props.food ? true : false}>
@@ -57,11 +84,30 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
               </Text>
             </SkeletonText>
           </Box>
-          <Box width={'25%'} alignSelf={'center'} mx={'.5rem'} my={'.2rem'}>
-            <Button size={'md'} height={'2em'} whiteSpace={'nowrap'}>
+          <Flex gap={'.5rem'} p={'.5rem'} justifyContent={'center'}>
+            <Button
+              height={'2em'}
+              colorScheme={'red'}
+              padding={'.5rem'}
+              fontSize={'.8em'}
+              onClick={() => {
+                onHidden();
+              }}
+              variant={data.isHidden ? 'outline' : 'solid'}
+            >
+              {data.isHidden ? 'Mở bài viết' : 'Ẩn bài viết'}
+            </Button>
+            <Button
+              size={'md'}
+              height={'2em'}
+              whiteSpace={'nowrap'}
+              padding={'.5rem'}
+              fontSize={'.8em'}
+              onClick={onOpen}
+            >
               Xem chi tiết
             </Button>
-          </Box>
+          </Flex>
         </Flex>
         <ModalCustom
           header={<p>Chi tiết món ăn</p>}
