@@ -1,4 +1,4 @@
-import { Box, Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
 import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import useFoodFetch from '../../hooks/foods/useFoodFetch';
 import FoodHomeItem from './FoodHomeItem';
@@ -41,6 +41,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
     }
   }, [props.activeCategory, props.keyName]);
   // console.log('Eror', error);
+
   return (
     <Flex
       flexDirection={'column'}
@@ -51,23 +52,21 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
       top={'5rem'}
     >
       <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
-        {!error && foods.length && !loading ? (
-          foods.map((food, index) => {
-            if (foods.length === index + 1) {
-              return (
-                <FoodHomeItem
-                  ref={lastFoodElementRef}
-                  food={food}
-                  key={index}
-                />
-              );
-            } else {
-              return <FoodHomeItem food={food} key={index} />;
-            }
-          })
-        ) : (
-          <Box fontWeight={'bold'}>Không có kết quả tìm thấy</Box>
-        )}
+        {!error && foods.length
+          ? foods.map((food, index) => {
+              if (foods.length === index + 1) {
+                return (
+                  <FoodHomeItem
+                    ref={lastFoodElementRef}
+                    food={food}
+                    key={index}
+                  />
+                );
+              } else {
+                return <FoodHomeItem food={food} key={index} />;
+              }
+            })
+          : null}
       </SimpleGrid>
       <Flex justifyContent={'center'} width={'100%'} mt={'2rem'}>
         {loading || (

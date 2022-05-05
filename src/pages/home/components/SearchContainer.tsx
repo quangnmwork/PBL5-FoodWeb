@@ -8,7 +8,6 @@ import useWatchScroll from '../../../hooks/utils/useWatchScroll';
 const SearchContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
   const [params] = useSearchParams();
-  console.log(params.get('nameCategory'), params.get('keyName'));
   return (
     <Box bgColor={'bgMain.100'} position="relative" minH={'100%'}>
       <Navigation />
