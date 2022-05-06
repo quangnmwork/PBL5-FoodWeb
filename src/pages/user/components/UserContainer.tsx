@@ -5,6 +5,7 @@ import Profile from '../../../components/Profile/Profile';
 import ProfileSecurity from '../../../components/Profile/ProfileSecurity';
 import SellerFoodsManage from '../../../components/SellerProfile/SellerFoodsManage';
 import ShipperAllOrder from '../../../components/Shipper/All/ShipperAllOrder';
+import MyShip from '../../../components/Shipper/Order/MyShip';
 
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import { useUser } from '../../../hooks/authentication/useUser';
@@ -32,6 +33,11 @@ const UserContainer = () => {
           data &&
           data.nameGroup == 'Shipper' ? (
             <ShipperAllOrder />
+          ) : null}
+          {location.pathname == '/user/my-ship' &&
+          data &&
+          data.nameGroup == 'Shipper' ? (
+            <MyShip />
           ) : null}
         </Sidebar>
       ) : (

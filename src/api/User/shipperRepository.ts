@@ -13,10 +13,10 @@ export default {
   getMyShip() {
     return axiosClient.get(`${path}/getListOrderShipperChoice`);
   },
-  getDetailMyShip(id: number) {
+  getDetailShip(id: number) {
     return axiosClient.get(`${path}/getListFoodOrder/${id}`);
   },
   tickShip(id: number) {
-    return axiosClient.post(`${path}/tickShip/${id}`);
+    return axiosClient.get(`${path}/tickShip/${id}`);
   }
 };

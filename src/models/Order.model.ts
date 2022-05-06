@@ -10,3 +10,15 @@ export interface Order {
   idCustomer: number;
   idShipper: number;
 }
+export interface OrderShipper {
+  idOrderDetail: number;
+  timeOrderDetail: string;
+  isShip: boolean;
+  choiceShip: boolean;
+  codeOrderDetail: string;
+  idRoom: number;
+  idPayment: number;
+  idCustomer: number;
+  idShipper: number;
+  timeShipDone?: boolean;
+}

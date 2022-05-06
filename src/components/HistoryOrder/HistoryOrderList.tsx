@@ -47,7 +47,7 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
     <>
       {orders.length > 0 ? (
         <TableContainer width={'100%'}>
-          <Table variant={'striped'} colorScheme={'green'}>
+          <Table variant={'striped'}>
             <Thead>
               <Tr>
                 <Th>Số thứ tự</Th>
