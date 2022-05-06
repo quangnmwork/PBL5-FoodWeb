@@ -25,7 +25,7 @@ const SearchBar = () => {
     const handleSearchKeyName = searchRef.current?.value || '';
     window.scrollTo({ top: 0 });
     navigate(
-      `${
+      `../${
         !location.pathname.includes('search') ? 'search/' : ''
       }?${handleSearchString}keyName=${handleSearchKeyName}`,
       {

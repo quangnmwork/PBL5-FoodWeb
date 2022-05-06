@@ -22,7 +22,8 @@ const AvatarCustom = (props: AvatarCustomProps) => {
   const navigate = useNavigate();
   const handlerLogout = () => {
     clientStorage.getClientStorage().clearToken();
-    mutate();
+    navigate('../', { replace: true });
+    mutate(null);
     cart.resetCart();
   };
   const handlerRouter = () => {

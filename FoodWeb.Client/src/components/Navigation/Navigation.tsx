@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
+import { checkObjectExist } from '../../utils/checkObjectNull';
 
 import AvatarCustom from '../Avatar/AvatarCustom';
 import ButtonCustom from '../Button/ButtonCustom';
@@ -30,7 +31,7 @@ const Navigation = () => {
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
       <SearchBar />
 
-      {error ? (
+      {error || !checkObjectExist(data) ? (
         <ButtonCustom textDisplay={'Đăng nhập'} onClick={handlerLoginRouter} />
       ) : (
         <Flex alignItems={'center'}>

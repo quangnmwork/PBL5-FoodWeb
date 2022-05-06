@@ -1,14 +1,19 @@
-import { AddIcon } from '@chakra-ui/icons';
-import { Text, Flex, SimpleGrid, Button, Divider } from '@chakra-ui/react';
-import { useState, useRef, useCallback } from 'react';
+import { Text, Flex, SimpleGrid, Divider } from '@chakra-ui/react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 import useSellerFood from '../../hooks/foods/useSellerFood';
 import SellerFoodItemManage from './SellerFoodItemManage';
+import SellerFoodPost from './SellerFoodPost';
 
 const SellerFoodsManage = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { foods, loading, hasMore, error } = useSellerFood(pageNumber);
-  console.log(foods);
+  const [reiceiveFood, setReiceveFood] = useState<number>(0);
+  const { foods, loading, hasMore, error } = useSellerFood(
+    pageNumber,
+    reiceiveFood
+  );
+
+  // console.log(foods);
   const observer = useRef<null | IntersectionObserver>(null);
   const lastFoodElementRef = useCallback(
     (node: any) => {
@@ -23,6 +28,10 @@ const SellerFoodsManage = () => {
     },
     [loading, hasMore]
   );
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    setPageNumber(1);
+  }, [reiceiveFood]);
 
   return (
     <Flex flexDirection={'column'}>
@@ -34,9 +43,13 @@ const SellerFoodsManage = () => {
         alignItems={'center'}
       >
         <Text fontWeight={'bold'}>Danh sách món ăn</Text>
-        <Button leftIcon={<AddIcon />}>Thêm món mới</Button>
+        <SellerFoodPost
+          onCreate={(idFood: number) => {
+            setReiceveFood(idFood);
+          }}
+        />
       </Flex>
-      <Divider />
+      <Divider height={'2px'} mb={'.5rem'} />
       <SimpleGrid columns={6} spacing={'1rem'}>
         {!error && foods.length
           ? foods.map((food, index) => {

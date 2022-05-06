@@ -6,7 +6,8 @@ import {
   SkeletonText,
   Text,
   Button,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from '@chakra-ui/react';
 import React from 'react';
 import { Food } from '../../models/Food.model';
@@ -14,8 +15,11 @@ import CustomCard from '../Card/CustomCard';
 
 import ModalCustom from '../Modal/ModalCustom';
 import SellerFoodItemModal from './SellerFoodItemModal';
-import { EditIcon } from '@chakra-ui/icons';
+
 import SellerFoodItemDelete from './SellerFoodItemDelete';
+import SellerFoodItemEdit from './SellerFoodItemEdit';
+import { useFood } from '../../hooks/foods/useFood';
+import { sellerAPI } from '../../api/repositoryFactory';
 
 interface FoodHomeItemProps {
   food: Food;
@@ -24,19 +28,46 @@ interface FoodHomeItemProps {
 const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
   (props, ref) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { data, mutate } = useFood(props.food.idFood);
+    const toast = useToast();
+    console.log(data);
+
+    const onHidden = async () => {
+      try {
+        const res = await sellerAPI.hiddenFood(data.idFood, !data.isHidden);
+        console.log(res);
+        mutate();
+        toast({
+          status: 'success',
+          title: 'Ẩn món ăn thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      } catch (error: any) {
+        toast({
+          status: 'error',
+          title: 'Có lỗi xảy ra vui lòng thử lại',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      }
+    };
     return (
       <CustomCard
         data-id={props.food.idFood}
         cursor={'pointer'}
         role={'group'}
         title={`${props.food.nameFood},${props.food.timeCreate}`}
-        onClick={onOpen}
+        filter={'auto'}
+        brightness={data.isHidden ? '80%' : '100%'}
       >
         <Flex flexDirection={'column'} ref={ref}>
           <Skeleton isLoaded={props.food ? true : false}>
             <Box overflow={'hidden'}>
               <Image
-                src={props.food.imageFood}
+                src={data?.imageFood || props.food.imageFood}
                 alt={props.food.imageFood}
                 boxSize={'8rem'}
                 width={'100%'}
@@ -48,23 +79,44 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           </Skeleton>
           <Box px={'.5rem'} pt={'.7rem'}>
             <SkeletonText isLoaded={props.food ? true : false}>
-              <Text isTruncated={true}>{props.food.nameFood}</Text>
+              <Text isTruncated={true}>
+                {data?.nameFood || props.food.nameFood}
+              </Text>
             </SkeletonText>
           </Box>
-          <Box width={'25%'} alignSelf={'center'} mx={'.5rem'} my={'.2rem'}>
-            <Button size={'md'} height={'2em'} whiteSpace={'nowrap'}>
+          <Flex gap={'.5rem'} p={'.5rem'} justifyContent={'center'}>
+            <Button
+              height={'2em'}
+              colorScheme={'red'}
+              padding={'.5rem'}
+              fontSize={'.8em'}
+              onClick={() => {
+                onHidden();
+              }}
+              variant={data.isHidden ? 'outline' : 'solid'}
+            >
+              {data.isHidden ? 'Mở bài viết' : 'Ẩn bài viết'}
+            </Button>
+            <Button
+              size={'md'}
+              height={'2em'}
+              whiteSpace={'nowrap'}
+              padding={'.5rem'}
+              fontSize={'.8em'}
+              onClick={onOpen}
+            >
               Xem chi tiết
             </Button>
-          </Box>
+          </Flex>
         </Flex>
         <ModalCustom
           header={<p>Chi tiết món ăn</p>}
           onClose={onClose}
           isOpen={isOpen}
-          body={<SellerFoodItemModal food={props.food} />}
+          body={<SellerFoodItemModal food={data || props.food} />}
           footer={
             <Flex gap={'.5rem'}>
-              <Button leftIcon={<EditIcon />}>Chỉnh sửa</Button>
+              <SellerFoodItemEdit food={data || props.food} />
               <SellerFoodItemDelete idFood={props.food.idFood} />
             </Flex>
           }
