@@ -18,5 +18,11 @@ export default {
   },
   tickShip(id: number) {
     return axiosClient.get(`${path}/tickShip/${id}`);
+  },
+  choiceShip(id: number, choiceShip: boolean) {
+    return axiosClient.post(`${path}/choiceShip `, {
+      idOrderDetail: id,
+      choiceShip: choiceShip
+    });
   }
 };

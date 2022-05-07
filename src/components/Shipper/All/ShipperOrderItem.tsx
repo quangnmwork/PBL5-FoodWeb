@@ -41,16 +41,22 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   }, []);
   const onTickShip = async () => {
     try {
-      await shipperAPI.tickShip(props.id);
+      await shipperAPI.choiceShip(props.id, true);
       toast({
         status: 'success',
-        title: 'Ship công',
+        title: 'Ship thành công',
         position: 'bottom-right',
         duration: 1500,
         variant: 'subtle'
       });
     } catch (error: any) {
-      console.log(error.message);
+      toast({
+        status: 'success',
+        title: 'Không thể chọn quá 5 đơn hàng',
+        position: 'bottom-right',
+        duration: 1500,
+        variant: 'subtle'
+      });
     }
   };
   return (
