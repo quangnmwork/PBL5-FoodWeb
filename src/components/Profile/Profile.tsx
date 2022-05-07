@@ -155,7 +155,15 @@ const Profile = (props: ProfileProps) => {
               </AvatarBadge>
             </Avatar>
           </Box>
-          <Flex alignItems={'center'} mt={'.5rem'}>
+          <Flex
+            alignItems={'center'}
+            mt={'.5rem'}
+            display={
+              ['Shipper', 'Seller'].includes(props.userData?.nameGroup)
+                ? 'block'
+                : 'none'
+            }
+          >
             <Text fontWeight={'bold'}>Số tiền hiện tại:</Text>
             <Text ml={'.3rem'}>{props.userData?.money || '0'}</Text>
           </Flex>
