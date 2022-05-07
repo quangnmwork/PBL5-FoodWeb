@@ -11,9 +11,11 @@ import {
   Tbody,
   useDisclosure,
   Box,
-  Avatar
+  Avatar,
+  useToast
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+
 import { shipperAPI } from '../../../api/repositoryFactory';
 import { OrderShipper } from '../../../models/Order.model';
 import { convertDateTime } from '../../../utils/convertDateTime';
@@ -29,14 +31,23 @@ const MyShip = () => {
   const [ships, setShips] = useState<OrderShipper[]>([]);
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const toast = useToast();
   useEffect(() => {
     try {
       let mounted = true;
-      shipperAPI.getMyShip().then((res) => {
-        if (mounted) setShips(res.data);
-      });
+      const fetching = () => {
+        shipperAPI.getMyShip().then((res) => {
+          if (mounted) setShips(res.data);
+        });
+      };
+      const fetcherInterval = setInterval(() => {
+        fetching();
+      }, 500);
+
       return () => {
         mounted = false;
+        clearInterval(fetcherInterval);
       };
     } catch (error: any) {}
   }, []);
@@ -45,10 +56,31 @@ const MyShip = () => {
       await shipperAPI.getDetailShip(id).then((res) => setOrder(res.data));
     } catch (error: any) {}
   };
+  const onTickShip = async (id: number) => {
+    try {
+      await shipperAPI.tickShip(id);
+      toast({
+        status: 'success',
+        title: 'Bạn đã ship thành công',
+        position: 'bottom-right',
+        duration: 1500,
+        variant: 'subtle'
+      });
+    } catch (error) {
+      toast({
+        status: 'error',
+        title: 'Có lỗi xảy ra vui lòng thử lại',
+        position: 'bottom-right',
+        duration: 1500,
+        variant: 'subtle'
+      });
+    } finally {
+    }
+  };
   return (
     <>
       {ships.length > 0 ? (
-        <TableContainer>
+        <TableContainer width={'60%'} mx={'auto'}>
           <Table variant={'striped'}>
             <Thead>
               <Tr>
@@ -72,6 +104,15 @@ const MyShip = () => {
                         }}
                       >
                         Xem chi tiết
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size={'xs'}
+                        onClick={() => {
+                          onTickShip(ship.idOrderDetail);
+                        }}
+                      >
+                        Đã ship
                       </Button>
                     </Flex>
                   </Td>

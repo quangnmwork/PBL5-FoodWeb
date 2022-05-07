@@ -4,4 +4,5 @@ export interface Seller {
   phone: string;
   address: string;
   avatar: string;
+  money?: number;
 }
