@@ -5,6 +5,8 @@ import {
   AiOutlineShoppingCart
 } from 'react-icons/ai';
 import { FaShippingFast, FaBloggerB } from 'react-icons/fa';
+import { FiUsers } from 'react-icons/fi';
+import { MdOutlineSell } from 'react-icons/md';
 export function getSideBarContent(
   nameGroup: 'Customer' | 'Shipper' | 'Admin' | 'Seller'
 ) {
@@ -65,7 +67,35 @@ export function getSideBarContent(
       linkTo: '/user/my-foods'
     }
   ];
+  const adminSidebar = [
+    {
+      icon: AiOutlineUser,
+      iconText: 'Thông tin cá nhân',
+      linkTo: '/user/profile'
+    },
+    {
+      icon: AiOutlineSetting,
+      iconText: 'Bảo mật',
+      linkTo: '/user/security'
+    },
+    {
+      icon: FiUsers,
+      iconText: 'Quản lý người dùng',
+      linkTo: '/user/user-manage'
+    },
+    {
+      icon: FaShippingFast,
+      iconText: 'Quản lý shipper',
+      linkTo: '/user/shipper-manage'
+    },
+    {
+      icon: MdOutlineSell,
+      iconText: 'Quản lý Seller',
+      linkTo: '/user/seller-manage'
+    }
+  ];
   if (nameGroup == 'Shipper') return shipperSidebar;
   if (nameGroup == 'Customer') return customerSidebar;
   if (nameGroup == 'Seller') return sellerSidebar;
+  if (nameGroup == 'Admin') return adminSidebar;
 }

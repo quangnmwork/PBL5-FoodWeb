@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import UserManageContainer from '../../../components/Admin/User/UserManageContainer';
 import HistoryOrderMain from '../../../components/HistoryOrder/HistoryOrderMain';
 import Profile from '../../../components/Profile/Profile';
 import ProfileSecurity from '../../../components/Profile/ProfileSecurity';
@@ -38,6 +39,11 @@ const UserContainer = () => {
           data &&
           data.nameGroup == 'Shipper' ? (
             <MyShip />
+          ) : null}
+          {location.pathname == '/user/user-manage' &&
+          data &&
+          data.nameGroup == 'Admin' ? (
+            <UserManageContainer />
           ) : null}
         </Sidebar>
       ) : (
