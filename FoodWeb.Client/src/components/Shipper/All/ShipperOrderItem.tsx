@@ -19,6 +19,7 @@ interface ShipperOrderItemProps {
   date: string;
   index: number;
   id: number;
+  onTick?: any;
 }
 interface ReiceiveOrderDetailItem {
   idFood: number;
@@ -29,6 +30,8 @@ interface ReiceiveOrderDetailItem {
 const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const toast = useToast();
   useEffect(() => {
     let mounted = true;
@@ -38,19 +41,28 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [props.id]);
   const onTickShip = async () => {
     try {
-      await shipperAPI.tickShip(props.id);
+      setLoading(true);
+      await shipperAPI.choiceShip(props.id, true);
       toast({
         status: 'success',
-        title: 'Ship công',
+        title: 'Ship thành công',
         position: 'bottom-right',
         duration: 1500,
         variant: 'subtle'
       });
+      setLoading(false);
     } catch (error: any) {
-      console.log(error.message);
+      setLoading(false);
+      toast({
+        status: 'error',
+        title: 'Không thể chọn quá 5 đơn hàng',
+        position: 'bottom-right',
+        duration: 1500,
+        variant: 'subtle'
+      });
     }
   };
   return (
@@ -63,7 +75,12 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
             <Button size={'xs'} onClick={onOpen}>
               Xem chi tiết
             </Button>
-            <Button size={'xs'} variant={'outline'} onClick={onTickShip}>
+            <Button
+              size={'xs'}
+              variant={'outline'}
+              onClick={onTickShip}
+              isLoading={loading}
+            >
               Ship đơn này
             </Button>
           </Flex>

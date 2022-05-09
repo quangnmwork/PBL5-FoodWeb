@@ -7,7 +7,8 @@ import {
   Input,
   Flex,
   Spinner,
-  useToast
+  useToast,
+  Text
 } from '@chakra-ui/react';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { DynamicObject } from '../../models/DynamicObject.model';
@@ -34,7 +35,7 @@ const Profile = (props: ProfileProps) => {
   const [selectAvatar, setSelectAvatar] = useState<File | undefined>();
   const [currentAvatar, setCurrentAvatar] = useState<string>();
   const toast = useToast();
-  // console.log(props.userData);
+  console.log(props.userData);
   const updateUserProfileHandler = async (data: signupInput | signinInput) => {
     try {
       const submitData = data as Partial<signupInput>;
@@ -154,6 +155,18 @@ const Profile = (props: ProfileProps) => {
               </AvatarBadge>
             </Avatar>
           </Box>
+          <Flex
+            alignItems={'center'}
+            mt={'.5rem'}
+            display={
+              ['Shipper', 'Seller'].includes(props.userData?.nameGroup)
+                ? 'block'
+                : 'none'
+            }
+          >
+            <Text fontWeight={'bold'}>Số tiền hiện tại:</Text>
+            <Text ml={'.3rem'}>{props.userData?.money || '0'}</Text>
+          </Flex>
           <FormInput
             textLabel={'Tên người dùng'}
             isEditable={true}
