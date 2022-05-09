@@ -199,7 +199,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_adminRepository.GetListPermissionDetail());
         }
 
-        [HttpPost("setBanGroup")]
+        [HttpPost("setBanPermission")]
         public ActionResult<IEnumerable<PermissionDetailDTO>> SetBanGroup(BanPermissionDTO banPermissionDTO)
         {
             int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
