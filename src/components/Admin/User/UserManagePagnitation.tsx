@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { adminAPI } from '../../../api/repositoryFactory';
 import UserManageList from './UserManageList';
+import './pagnitation.css';
 interface UserManageProps {
   nameGroup: string;
   name?: string;
@@ -103,6 +104,7 @@ const UserManagePagnitation = (props: UserManageProps) => {
             pageCount={totalPage || 1}
             containerClassName={'container'}
             pageLinkClassName={'page-link'}
+            activeLinkClassName="page-link-active"
             onClick={pageOnClick}
           />
         ) : null
