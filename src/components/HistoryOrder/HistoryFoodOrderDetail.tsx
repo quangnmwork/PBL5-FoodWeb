@@ -10,6 +10,7 @@ interface OrderDetailProps {
 }
 const HistoryFoodOrderDetail = (props: OrderDetailProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
   return (
     <Tr key={props.orderDetail.idOrderDetail}>
       <Td>{props.orderDetail.idOrderDetail}</Td>
@@ -17,7 +18,7 @@ const HistoryFoodOrderDetail = (props: OrderDetailProps) => {
       <Td>
         <Tag colorScheme={props.orderDetail.isShip ? 'main' : 'red'}>
           <TagLabel>
-            {props.orderDetail.isShip ? 'Đã ship' : 'Chưa ship'}
+            {props.orderDetail.isShip ? 'Đã giao hàng' : 'Chưa giao hàng'}
           </TagLabel>
         </Tag>
       </Td>

@@ -1,4 +1,13 @@
-import { TableContainer, Thead, Tr, Table, Th, Tbody } from '@chakra-ui/react';
+import {
+  TableContainer,
+  Thead,
+  Tr,
+  Table,
+  Th,
+  Tbody,
+  Flex,
+  Text
+} from '@chakra-ui/react';
 
 import useSWR from 'swr';
 import axiosClient from '../../../api/repository';
@@ -16,31 +25,44 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
   );
 
   return (
-    <TableContainer width={'100%'}>
-      {!error ? (
-        <Table variant={'striped'}>
-          <Thead>
-            <Tr>
-              <Th>Số thứ tự</Th>
-              <Th>Ngày đặt món</Th>
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data
-              ? data.map((order: any, index: number) => (
-                  <ShipperOrderItem
-                    key={index}
-                    date={order.timeOrderDetail}
-                    index={index}
-                    id={order.idOrderDetail}
-                  />
-                ))
-              : null}
-          </Tbody>
-        </Table>
-      ) : null}
-    </TableContainer>
+    <Flex
+      flexDirection={'column'}
+      width={'70%'}
+      px={'3rem'}
+      py={'1rem'}
+      borderWidth={'1px'}
+      borderColor={'moccasin.100'}
+      boxShadow={'lg'}
+    >
+      <Text fontWeight={'bold'} textAlign={'left'} my={'1rem'}>
+        Danh sách đơn hàng đang chờ ship
+      </Text>
+      <TableContainer>
+        {!error ? (
+          <Table variant={'striped'}>
+            <Thead>
+              <Tr>
+                <Th>Số thứ tự</Th>
+                <Th>Ngày đặt món</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data
+                ? data.map((order: any, index: number) => (
+                    <ShipperOrderItem
+                      key={index}
+                      date={order.timeOrderDetail}
+                      index={index}
+                      id={order.idOrderDetail}
+                    />
+                  ))
+                : null}
+            </Tbody>
+          </Table>
+        ) : null}
+      </TableContainer>
+    </Flex>
   );
 };
 

@@ -16,3 +16,9 @@ export interface User {
   money?: number;
   nameGroup?: string;
 }
+export interface UserPermission {
+  idAccount: number;
+  enableGroupDetail: true;
+  timeEnable: any;
+  descriptionBan: string | undefined;
+}

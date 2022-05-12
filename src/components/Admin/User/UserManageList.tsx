@@ -30,8 +30,7 @@ const UserManageList = (props: UserManageListProps) => {
       .getUserOfRoleBySearch(
         props.role,
         props.name || '',
-        props.phone || '',
-        props.address || '',
+
         props.currentPage
       )
       .then((res) => {
@@ -80,7 +79,6 @@ const UserManageList = (props: UserManageListProps) => {
                 )}
               </Tbody>
             </>
-            )
           </Table>
         </TableContainer>
       ) : (

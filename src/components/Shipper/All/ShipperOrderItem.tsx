@@ -69,8 +69,8 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
     <>
       <Tr>
         <Td>{props.index}</Td>
-        <Td>{convertDateTime(new Date(props.date))}</Td>
-        <Td>
+        <Td width={'fit-content'}>{convertDateTime(new Date(props.date))}</Td>
+        <Td width={'fit-content'}>
           <Flex gap={'1rem'} justifyContent={'center'}>
             <Button size={'xs'} onClick={onOpen}>
               Xem chi tiết

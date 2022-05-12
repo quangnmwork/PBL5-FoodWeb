@@ -29,13 +29,18 @@ const AvatarCustom = (props: AvatarCustomProps) => {
   const handlerRouter = () => {
     navigate('/user/profile', { replace: true });
   };
+  const handleAvatar = () => {
+    if (props.userData?.avatar) return props.userData.avatar;
+    if (props.userData?.nameGroup == 'Customer')
+      return '/assets/user-avatar.jpg';
+    if (props.userData?.nameGroup == 'Shipper') return '/assets/shipper.jpg';
+    if (props.userData?.nameGroup == 'Seller') return '/assets/seller.jpg';
+    if (props.userData?.nameGroup == 'Admin') return '/assets/admin.png';
+  };
   return (
     <Menu>
       <MenuButton {...rest}>
-        <Avatar
-          src={props.userData?.avatar || '/assets/user-avatar.jpg'}
-          size={'md'}
-        />
+        <Avatar src={handleAvatar()} size={'md'} />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={handlerRouter}>Thông tin cá nhân</MenuItem>
