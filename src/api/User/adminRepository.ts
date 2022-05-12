@@ -7,33 +7,28 @@ export default {
   getUserOfRole(role: string, pageNumber: number) {
     return axiosClient.get(`${path}/${role}/page-${pageNumber}`);
   },
-  getTotalPageOfRoleBySearch(
-    role: string,
-    nameUser: string,
-    phone: string,
-    address: string
-  ) {
+  getTotalPageOfRoleBySearch(role: string, keyName: string) {
     return axiosClient.get(`${path}/${role}/search/getTotalPage`, {
       params: {
-        nameUser: nameUser,
-        phone: phone,
-        address: address
+        keyName: keyName
       }
     });
   },
-  getUserOfRoleBySearch(
-    role: string,
-    nameUser: string,
-    phone: string,
-    address: string,
-    pageNumber: number
-  ) {
+  getUserOfRoleBySearch(role: string, keyName: string, pageNumber: number) {
     return axiosClient.get(`${path}/${role}/search/page-${pageNumber}`, {
       params: {
-        nameUser: nameUser,
-        phone: phone,
-        address: address
+        keyName: keyName
       }
+    });
+  },
+  checkBanUser(id: number) {
+    return axiosClient.get(`${path}/checkBanGroup/${id}`);
+  },
+  banUser(idUser: number, date: Date, descriptionBan: string) {
+    return axiosClient.post(`${path}/banUser`, {
+      idUser: idUser,
+      timeEnable: date,
+      descriptionBan: descriptionBan
     });
   }
 };

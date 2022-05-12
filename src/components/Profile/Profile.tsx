@@ -98,7 +98,14 @@ const Profile = (props: ProfileProps) => {
     if (!selectAvatar) return;
     return () => URL.revokeObjectURL(URL.createObjectURL(selectAvatar));
   }, [selectAvatar]);
-
+  const handleAvatar = () => {
+    if (props.userData?.avatar) return props.userData.avatar;
+    if (props.userData?.nameGroup == 'Customer')
+      return '/assets/user-avatar.jpg';
+    if (props.userData?.nameGroup == 'Shipper') return '/assets/shipper.jpg';
+    if (props.userData?.nameGroup == 'Seller') return '/assets/seller.jpg';
+    if (props.userData?.nameGroup == 'Admin') return '/assets/admin.png';
+  };
   return (
     <Flex
       direction={'column'}
@@ -117,7 +124,7 @@ const Profile = (props: ProfileProps) => {
         <>
           <Box alignSelf={'center'} mb={'1rem'}>
             <Avatar
-              src={currentAvatar || props.userData?.avatar}
+              src={currentAvatar || handleAvatar()}
               borderColor={'main.100'}
               borderWidth={'1px'}
               size={'xl'}
@@ -159,9 +166,7 @@ const Profile = (props: ProfileProps) => {
             alignItems={'center'}
             mt={'.5rem'}
             display={
-              ['Shipper', 'Seller'].includes(props.userData?.nameGroup)
-                ? 'block'
-                : 'none'
+              ['Shipper'].includes(props.userData?.nameGroup) ? 'block' : 'none'
             }
           >
             <Text fontWeight={'bold'}>Số tiền hiện tại:</Text>

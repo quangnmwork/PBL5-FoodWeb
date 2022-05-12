@@ -8,8 +8,6 @@ import './pagnitation.css';
 interface UserManageProps {
   nameGroup: string;
   name?: string;
-  phone?: string;
-  address?: string;
 }
 function isNumeric(num: any) {
   return !isNaN(num);
@@ -24,12 +22,7 @@ const UserManagePagnitation = (props: UserManageProps) => {
     let mounted = true;
     console.log(props.name);
     adminAPI
-      .getTotalPageOfRoleBySearch(
-        props.nameGroup,
-        props.name || '',
-        props.phone || '',
-        props.address || ''
-      )
+      .getTotalPageOfRoleBySearch(props.nameGroup, props.name || '')
       .then((res) => {
         if (mounted) {
           setCurrentPage(1);
@@ -42,7 +35,7 @@ const UserManagePagnitation = (props: UserManageProps) => {
     return () => {
       mounted = false;
     };
-  }, [props.name, props.phone, props.address]);
+  }, [props.name]);
   const goToPage = (isIncrease: boolean) => {
     if (isIncrease) {
       if (currentPage > totalPage && totalPage > 0) {
@@ -75,8 +68,6 @@ const UserManagePagnitation = (props: UserManageProps) => {
         currentPage={currentPage}
         role={props.nameGroup}
         name={props.name}
-        address={props.address}
-        phone={props.phone}
         loading={loading}
       />
       {!loading ? (

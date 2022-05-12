@@ -31,15 +31,21 @@ const MyShip = () => {
   const [ships, setShips] = useState<OrderShipper[]>([]);
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
   useEffect(() => {
     try {
+      setLoading(true);
       let mounted = true;
       const fetching = () => {
-        shipperAPI.getMyShip().then((res) => {
-          if (mounted) setShips(res.data);
-        });
+        shipperAPI
+          .getMyShip()
+          .then((res) => {
+            if (mounted) setShips(res.data);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       };
       const fetcherInterval = setInterval(() => {
         fetching();
@@ -78,52 +84,62 @@ const MyShip = () => {
     }
   };
   return (
-    <>
-      {ships.length > 0 ? (
-        <TableContainer width={'60%'} mx={'auto'}>
-          <Table variant={'striped'}>
-            <Thead>
-              <Tr>
-                <Th>Số thứ tự</Th>
-                <Th>Ngày đặt món</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {ships.map((ship, index) => (
-                <Tr key={index}>
-                  <Td>{index}</Td>
-                  <Td>{convertDateTime(new Date(ship.timeOrderDetail))}</Td>
-                  <Td>
-                    <Flex gap={'1rem'} justifyContent={'center'}>
-                      <Button
-                        size={'xs'}
-                        onClick={() => {
-                          onOpen();
-                          onGetDetail(ship.idOrderDetail);
-                        }}
-                      >
-                        Xem chi tiết
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size={'xs'}
-                        onClick={() => {
-                          onTickShip(ship.idOrderDetail);
-                        }}
-                      >
-                        Đã ship
-                      </Button>
-                    </Flex>
-                  </Td>
+    <Flex
+      flexDirection={'column'}
+      alignItems={'flex-start'}
+      width={'60%'}
+      mx={'auto'}
+    >
+      <Text fontWeight={'bold'} my={'1rem'}>
+        Đơn hàng đang ship của bạn
+      </Text>
+      {!loading ? (
+        ships.length > 0 ? (
+          <TableContainer width={'100%'} mx={'auto'}>
+            <Table variant={'striped'}>
+              <Thead>
+                <Tr>
+                  <Th>Số thứ tự</Th>
+                  <Th>Ngày đặt món</Th>
+                  <Th></Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <Text fontWeight={'bold'}>Bạn chưa có đơn hàng nào</Text>
-      )}
+              </Thead>
+              <Tbody>
+                {ships.map((ship, index) => (
+                  <Tr key={index}>
+                    <Td>{index}</Td>
+                    <Td>{convertDateTime(new Date(ship.timeOrderDetail))}</Td>
+                    <Td>
+                      <Flex gap={'1rem'} justifyContent={'center'}>
+                        <Button
+                          size={'xs'}
+                          onClick={() => {
+                            onOpen();
+                            onGetDetail(ship.idOrderDetail);
+                          }}
+                        >
+                          Xem chi tiết
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size={'xs'}
+                          onClick={() => {
+                            onTickShip(ship.idOrderDetail);
+                          }}
+                        >
+                          Đã ship
+                        </Button>
+                      </Flex>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Text fontWeight={'bold'}></Text>
+        )
+      ) : null}
       <ModalCustom
         header={<p>Chi tiết đơn hàng</p>}
         isOpen={isOpen}
@@ -162,7 +178,7 @@ const MyShip = () => {
           ) : null
         }
       />
-    </>
+    </Flex>
   );
 };
 

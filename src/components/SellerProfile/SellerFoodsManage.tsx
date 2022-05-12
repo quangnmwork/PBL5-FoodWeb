@@ -28,6 +28,7 @@ const SellerFoodsManage = () => {
     },
     [loading, hasMore]
   );
+
   useEffect(() => {
     window.scrollTo({ top: 0 });
     setPageNumber(1);
