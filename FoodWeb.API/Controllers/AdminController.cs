@@ -58,9 +58,7 @@ namespace FoodWeb.API.Controllers
 
             var searchDTO = new SearchDTO{
                 NameGroup = nameGroup,
-                NameUser = HttpContext.Request.Query["nameUser"].ToString(),
-                Phone = HttpContext.Request.Query["phone"].ToString(),
-                Address = HttpContext.Request.Query["address"].ToString(),
+                KeyName = HttpContext.Request.Query["keyName"].ToString(),
             };
             
             return Ok(_adminRepository.GetTotalPageListUsersSearchPaging(searchDTO));
@@ -75,9 +73,7 @@ namespace FoodWeb.API.Controllers
                 
             var searchDTO = new SearchDTO{
                 NameGroup = nameGroup,
-                NameUser = HttpContext.Request.Query["nameUser"].ToString(),
-                Phone = HttpContext.Request.Query["phone"].ToString(),
-                Address = HttpContext.Request.Query["address"].ToString(),
+                KeyName = HttpContext.Request.Query["keyName"].ToString(),
             };
 
             if(numberPage > _adminRepository.GetTotalPageListUsersSearchPaging(searchDTO))
@@ -219,6 +215,17 @@ namespace FoodWeb.API.Controllers
             var permissionDetail = _adminRepository.GetPermissionDetailByCode(code);
             if(permissionDetail == null)    return NotFound("Permission detail no exist");
             return Ok(permissionDetail);
+        }
+
+        [HttpGet("checkBanGroup/{IdUser}")]   // kiểm tra user có bị ban hay không để làm button cho giao diện
+        public ActionResult<GroupDetailDTO> CheckBanForAdmin(int IdUser)
+        {
+            int IdAdmin = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if(!_authorizeService.IsAdmin(IdAdmin))
+                return BadRequest("Action only admin");
+
+            return Ok(_adminRepository.CheckBanGroup(IdUser));
         }
     }
 }

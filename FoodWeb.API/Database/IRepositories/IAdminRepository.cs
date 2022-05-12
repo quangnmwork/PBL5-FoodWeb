@@ -31,5 +31,6 @@ namespace FoodWeb.API.Database.IRepositories
 
         public PermissionDetailDTO GetPermissionDetailByCode(string code);
 
+        public GroupDetailDTO CheckBanGroup(int IdUser);
     }
 }

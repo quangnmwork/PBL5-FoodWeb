@@ -66,9 +66,9 @@ namespace FoodWeb.API.Database.Repositories
                     data.Add(_mapper.Map<ProfileDTO>(user));
             }
 
-            int number = data.Where(u => u.NameUser.ToLower().Contains(searchDTO.NameUser.ToLower()) 
-                                         && u.Address.ToLower().Contains(searchDTO.Address.ToLower()) 
-                                         && u.Phone.ToLower().Contains(searchDTO.Phone.ToLower())).Count();
+            int number = data.Where(u => u.NameUser.ToLower().Contains(searchDTO.KeyName.ToLower()) 
+                                         || u.Address.ToLower().Contains(searchDTO.KeyName.ToLower()) 
+                                         || u.Phone.ToLower().Contains(searchDTO.KeyName.ToLower())).Count();
 
             return (int)Math.Ceiling(1.0*number / PageServiceExtensions.ProfilePageSize);
             
@@ -82,9 +82,11 @@ namespace FoodWeb.API.Database.Repositories
                     data.Add(_mapper.Map<ProfileDTO>(user));
             }
 
-            return data.Where(u => u.NameUser.ToLower().Contains(searchDTO.NameUser.ToLower()) 
-                                         && u.Address.ToLower().Contains(searchDTO.Address.ToLower()) 
-                                         && u.Phone.ToLower().Contains(searchDTO.Phone.ToLower()));
+            return data.Where(u => u.NameUser.ToLower().Contains(searchDTO.KeyName.ToLower()) 
+                                         || u.Address.ToLower().Contains(searchDTO.KeyName.ToLower()) 
+                                         || u.Phone.ToLower().Contains(searchDTO.KeyName.ToLower()))
+                        .OrderBy(u => u.IdUser)
+                        .ToPagedList(numberPage, PageServiceExtensions.ProfilePageSize);;
         }
 
         public IEnumerable<OrderDTO> GetListOrderShipperChoice(int IdShipper)
@@ -186,6 +188,13 @@ namespace FoodWeb.API.Database.Repositories
             var permission = _context.Permissions.FirstOrDefault(u => u.IdPermission == permissionDetail.PermissionId);
 
             return _mapper.Map<PermissionDetailDTO>(permissionDetail);
+        }
+
+        public GroupDetailDTO CheckBanGroup(int IdUser){
+            var account = _context.Accounts.FirstOrDefault(u => u.UserId == IdUser);
+            var groupDetail = _context.GroupDetails.FirstOrDefault(u => u.AccountId == account.IdAccount);
+
+            return _mapper.Map<GroupDetailDTO>(groupDetail);
         }
     }
 }
