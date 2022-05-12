@@ -46,43 +46,53 @@ const UserManageList = (props: UserManageListProps) => {
   }, [props.currentPage, props.name, props.address, props.phone]);
   console.log(users.length);
   return (
-    <TableContainer>
-      <Table variant={'striped'}>
-        {!loading ? (
-          <>
-            <Thead>
-              <Tr>
-                <Th>ID</Th>
-                <Th>Ảnh đại diện</Th>
-                <Th>Tên người dùng</Th>
-                <Th>Số điện thoại</Th>
-                <Th>Địa chỉ</Th>
-                <Th display={props.role == 'Shipper' ? 'block' : 'none'}>
-                  Tiền kiếm được
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {users.length > 0 ? (
-                users.map((user, index) => (
-                  <UserManageItem key={index} user={user} />
-                ))
-              ) : (
-                <Text fontWeight={'bold'}>Không có kết quả tìm kiếm</Text>
-              )}
-            </Tbody>
-          </>
-        ) : (
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="main.300"
-            size="xl"
-          />
-        )}
-      </Table>
-    </TableContainer>
+    <>
+      {!loading ? (
+        <TableContainer
+          textOverflow={'ellipsis'}
+          whiteSpace={'pre-wrap'}
+          overflowY={'auto'}
+        >
+          <Table variant={'striped'}>
+            <>
+              <Thead>
+                <Tr>
+                  <Th>ID</Th>
+                  <Th>Ảnh đại diện</Th>
+                  <Th>Tên người dùng</Th>
+                  <Th>Số điện thoại</Th>
+                  <Th>Địa chỉ</Th>
+                  <Th display={props.role == 'shipper' ? 'block' : 'none'}>
+                    Tiền kiếm được
+                  </Th>
+                  {props.role == 'shipper' || props.role == 'seller' ? (
+                    <Th></Th>
+                  ) : null}
+                </Tr>
+              </Thead>
+              <Tbody>
+                {users.length > 0 ? (
+                  users.map((user, index) => (
+                    <UserManageItem key={index} user={user} role={props.role} />
+                  ))
+                ) : (
+                  <Text fontWeight={'bold'}>Không có kết quả tìm kiếm</Text>
+                )}
+              </Tbody>
+            </>
+            )
+          </Table>
+        </TableContainer>
+      ) : (
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="main.300"
+          size="xl"
+        />
+      )}
+    </>
   );
 };
 
