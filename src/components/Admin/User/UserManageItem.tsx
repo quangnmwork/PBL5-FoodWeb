@@ -17,7 +17,9 @@ import React, { useState } from 'react';
 import useSWR from 'swr';
 import axiosClient from '../../../api/repository';
 import { adminAPI } from '../../../api/repositoryFactory';
+import { OrderShipper } from '../../../models/Order.model';
 import { User } from '../../../models/User.model';
+import { convertDateTime } from '../../../utils/convertDateTime';
 import ModalCustom from '../../Modal/ModalCustom';
 interface UserManageItemProps {
   user: User;
@@ -26,21 +28,29 @@ interface UserManageItemProps {
 const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
 const UserManageItem = (props: UserManageItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const shipModal = useDisclosure();
   const messageRef = React.createRef<HTMLTextAreaElement>();
+  const [ships, setShips] = useState<OrderShipper[]>([]);
   const dateRef = React.createRef<HTMLInputElement>();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const toast = useToast();
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     `${process.env.REACT_APP_DOMAIN}Admin/checkBanGroup/${props.user.idUser}`,
     fetcher,
     { refreshInterval: 500 }
   );
-  console.log(props.user.idUser);
+  const onGetDetailShip = async () => {
+    try {
+      adminAPI
+        .getSellerShip(+props.user.idUser)
+        .then((res) => setShips(res.data));
+    } catch (error) {}
+  };
   const onBan = async (message: string, type: string) => {
     try {
       // console.log(messageRef.current?.value, dateRef.current?.value);
       if (type == 'Ban') {
-        adminAPI.banUser(
+        await adminAPI.banUser(
           +props.user.idUser,
           dateRef.current?.value
             ? new Date(dateRef.current?.value)
@@ -48,9 +58,9 @@ const UserManageItem = (props: UserManageItemProps) => {
           message
         );
       } else if (type == 'Unban') {
-        adminAPI.unbanUser(+props.user.idUser);
+        await adminAPI.unbanUser(+props.user.idUser);
       } else if (type == 'Edit') {
-        adminAPI.editBanUser(
+        await adminAPI.editBanUser(
           +props.user.idUser,
           dateRef.current?.value
             ? new Date(dateRef.current?.value)
@@ -61,7 +71,7 @@ const UserManageItem = (props: UserManageItemProps) => {
       toast({
         status: 'success',
         title: `${
-          isEdit ? 'Chỉnh sửa' : data.enableGroupDetail ? 'Ban' : 'Unban'
+          isEdit ? 'Chỉnh sửa' : data.enableGroupDetail ? 'Ban' : 'UnBan'
         } thành công`,
         position: 'bottom-right',
         duration: 1500,
@@ -69,13 +79,23 @@ const UserManageItem = (props: UserManageItemProps) => {
       });
       setIsEdit(false);
     } catch (err: any) {
-      toast({
-        status: 'error',
-        title: 'Có lỗi xảy ra vui lòng thử lại',
-        position: 'bottom-right',
-        duration: 1500,
-        variant: 'subtle'
-      });
+      if (props.role == 'shipper') {
+        toast({
+          status: 'error',
+          title: 'Tài khoản đang có đơn hàng , không thể ban',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      } else {
+        toast({
+          status: 'error',
+          title: 'Có lỗi xảy ra vui lòng thử lại',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      }
       setIsEdit(false);
     }
   };
@@ -95,7 +115,14 @@ const UserManageItem = (props: UserManageItemProps) => {
           <Td>
             <Flex gap={'.5rem'} justifyContent={'center'}>
               {props.role == 'shipper' ? (
-                <Button size={'xs'} variant={'outline'}>
+                <Button
+                  size={'xs'}
+                  variant={'outline'}
+                  onClick={() => {
+                    shipModal.onOpen();
+                    onGetDetailShip();
+                  }}
+                >
                   Chi tiết đơn hàng
                 </Button>
               ) : null}
@@ -118,6 +145,31 @@ const UserManageItem = (props: UserManageItemProps) => {
           </Td>
         ) : null}
       </Tr>
+      <ModalCustom
+        isOpen={shipModal.isOpen}
+        onClose={shipModal.onClose}
+        header={<Text fontWeight={'bold'}>Chi tiết đơn hàng</Text>}
+        body={
+          <>
+            {ships.map((ship, index) => (
+              <Flex
+                justifyContent={'space-between'}
+                alignItems={'center'}
+                key={index}
+                my={'1rem'}
+                boxShadow={'lg'}
+                px={'1rem'}
+              >
+                <Avatar src={'/assets/seller.jpg'} />
+                <Text>
+                  Ngày đặt món :{' '}
+                  {convertDateTime(new Date(ship.timeOrderDetail))}
+                </Text>
+              </Flex>
+            ))}
+          </>
+        }
+      />
       <ModalCustom
         onClose={() => {
           onClose();

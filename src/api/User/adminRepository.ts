@@ -40,5 +40,8 @@ export default {
       timeEnable: date,
       descriptionBan: descriptionBan
     });
+  },
+  getSellerShip(id: number) {
+    return axiosClient.get(`${path}/getChoiceShip/${id}`);
   }
 };
