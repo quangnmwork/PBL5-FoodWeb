@@ -95,7 +95,7 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
         Thêm món mới
       </Button>
       <ModalCustom
-        header={<Text fontWeight={'bold'}>Chỉnh sửa món ăn</Text>}
+        header={<Text fontWeight={'bold'}>Tạo bài viết mới</Text>}
         onClose={onClose}
         isOpen={isOpen}
         footer={
