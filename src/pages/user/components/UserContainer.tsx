@@ -43,7 +43,17 @@ const UserContainer = () => {
           {location.pathname == '/user/user-manage' &&
           data &&
           data.nameGroup == 'Admin' ? (
-            <UserManageContainer />
+            <UserManageContainer nameGroup={'customer'} />
+          ) : null}
+          {location.pathname == '/user/shipper-manage' &&
+          data &&
+          data.nameGroup == 'Admin' ? (
+            <UserManageContainer nameGroup={'shipper'} />
+          ) : null}
+          {location.pathname == '/user/seller-manage' &&
+          data &&
+          data.nameGroup == 'Admin' ? (
+            <UserManageContainer nameGroup={'seller'} />
           ) : null}
         </Sidebar>
       ) : (
