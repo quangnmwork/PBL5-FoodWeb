@@ -30,5 +30,15 @@ export default {
       timeEnable: date,
       descriptionBan: descriptionBan
     });
+  },
+  unbanUser(id: number) {
+    return axiosClient.post(`${path}/unBanUser/${id}`);
+  },
+  editBanUser(idUser: number, date: Date, descriptionBan: string) {
+    return axiosClient.patch(`${path}/editBanUser`, {
+      idUser: idUser,
+      timeEnable: date,
+      descriptionBan: descriptionBan
+    });
   }
 };
