@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import GroupContainer from '../../../components/Admin/Group/GroupContainer';
 import UserManageContainer from '../../../components/Admin/User/UserManageContainer';
 import HistoryOrderMain from '../../../components/HistoryOrder/HistoryOrderMain';
 import Profile from '../../../components/Profile/Profile';
@@ -54,6 +55,11 @@ const UserContainer = () => {
           data &&
           data.nameGroup == 'Admin' ? (
             <UserManageContainer nameGroup={'seller'} />
+          ) : null}
+          {location.pathname == '/user/group-manage' &&
+          data &&
+          data.nameGroup == 'Admin' ? (
+            <GroupContainer />
           ) : null}
         </Sidebar>
       ) : (

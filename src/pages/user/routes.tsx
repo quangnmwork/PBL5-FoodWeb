@@ -64,6 +64,13 @@ const UserRoutes: RoutesConfig[] = [
     redirectWhenAlreadyHasUser: false,
     needProtected: true,
     specificRole: ['Admin']
+  },
+  {
+    path: '/user/group-manage',
+    component: <UserContainer />,
+    redirectWhenAlreadyHasUser: false,
+    needProtected: true,
+    specificRole: ['Admin']
   }
 ];
 export default UserRoutes;

@@ -7,6 +7,7 @@ import {
 import { FaShippingFast, FaBloggerB } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
 import { MdOutlineSell } from 'react-icons/md';
+import { RiLockPasswordLine } from 'react-icons/ri';
 export function getSideBarContent(
   nameGroup: 'Customer' | 'Shipper' | 'Admin' | 'Seller'
 ) {
@@ -18,7 +19,7 @@ export function getSideBarContent(
       linkTo: '/user/profile'
     },
     {
-      icon: AiOutlineSetting,
+      icon: RiLockPasswordLine,
       iconText: 'Bảo mật',
       linkTo: '/user/security'
     },
@@ -35,7 +36,7 @@ export function getSideBarContent(
       linkTo: '/user/profile'
     },
     {
-      icon: AiOutlineSetting,
+      icon: RiLockPasswordLine,
       iconText: 'Bảo mật',
       linkTo: '/user/security'
     },
@@ -57,7 +58,7 @@ export function getSideBarContent(
       linkTo: '/user/profile'
     },
     {
-      icon: AiOutlineSetting,
+      icon: RiLockPasswordLine,
       iconText: 'Bảo mật',
       linkTo: '/user/security'
     },
@@ -74,7 +75,7 @@ export function getSideBarContent(
       linkTo: '/user/profile'
     },
     {
-      icon: AiOutlineSetting,
+      icon: RiLockPasswordLine,
       iconText: 'Bảo mật',
       linkTo: '/user/security'
     },
@@ -92,6 +93,11 @@ export function getSideBarContent(
       icon: MdOutlineSell,
       iconText: 'Quản lý Seller',
       linkTo: '/user/seller-manage'
+    },
+    {
+      icon: AiOutlineSetting,
+      iconText: 'Quản lý Group',
+      linkTo: '/user/group-manage'
     }
   ];
   if (nameGroup == 'Shipper') return shipperSidebar;

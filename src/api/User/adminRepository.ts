@@ -43,5 +43,11 @@ export default {
   },
   getSellerShip(id: number) {
     return axiosClient.get(`${path}/getChoiceShip/${id}`);
+  },
+  setGroupPermission(code: string, enable: boolean) {
+    return axiosClient.post(`${path}/setBanPermission`, {
+      codePermissionDetail: code,
+      enableGroupDetail: enable
+    });
   }
 };
