@@ -30,7 +30,6 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { data, mutate } = useFood(props.food.idFood);
     const toast = useToast();
-    console.log(data);
 
     const onHidden = async () => {
       try {
@@ -39,7 +38,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
         mutate();
         toast({
           status: 'success',
-          title: 'Ẩn món ăn thành công',
+          title: `${data.isHidden ? 'Hiện' : 'Mở'} bài viết thành công`,
           position: 'bottom-right',
           duration: 1500,
           variant: 'subtle'
@@ -61,7 +60,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
         role={'group'}
         title={`${props.food.nameFood},${props.food.timeCreate}`}
         filter={'auto'}
-        brightness={data.isHidden ? '80%' : '100%'}
+        brightness={data?.isHidden ? '80%' : '100%'}
       >
         <Flex flexDirection={'column'} ref={ref}>
           <Skeleton isLoaded={props.food ? true : false}>
@@ -93,9 +92,9 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
               onClick={() => {
                 onHidden();
               }}
-              variant={data.isHidden ? 'outline' : 'solid'}
+              variant={data?.isHidden ? 'outline' : 'solid'}
             >
-              {data.isHidden ? 'Mở bài viết' : 'Ẩn bài viết'}
+              {data?.isHidden ? 'Mở bài viết' : 'Ẩn bài viết'}
             </Button>
             <Button
               size={'md'}
