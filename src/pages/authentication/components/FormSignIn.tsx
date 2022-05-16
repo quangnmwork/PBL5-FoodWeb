@@ -1,4 +1,11 @@
-import { FormControl, Flex, FormErrorMessage, Text } from '@chakra-ui/react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  FormControl,
+  Flex,
+  FormErrorMessage,
+  Text,
+  useToast
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
@@ -22,8 +29,9 @@ const FormSignIn = () => {
   } = useForm<signinInput>({
     resolver: yupResolver(signinSchema)
   });
+  const toast = useToast();
 
-  const [signinErr, setSigninErr] = useState<string>('');
+  const [_, setSigninErr] = useState<string>('');
   const navigate = useNavigate();
   const loginHandler: SubmitHandler<signinInput> = async (
     data: signinInput
@@ -35,8 +43,12 @@ const FormSignIn = () => {
       clientStorage.getClientStorage().setToken(res.data.token);
       navigate('/', { replace: true });
     } catch (err: any) {
-      console.log(err.response.data);
-      setSigninErr(err.response.data);
+      toast({
+        status: 'error',
+        position: 'top',
+        title: 'Tài khoản hoặc mật khẩu không đúng',
+        duration: 1500
+      });
     }
   };
 
@@ -58,7 +70,6 @@ const FormSignIn = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         transition={{ delay: '1' }}
-        isInvalid={signinErr.length > 0}
       >
         <FormHeading />
         <FormInput
@@ -75,11 +86,7 @@ const FormSignIn = () => {
           register={register}
           nameRegister={'password'}
         />
-        <FormErrorMessage mb={'1rem'}>
-          <Text textAlign={'center'} width={'100%'}>
-            {signinErr}
-          </Text>
-        </FormErrorMessage>
+
         <ButtonCustom
           textDisplay={'Sign In'}
           onClick={handleSubmit(loginHandler)}

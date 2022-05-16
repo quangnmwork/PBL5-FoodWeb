@@ -46,7 +46,7 @@ const FormSignUp = () => {
       toast({
         status: 'success',
         title: 'Đăng kí tài khoản thành công',
-        position: 'bottom-right',
+        position: 'top',
         duration: 1500,
         variant: 'subtle'
       });
@@ -54,7 +54,13 @@ const FormSignUp = () => {
         navigate('/', { replace: true });
       }, 2000);
     } catch (err: any) {
-      setSignupErr(err.response.data);
+      toast({
+        status: 'error',
+        title: 'Email đã được đăng ký vui lòng thử lại',
+        position: 'top',
+        duration: 1500,
+        variant: 'subtle'
+      });
     }
   };
   useEffect(() => {
