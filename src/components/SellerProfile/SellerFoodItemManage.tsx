@@ -20,7 +20,7 @@ import SellerFoodItemDelete from './SellerFoodItemDelete';
 import SellerFoodItemEdit from './SellerFoodItemEdit';
 import { useFood } from '../../hooks/foods/useFood';
 import { sellerAPI } from '../../api/repositoryFactory';
-
+import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 interface FoodHomeItemProps {
   food: Food;
 }
@@ -30,9 +30,18 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { data, mutate } = useFood(props.food.idFood);
     const toast = useToast();
-
+    const permission = usePermissionDetail('Hidden_Food');
     const onHidden = async () => {
       try {
+        if (permission.data.enablePermissionDetail == false) {
+          toast({
+            status: 'error',
+            description: 'Hệ thống đang bảo trì , bạn không thể ẩn món ăn',
+            duration: 1500,
+            position: 'bottom-right'
+          });
+          return;
+        }
         const res = await sellerAPI.hiddenFood(data.idFood, !data.isHidden);
         console.log(res);
         mutate();

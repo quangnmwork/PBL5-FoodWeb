@@ -6,6 +6,7 @@ import {
   Image,
   IconButton,
   useDisclosure,
+  useToast,
   Button
 } from '@chakra-ui/react';
 import React from 'react';
@@ -14,6 +15,7 @@ import { useUser } from '../../hooks/authentication/useUser';
 import { useCart } from '../../services/cart/useCart';
 import ModalCustom from '../Modal/ModalCustom';
 import { Food } from './../../models/Food.model';
+import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 interface SellerFoodItemProps {
   food: Food;
 }
@@ -22,10 +24,21 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
   (props, ref) => {
     const cart = useCart();
     const { data, error } = useUser();
+    const toast = useToast();
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const permission = usePermissionDetail('Create_Order');
     const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
       event.preventDefault();
+      if (permission.data.enablePermissionDetail == false) {
+        toast({
+          status: 'error',
+          description: 'Hệ thống đang bảo trì , bạn không thể đặt hàng',
+          duration: 1500,
+          position: 'bottom-right'
+        });
+        return;
+      }
       if (data && !error) {
         const food = {
           idFood: props.food.idFood.toString(),
@@ -35,6 +48,13 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
           priceFood: props.food.priceFood || 0
         };
         cart.addFood(food);
+        toast({
+          status: 'success',
+          title: 'Thêm vào giỏ thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
       } else {
       }
     };

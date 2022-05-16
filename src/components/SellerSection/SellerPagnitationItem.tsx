@@ -20,7 +20,8 @@ const SellerPagnitationItem = (props: SellerPagnitationItemProps) => {
   return (
     <CustomCard
       data-id={props.seller.idUser}
-      cursor={'pointer'}
+      cursor={props.isLoading ? 'not-allowed' : 'pointer'}
+      pointerEvents={props.isLoading ? 'none' : 'auto'}
       role={'group'}
       title={`${props.seller.nameUser},${props.seller.address}`}
       onClick={() => {
