@@ -56,6 +56,17 @@
       "react-app/jest"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    ".(tsx|ts)": [
+      "npm run eslint:fix",
+      "npm run eslint"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -71,6 +82,8 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
     "typescript": "^4.6.3"
   }
 }
