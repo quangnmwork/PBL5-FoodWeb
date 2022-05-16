@@ -12,16 +12,19 @@ import MainContainer from './MainContainer';
 const HomeContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
   const { data, error, mutate } = useUser();
-  console.log('Error', !error);
+  mutate();
+  if (!data && clientStorage.getClientStorage().getToken()) {
+    return <div></div>;
+  }
   if (!error) {
     mutate();
-    console.log('Data', data);
-    if (
-      data?.nameGroup !== 'Customer' &&
-      data &&
-      clientStorage.getClientStorage().getToken()
-    )
-      return <Navigate to={'/user/profile'} replace={true} />;
+    if (data) {
+      if (
+        data?.nameGroup !== 'Customer' &&
+        clientStorage.getClientStorage().getToken()
+      )
+        return <Navigate to={'/user/profile'} replace={true} />;
+    }
   }
 
   return (
