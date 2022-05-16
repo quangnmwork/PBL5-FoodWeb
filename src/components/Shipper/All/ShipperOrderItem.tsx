@@ -15,6 +15,7 @@ import { shipperAPI } from '../../../api/repositoryFactory';
 import { convertDateTime } from '../../../utils/convertDateTime';
 import CustomCard from '../../Card/CustomCard';
 import ModalCustom from '../../Modal/ModalCustom';
+import { usePermissionDetail } from '../../../hooks/authentication/usePermissionDetail';
 interface ShipperOrderItemProps {
   date: string;
   index: number;
@@ -31,7 +32,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const permission = usePermissionDetail('Choice_Ship');
   const toast = useToast();
   useEffect(() => {
     let mounted = true;
@@ -45,10 +46,20 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const onTickShip = async () => {
     try {
       setLoading(true);
+      if (permission.data.enablePermissionDetail == false) {
+        toast({
+          status: 'error',
+          description: 'Hệ thống đang bảo trì , bạn không thể chọn ship',
+          duration: 1500,
+          position: 'bottom-right'
+        });
+        setLoading(false);
+        return;
+      }
       await shipperAPI.choiceShip(props.id, true);
       toast({
         status: 'success',
-        title: 'Ship thành công',
+        title: 'Chọn ship thành công',
         position: 'bottom-right',
         duration: 1500,
         variant: 'subtle'

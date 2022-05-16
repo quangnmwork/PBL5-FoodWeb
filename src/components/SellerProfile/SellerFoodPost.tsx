@@ -19,6 +19,7 @@ import React, { useEffect, useState } from 'react';
 import { sellerAPI } from '../../api/repositoryFactory';
 import { categories, returnIdCategory } from '../../utils/constants';
 import ModalCustom from '../Modal/ModalCustom';
+import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 interface SellerFoodPostProps {
   onCreate?: any;
 }
@@ -31,6 +32,7 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
   const [selectAvatar, setSelectAvatar] = useState<File | undefined>();
   const [currentAvatar, setCurrentAvatar] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const permission = usePermissionDetail('Create_Food');
   const toast = useToast();
   const onImageUploadChanging = (event: any) => {
     const currentTarget = event.target as HTMLInputElement;
@@ -91,7 +93,23 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
   };
   return (
     <>
-      <Button leftIcon={<AddIcon />} onClick={onOpen}>
+      <Button
+        leftIcon={<AddIcon />}
+        onClick={() => {
+          if (permission.data.enablePermissionDetail == false) {
+            toast({
+              status: 'error',
+              description:
+                'Hệ thống đang bảo trì , bạn không thể tạo món ăn mới',
+              duration: 1500,
+              position: 'bottom-right'
+            });
+            return;
+          } else {
+            onOpen();
+          }
+        }}
+      >
         Thêm món mới
       </Button>
       <ModalCustom

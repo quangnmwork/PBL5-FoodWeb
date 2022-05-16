@@ -20,7 +20,7 @@ import { AiOutlineSave } from 'react-icons/ai';
 import { sellerAPI } from '../../api/repositoryFactory';
 import { Food } from '../../models/Food.model';
 import { categories, returnIdCategory } from '../../utils/constants';
-
+import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 import ModalCustom from '../Modal/ModalCustom';
 interface SellerFoodItemEditProps {
   food: Food;
@@ -36,6 +36,7 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
   const priceRef = React.createRef<HTMLInputElement>();
   const descriptionRef = React.createRef<HTMLTextAreaElement>();
   const typeRef = React.createRef<HTMLSelectElement>();
+  const permission = usePermissionDetail('Edit_Food');
   const toast = useToast();
   const onImageUploadChanging = (event: any) => {
     const currentTarget = event.target as HTMLInputElement;
@@ -84,9 +85,26 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
       });
     }
   };
+
   return (
     <>
-      <Button leftIcon={<EditIcon />} onClick={onOpen}>
+      <Button
+        leftIcon={<EditIcon />}
+        onClick={() => {
+          if (permission.data.enablePermissionDetail == false) {
+            toast({
+              status: 'error',
+              description:
+                'Hệ thống đang bảo trì , bạn không thể chỉnh sửa món ăn',
+              duration: 1500,
+              position: 'bottom-right'
+            });
+            return;
+          } else {
+            onOpen();
+          }
+        }}
+      >
         Chỉnh sửa
       </Button>
       <ModalCustom

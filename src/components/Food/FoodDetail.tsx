@@ -8,7 +8,8 @@ import {
   Td,
   TableContainer,
   useDisclosure,
-  Button
+  Button,
+  useToast
 } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillTags } from 'react-icons/ai';
@@ -22,15 +23,26 @@ import { convertDateTime } from '../../utils/convertDateTime';
 import ModalCustom from '../Modal/ModalCustom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useNavigate } from 'react-router-dom';
-
+import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 const FoodDetail = (props: Partial<Food>) => {
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
   const { data, error } = useUser();
+  const permission = usePermissionDetail('Create_Order');
   const navigate = useNavigate();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (permission.data.enablePermissionDetail == false) {
+      toast({
+        status: 'error',
+        description: 'Hệ thống đang bảo trì , bạn không thể đặt hàng',
+        duration: 1500,
+        position: 'bottom-right'
+      });
+      return;
+    }
     if (data && !error) {
       const food = {
         idFood: props.idFood?.toString() || '1',
@@ -42,6 +54,13 @@ const FoodDetail = (props: Partial<Food>) => {
       // console.log(food);
       if (food.numberFood > 0) {
         cart.addFood(food);
+        toast({
+          status: 'success',
+          title: 'Thêm vào giỏ thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
       }
     }
   };

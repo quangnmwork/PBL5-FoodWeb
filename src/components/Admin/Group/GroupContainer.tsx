@@ -49,24 +49,26 @@ const GroupContainer = () => {
         <Text fontWeight={'bold'} fontSize={'2xl'}>
           Quản lý quyền customer
         </Text>
-        {newData.map((item: any, index: number) => (
-          <Flex alignItems={'center'} key={index}>
-            <Text fontWeight={'bold'} color={'moccasin.500'}>
-              {item?.namePermission}
-            </Text>
-            <Switch
-              defaultChecked={item?.enablePermissionDetail}
-              colorScheme={'main'}
-              onChange={() => {
-                onChangeEnable(
-                  item?.codePermissionDetail,
-                  item.enablePermissionDetail == true ? false : true,
-                  item?.namePermission
-                );
-              }}
-            ></Switch>
-          </Flex>
-        ))}
+        {newData.map((item: any, index: number) =>
+          item?.nameGroup == 'Customer' ? (
+            <Flex alignItems={'center'} key={index}>
+              <Text fontWeight={'bold'} color={'moccasin.500'}>
+                {item?.namePermission}
+              </Text>
+              <Switch
+                defaultChecked={item?.enablePermissionDetail}
+                colorScheme={'main'}
+                onChange={() => {
+                  onChangeEnable(
+                    item?.codePermissionDetail,
+                    item.enablePermissionDetail == true ? false : true,
+                    item?.namePermission
+                  );
+                }}
+              ></Switch>
+            </Flex>
+          ) : null
+        )}
       </Box>
       <Box>
         <Text fontWeight={'bold'} fontSize={'2xl'}>
