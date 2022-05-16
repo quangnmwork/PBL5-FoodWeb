@@ -13,7 +13,8 @@ import {
   Tbody,
   Textarea,
   Select,
-  useToast
+  useToast,
+  Box
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineSave } from 'react-icons/ai';
@@ -22,6 +23,8 @@ import { Food } from '../../models/Food.model';
 import { categories, returnIdCategory } from '../../utils/constants';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 import ModalCustom from '../Modal/ModalCustom';
+import { useCheckban } from '../../hooks/authentication/useCheckban';
+import { convertDateTimeDetail } from '../../utils/convertDateTime';
 interface SellerFoodItemEditProps {
   food: Food;
   onChange?: any;
@@ -47,6 +50,8 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
     const url = URL.createObjectURL(currentTarget.files[0]);
     setCurrentAvatar(url);
   };
+  const banModal = useDisclosure();
+  const banned = useCheckban();
   useEffect(() => {
     if (!selectAvatar) return;
     return () => URL.revokeObjectURL(URL.createObjectURL(selectAvatar));
@@ -91,6 +96,10 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
       <Button
         leftIcon={<EditIcon />}
         onClick={() => {
+          if (banned.data.enableGroupDetail == false) {
+            banModal.onOpen();
+            return;
+          }
           if (permission.data.enablePermissionDetail == false) {
             toast({
               status: 'error',
@@ -107,6 +116,19 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
       >
         Chỉnh sửa
       </Button>
+      <ModalCustom
+        isOpen={banModal.isOpen}
+        header={<Text color="red">Tài khoản của bạn đang bị cấm</Text>}
+        onClose={banModal.onClose}
+        body={
+          <Box>
+            Chúng tôi xin thông báo bạn đã bị cấm với lí do{' '}
+            <Text fontWeight={'bold'}>{banned.data?.descriptionBan || ''}</Text>{' '}
+            . Tài khoản của bạn sẽ được tự động vào{' '}
+            {convertDateTimeDetail(new Date(banned.data?.timeEnable))}
+          </Box>
+        }
+      ></ModalCustom>
       <ModalCustom
         header={<Text fontWeight={'bold'}>Chỉnh sửa món ăn</Text>}
         onClose={onClose}

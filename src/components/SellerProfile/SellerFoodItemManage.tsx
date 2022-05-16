@@ -21,6 +21,8 @@ import SellerFoodItemEdit from './SellerFoodItemEdit';
 import { useFood } from '../../hooks/foods/useFood';
 import { sellerAPI } from '../../api/repositoryFactory';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
+import { useCheckban } from '../../hooks/authentication/useCheckban';
+import { convertDateTimeDetail } from '../../utils/convertDateTime';
 interface FoodHomeItemProps {
   food: Food;
 }
@@ -31,6 +33,8 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
     const { data, mutate } = useFood(props.food.idFood);
     const toast = useToast();
     const permission = usePermissionDetail('Hidden_Food');
+    const banModal = useDisclosure();
+    const banned = useCheckban();
     const onHidden = async () => {
       try {
         if (permission.data.enablePermissionDetail == false) {
@@ -99,6 +103,10 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
               padding={'.5rem'}
               fontSize={'.8em'}
               onClick={() => {
+                if (banned.data.enableGroupDetail == false) {
+                  banModal.onOpen();
+                  return;
+                }
                 onHidden();
               }}
               variant={data?.isHidden ? 'outline' : 'solid'}
@@ -129,6 +137,21 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
             </Flex>
           }
         />
+        <ModalCustom
+          isOpen={banModal.isOpen}
+          header={<Text color="red">Tài khoản của bạn đang bị cấm</Text>}
+          onClose={banModal.onClose}
+          body={
+            <Box>
+              Chúng tôi xin thông báo bạn đã bị cấm với lí do{' '}
+              <Text fontWeight={'bold'}>
+                {banned.data?.descriptionBan || ''}
+              </Text>{' '}
+              . Tài khoản của bạn sẽ được tự động vào{' '}
+              {convertDateTimeDetail(new Date(banned.data?.timeEnable))}
+            </Box>
+          }
+        ></ModalCustom>
       </CustomCard>
     );
   }

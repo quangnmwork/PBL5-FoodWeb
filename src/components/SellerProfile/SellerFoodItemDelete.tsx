@@ -1,15 +1,26 @@
 import { DeleteIcon } from '@chakra-ui/icons';
-import { Button, Flex, useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  useDisclosure,
+  useToast,
+  Box,
+  Text
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { sellerAPI } from '../../api/repositoryFactory';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 import ModalCustom from '../Modal/ModalCustom';
-import { Text } from '@chakra-ui/react';
+
+import { useCheckban } from '../../hooks/authentication/useCheckban';
+import { convertDateTimeDetail } from '../../utils/convertDateTime';
 
 const SellerFoodItemDelete = ({ idFood }: { idFood: number }) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(false);
+  const banModal = useDisclosure();
+  const banned = useCheckban();
   const permission = usePermissionDetail('Delete_Food');
   const onDelete = async () => {
     try {
@@ -40,6 +51,10 @@ const SellerFoodItemDelete = ({ idFood }: { idFood: number }) => {
         leftIcon={<DeleteIcon />}
         colorScheme={'red'}
         onClick={() => {
+          if (banned.data.enableGroupDetail == false) {
+            banModal.onOpen();
+            return;
+          }
           if (permission.data.enablePermissionDetail == false) {
             toast({
               status: 'error',
@@ -55,6 +70,19 @@ const SellerFoodItemDelete = ({ idFood }: { idFood: number }) => {
       >
         Xoá món ăn
       </Button>
+      <ModalCustom
+        isOpen={banModal.isOpen}
+        header={<Text color="red">Tài khoản của bạn đang bị cấm</Text>}
+        onClose={banModal.onClose}
+        body={
+          <Box>
+            Chúng tôi xin thông báo bạn đã bị cấm với lí do{' '}
+            <Text fontWeight={'bold'}>{banned.data?.descriptionBan || ''}</Text>{' '}
+            . Tài khoản của bạn sẽ được tự động vào{' '}
+            {convertDateTimeDetail(new Date(banned.data?.timeEnable))}
+          </Box>
+        }
+      ></ModalCustom>
       <ModalCustom
         header={<Text color={'red'}>Cảnh báo</Text>}
         body={<p>Bạn có chắc xoá món ăn này không</p>}

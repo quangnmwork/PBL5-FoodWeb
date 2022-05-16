@@ -13,6 +13,7 @@ import {
   Tbody,
   Textarea,
   Select,
+  Box,
   useToast
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -20,6 +21,8 @@ import { sellerAPI } from '../../api/repositoryFactory';
 import { categories, returnIdCategory } from '../../utils/constants';
 import ModalCustom from '../Modal/ModalCustom';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
+import { convertDateTimeDetail } from '../../utils/convertDateTime';
+import { useCheckban } from '../../hooks/authentication/useCheckban';
 interface SellerFoodPostProps {
   onCreate?: any;
 }
@@ -33,6 +36,8 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
   const [currentAvatar, setCurrentAvatar] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const permission = usePermissionDetail('Create_Food');
+  const banModal = useDisclosure();
+  const banned = useCheckban();
   const toast = useToast();
   const onImageUploadChanging = (event: any) => {
     const currentTarget = event.target as HTMLInputElement;
@@ -96,6 +101,10 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
       <Button
         leftIcon={<AddIcon />}
         onClick={() => {
+          if (banned.data.enableGroupDetail == false) {
+            banModal.onOpen();
+            return;
+          }
           if (permission.data.enablePermissionDetail == false) {
             toast({
               status: 'error',
@@ -111,7 +120,20 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
         }}
       >
         Thêm món mới
-      </Button>
+      </Button>{' '}
+      <ModalCustom
+        isOpen={banModal.isOpen}
+        header={<Text color="red">Tài khoản của bạn đang bị cấm</Text>}
+        onClose={banModal.onClose}
+        body={
+          <Box>
+            Chúng tôi xin thông báo bạn đã bị cấm với lí do
+            <Text fontWeight={'bold'}>{banned.data?.descriptionBan || ''}</Text>
+            . Tài khoản của bạn sẽ được tự động vào
+            {convertDateTimeDetail(new Date(banned.data?.timeEnable))}
+          </Box>
+        }
+      ></ModalCustom>
       <ModalCustom
         header={<Text fontWeight={'bold'}>Tạo bài viết mới</Text>}
         onClose={onClose}
