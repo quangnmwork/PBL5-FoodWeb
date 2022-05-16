@@ -12,10 +12,14 @@ import {
 import React, { useEffect, useState } from 'react';
 import { shipperAPI } from '../../../api/repositoryFactory';
 
-import { convertDateTime } from '../../../utils/convertDateTime';
+import {
+  convertDateTime,
+  convertDateTimeDetail
+} from '../../../utils/convertDateTime';
 import CustomCard from '../../Card/CustomCard';
 import ModalCustom from '../../Modal/ModalCustom';
 import { usePermissionDetail } from '../../../hooks/authentication/usePermissionDetail';
+import { useCheckban } from '../../../hooks/authentication/useCheckban';
 interface ShipperOrderItemProps {
   date: string;
   index: number;
@@ -30,9 +34,11 @@ interface ReiceiveOrderDetailItem {
 }
 const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const banModal = useDisclosure();
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const permission = usePermissionDetail('Choice_Ship');
+  const banned = useCheckban();
   const toast = useToast();
   useEffect(() => {
     let mounted = true;
@@ -46,6 +52,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const onTickShip = async () => {
     try {
       setLoading(true);
+
       if (permission.data.enablePermissionDetail == false) {
         toast({
           status: 'error',
@@ -89,7 +96,13 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
             <Button
               size={'xs'}
               variant={'outline'}
-              onClick={onTickShip}
+              onClick={() => {
+                if (banned.data.enableGroupDetail == false) {
+                  banModal.onOpen();
+                } else {
+                  onTickShip();
+                }
+              }}
               isLoading={loading}
             >
               Ship đơn này
@@ -97,6 +110,19 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
           </Flex>
         </Td>
       </Tr>
+      <ModalCustom
+        isOpen={banModal.isOpen}
+        header={<Text color="red">Tài khoản của bạn đang bị cấm</Text>}
+        onClose={banModal.onClose}
+        body={
+          <Box>
+            Chúng tôi xin thông báo bạn đã bị cấm với lí do{' '}
+            <Text fontWeight={'bold'}>{banned.data?.descriptionBan || ''}</Text>{' '}
+            . Tài khoản của bạn sẽ được tự động vào{' '}
+            {convertDateTimeDetail(new Date(banned.data?.timeEnable))}
+          </Box>
+        }
+      ></ModalCustom>
       <ModalCustom
         header={<p>Chi tiết đơn hàng</p>}
         isOpen={isOpen}
