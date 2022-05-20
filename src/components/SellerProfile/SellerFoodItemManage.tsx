@@ -51,7 +51,7 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
         mutate();
         toast({
           status: 'success',
-          title: `${data.isHidden ? 'Hiện' : 'Mở'} bài viết thành công`,
+          title: `${data.isHidden ? 'Hiện' : 'Ẩn'} bài viết thành công`,
           position: 'bottom-right',
           duration: 1500,
           variant: 'subtle'
