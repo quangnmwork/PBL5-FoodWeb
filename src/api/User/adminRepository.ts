@@ -24,7 +24,7 @@ export default {
   checkBanUser(id: number) {
     return axiosClient.get(`${path}/checkBanGroup/${id}`);
   },
-  banUser(idUser: number, date: Date, descriptionBan: string) {
+  banUser(idUser: number, date: string, descriptionBan: string) {
     return axiosClient.post(`${path}/banUser`, {
       idUser: idUser,
       timeEnable: date,
@@ -34,7 +34,7 @@ export default {
   unbanUser(id: number) {
     return axiosClient.post(`${path}/unBanUser/${id}`);
   },
-  editBanUser(idUser: number, date: Date, descriptionBan: string) {
+  editBanUser(idUser: number, date: string, descriptionBan: string) {
     return axiosClient.patch(`${path}/editBanUser`, {
       idUser: idUser,
       timeEnable: date,

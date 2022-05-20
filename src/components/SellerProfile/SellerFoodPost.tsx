@@ -39,6 +39,7 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
   const banModal = useDisclosure();
   const banned = useCheckban();
   const toast = useToast();
+
   const onImageUploadChanging = (event: any) => {
     const currentTarget = event.target as HTMLInputElement;
     if (!currentTarget.files || currentTarget.files.length == 0) {
