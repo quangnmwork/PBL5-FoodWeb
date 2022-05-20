@@ -25,7 +25,7 @@ const GroupContainer = () => {
       await adminAPI.setGroupPermission(code, enable);
       toast({
         status: 'success',
-        title: `${enable ? 'Bật' : 'Tắt'} quyền ${permissionName} thành công`,
+        title: `${enable ? 'Tắt' : 'Bật'} quyền ${permissionName} thành công`,
         position: 'bottom-right',
         duration: 1500,
         variant: 'subtle'

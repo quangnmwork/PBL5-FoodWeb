@@ -45,3 +45,9 @@ export const convertDateTimeDetail = (date?: Date) => {
   }
   return '';
 };
+export const toISOLocalString = (date: Date) => {
+  const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+  const localISOTime = new Date(date.getTime() - tzoffset).toISOString();
+
+  return localISOTime;
+};

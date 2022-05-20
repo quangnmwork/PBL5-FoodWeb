@@ -19,7 +19,10 @@ import axiosClient from '../../../api/repository';
 import { adminAPI } from '../../../api/repositoryFactory';
 import { OrderShipper } from '../../../models/Order.model';
 import { User } from '../../../models/User.model';
-import { convertDateTime } from '../../../utils/convertDateTime';
+import {
+  convertDateTime,
+  toISOLocalString
+} from '../../../utils/convertDateTime';
 import ModalCustom from '../../Modal/ModalCustom';
 interface UserManageItemProps {
   user: User;
@@ -49,24 +52,16 @@ const UserManageItem = (props: UserManageItemProps) => {
   const onBan = async (message: string, type: string) => {
     try {
       // console.log(messageRef.current?.value, dateRef.current?.value);
+      const date = dateRef.current?.value
+        ? toISOLocalString(new Date(dateRef.current?.value))
+        : toISOLocalString(new Date());
       if (type == 'Ban') {
-        await adminAPI.banUser(
-          +props.user.idUser,
-          dateRef.current?.value
-            ? new Date(dateRef.current?.value)
-            : new Date(),
-          message
-        );
+        console.log('Date', date, dateRef.current?.value);
+        await adminAPI.banUser(+props.user.idUser, date, message);
       } else if (type == 'Unban') {
         await adminAPI.unbanUser(+props.user.idUser);
       } else if (type == 'Edit') {
-        await adminAPI.editBanUser(
-          +props.user.idUser,
-          dateRef.current?.value
-            ? new Date(dateRef.current?.value)
-            : new Date(),
-          message
-        );
+        await adminAPI.editBanUser(+props.user.idUser, date, message);
       }
       toast({
         status: 'success',
