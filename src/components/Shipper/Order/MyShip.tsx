@@ -14,13 +14,14 @@ import {
   Avatar,
   useToast
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { shipperAPI } from '../../../api/repositoryFactory';
 import { OrderShipper } from '../../../models/Order.model';
 import { convertDateTime } from '../../../utils/convertDateTime';
 import CustomCard from '../../Card/CustomCard';
 import ModalCustom from '../../Modal/ModalCustom';
+import './../pagnitation..css';
 interface ReiceiveOrderDetailItem {
   idFood: number;
   nameFood: string;
@@ -100,6 +101,7 @@ const MyShip = () => {
               <Thead>
                 <Tr>
                   <Th>Số thứ tự</Th>
+                  <Th>Tên người đặt</Th>
                   <Th>Ngày đặt món</Th>
                   <Th></Th>
                 </Tr>
@@ -108,6 +110,7 @@ const MyShip = () => {
                 {ships.map((ship, index) => (
                   <Tr key={index}>
                     <Td>{index}</Td>
+                    <Td>{ship.nameCustomer}</Td>
                     <Td>{convertDateTime(new Date(ship.timeOrderDetail))}</Td>
                     <Td>
                       <Flex gap={'1rem'} justifyContent={'center'}>

@@ -23,6 +23,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
     fetcher,
     { refreshInterval: 500 }
   );
+  console.log(data);
 
   return (
     <Flex
@@ -43,6 +44,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
             <Thead>
               <Tr>
                 <Th>Số thứ tự</Th>
+                <Th>Tên người đặt</Th>
                 <Th>Ngày đặt món</Th>
                 <Th></Th>
               </Tr>
@@ -53,6 +55,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
                     <ShipperOrderItem
                       key={index}
                       date={order.timeOrderDetail}
+                      nameCustomer={order.nameCustomer}
                       index={index}
                       id={order.idOrderDetail}
                     />

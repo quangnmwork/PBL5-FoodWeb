@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { shipperAPI } from '../../../api/repositoryFactory';
 import ShipperOrderList from './ShipperOrderList';
+import './../pagnitation..css';
 function isNumeric(num: any) {
   return !isNaN(num);
 }
@@ -71,6 +72,7 @@ const ShipperAllOrder = () => {
         pageCount={totalPage || 1}
         containerClassName={'container'}
         pageLinkClassName={'page-link'}
+        activeLinkClassName="page-link-active"
         onClick={pageOnClick}
       />
     </Stack>

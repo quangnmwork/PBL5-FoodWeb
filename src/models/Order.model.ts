@@ -21,4 +21,6 @@ export interface OrderShipper {
   idCustomer: number;
   idShipper: number;
   timeShipDone?: boolean;
+  nameCustomer?: string;
+  nameShipper?: string;
 }
