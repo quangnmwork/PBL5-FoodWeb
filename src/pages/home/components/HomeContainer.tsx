@@ -11,13 +11,12 @@ import Navigation from './../../../components/Navigation/Navigation';
 import MainContainer from './MainContainer';
 const HomeContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
-  const { data, error, mutate } = useUser();
-  mutate();
+  const { data, error } = useUser();
+
   if (!data && clientStorage.getClientStorage().getToken()) {
     return <div></div>;
   }
   if (!error) {
-    mutate();
     if (data) {
       if (
         data?.nameGroup !== 'Customer' &&

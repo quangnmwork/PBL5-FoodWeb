@@ -2,7 +2,6 @@ import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { orderAPI } from '../../api/repositoryFactory';
 import CustomCard from '../Card/CustomCard';
-import './CustomScrollBar.css';
 
 interface HistoryOrderModalProps {
   orderDetailId: number;

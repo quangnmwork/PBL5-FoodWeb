@@ -3,7 +3,7 @@ import { IconButton, Stack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { orderAPI } from '../../api/repositoryFactory';
-import './CustomPagnitation.css';
+import './pagnitation.css';
 import HistoryOrderList from './HistoryOrderList';
 
 interface HistoryOrderPagnitationProps {
@@ -90,6 +90,7 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
           pageCount={totalPage || 1}
           containerClassName={'container'}
           pageLinkClassName={'page-link'}
+          activeLinkClassName="page-link-active"
           onClick={pageOnClick}
         />
       ) : null}
