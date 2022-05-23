@@ -23,7 +23,6 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
     fetcher,
     { refreshInterval: 500 }
   );
-  console.log(data);
 
   return (
     <Flex

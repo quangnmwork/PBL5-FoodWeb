@@ -41,6 +41,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const permission = usePermissionDetail('Choice_Ship');
   const banned = useCheckban();
   const toast = useToast();
+  const warnModal = useDisclosure();
   useEffect(() => {
     let mounted = true;
     shipperAPI.getDetailShip(props.id).then((res) => {
@@ -102,16 +103,47 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
                 if (banned.data.enableGroupDetail == false) {
                   banModal.onOpen();
                 } else {
-                  onTickShip();
+                  warnModal.onOpen();
                 }
               }}
-              isLoading={loading}
             >
               Ship đơn này
             </Button>
           </Flex>
         </Td>
       </Tr>
+      <ModalCustom
+        isOpen={warnModal.isOpen}
+        onClose={warnModal.onClose}
+        header={
+          <Text color={'red'} fontWeight={'bold'}>
+            Cảnh báo
+          </Text>
+        }
+        body={
+          <Text>
+            Hành động chọn ship này sẽ không được hoàn lại ? Bạn có chắc chắn
+            muốn ship đơn này chứ ?{' '}
+          </Text>
+        }
+        footer={
+          <Flex gap={'1rem'}>
+            <Button colorScheme={'red'} onClick={warnModal.onClose}>
+              Không
+            </Button>
+            <Button
+              variant={'outline'}
+              isLoading={loading}
+              onClick={() => {
+                onTickShip();
+                warnModal.onClose();
+              }}
+            >
+              Có
+            </Button>
+          </Flex>
+        }
+      ></ModalCustom>
       <ModalCustom
         isOpen={banModal.isOpen}
         header={<Text color="red">Tài khoản của bạn đang bị cấm</Text>}
