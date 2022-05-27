@@ -1,5 +1,5 @@
 import { Box, Flex, Text, CloseButton, BoxProps } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { DynamicObject } from '../../models/DynamicObject.model';
 import { getSideBarContent } from '../../utils/SidebarContent';
@@ -16,7 +16,7 @@ const SidebarContent = ({
   ...rest
 }: SidebarContentProps) => {
   const SidebarItems = userData ? getSideBarContent(userData.nameGroup) : [];
-
+  const location = useLocation();
   return (
     <Box
       transition="1s ease-in"
@@ -44,7 +44,7 @@ const SidebarContent = ({
         ? SidebarItems.map((sidebar) => (
             <SidebarItem
               linkTo={sidebar.linkTo}
-              isActive={true}
+              isActive={location.pathname == sidebar.linkTo ? true : false}
               icon={sidebar.icon}
               iconText={sidebar.iconText}
               key={sidebar.iconText}
