@@ -32,5 +32,9 @@ namespace FoodWeb.API.Database.Repositories
 
             return room;
         }
+        public List<Room> GetAllRoom()
+        {
+            return _context.Rooms.ToList();
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using FoodWeb.API.Extensions;
+using FoodWeb.API.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,23 +24,31 @@ namespace FoodWeb.API
         {
 
             //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            services.AddSignalR();
             services.AddControllers();
 
             services.AddCors(o =>
+            {
                 o.AddPolicy("CorsPolicy", builder =>
-                    builder.WithOrigins("http://localhost:3000")
+                    builder.WithOrigins("http://localhost:5001")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowAnyOrigin()
-                )
-            );
+                );
+                o.AddPolicy("signalr",
+                    builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .SetIsOriginAllowed(hostName => true));
+            });
 
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FoodWeb.API", Version = "v1" });
             });
-            
+
             services.AddApplicationServices(Configuration);
 
             services.AddIdentityServices(Configuration);
@@ -57,7 +66,7 @@ namespace FoodWeb.API
 
             app.UseHttpsRedirection();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors();
 
             app.UseRouting();
 
@@ -67,6 +76,7 @@ namespace FoodWeb.API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chat");
                 endpoints.MapControllers();
             });
         }

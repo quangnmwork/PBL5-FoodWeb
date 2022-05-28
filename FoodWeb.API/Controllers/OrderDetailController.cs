@@ -21,6 +21,7 @@ namespace FoodWeb.API.Controllers
     {
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly IRoomDetailRepository _roomDetailRepository;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IFoodRepository _foodRepository;
         private readonly IListOrderRepository _listOrderRepository;
@@ -29,6 +30,7 @@ namespace FoodWeb.API.Controllers
 
         public OrderDetailController(IOrderDetailRepository orderDetailRepository,
                                      IRoomRepository roomRepository,
+                                     IRoomDetailRepository roomDetailRepository,
                                      IPaymentRepository paymentRepository,
                                      IFoodRepository foodRepository,
                                      IListOrderRepository listOrderRepository,
@@ -41,6 +43,7 @@ namespace FoodWeb.API.Controllers
             this._authorizeService = authorizeService;
             this._mapper = mapper;
             this._roomRepository = roomRepository;
+            this._roomDetailRepository = roomDetailRepository;
             this._orderDetailRepository = orderDetailRepository;
         }
 

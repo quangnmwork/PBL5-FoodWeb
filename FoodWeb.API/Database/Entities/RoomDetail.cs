@@ -15,5 +15,9 @@ namespace FoodWeb.API.Database.Entities
 
         public int UserId { get; set; }
         public virtual User User { get; set; }
+        public override string ToString()
+        {
+            return IdRoomDetail + " " + RoomId + " " + UserId;
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace FoodWeb.API.Database.IRepositories
     public interface IRoomRepository
     {
         public Room CreateRoom(int OrderDetailId);
+        public List<Room> GetAllRoom();
     }
 }
