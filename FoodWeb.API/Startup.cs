@@ -30,7 +30,7 @@ namespace FoodWeb.API
             services.AddCors(o =>
             {
                 o.AddPolicy("CorsPolicy", builder =>
-                    builder.WithOrigins("http://localhost:5001")
+                    builder.WithOrigins("http://localhost:3000")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowAnyOrigin()
@@ -66,7 +66,8 @@ namespace FoodWeb.API
 
             app.UseHttpsRedirection();
 
-            app.UseCors();
+            app.UseCors("CorsPolicy");
+            app.UseCors("signalr");
 
             app.UseRouting();
 
