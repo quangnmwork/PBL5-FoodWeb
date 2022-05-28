@@ -1,4 +1,12 @@
-import { Td, Tr, Button, Tag, TagLabel, useDisclosure } from '@chakra-ui/react';
+import {
+  Td,
+  Tr,
+  Button,
+  Tag,
+  TagLabel,
+  useDisclosure,
+  Flex
+} from '@chakra-ui/react';
 import React from 'react';
 import { Order } from '../../models/Order.model';
 import { convertDateTime } from '../../utils/convertDateTime';
@@ -23,9 +31,14 @@ const HistoryFoodOrderDetail = (props: OrderDetailProps) => {
         </Tag>
       </Td>
       <Td>
-        <Button size={'xs'} onClick={onOpen}>
-          Xem chi tiết
-        </Button>
+        <Flex gap={'1rem'}>
+          <Button size={'xs'} onClick={onOpen}>
+            Xem chi tiết
+          </Button>
+          <Button size={'xs'} variant={'outline'}>
+            Nhắn tin
+          </Button>
+        </Flex>
       </Td>
       <ModalCustom
         isOpen={isOpen}
