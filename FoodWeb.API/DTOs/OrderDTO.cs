@@ -28,5 +28,9 @@ namespace FoodWeb.API.DTOs
         public int IdCustomer { get; set; }
 
         public int IdShipper { get; set; }
+
+        public string NameCustomer { get; set; }
+
+        public string NameShipper { get; set; }
     }
 }
