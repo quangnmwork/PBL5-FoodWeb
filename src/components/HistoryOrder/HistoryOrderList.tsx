@@ -50,7 +50,7 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
           <Table variant={'striped'}>
             <Thead>
               <Tr>
-                <Th>Số thứ tự</Th>
+                <Th>ID</Th>
                 <Th>Ngày đặt món</Th>
                 <Th>Trạng thái</Th>
                 <Th></Th>
