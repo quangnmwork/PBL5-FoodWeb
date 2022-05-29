@@ -1,4 +1,11 @@
-import { createRef, useContext, useEffect, useState } from 'react';
+import {
+  createRef,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  MutableRefObject
+} from 'react';
 import {
   HubConnectionBuilder,
   HttpTransportType,
@@ -14,7 +21,8 @@ import { FiSend } from 'react-icons/fi';
 const ChatBody = () => {
   const [connection, setConnection] = useState<null | HubConnection>(null);
   const messageRef = createRef<HTMLInputElement>();
-  const bodyMessage = createRef<HTMLDivElement>();
+  const bodyMessage =
+    useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   const [loading, setLoading] = useState<boolean>();
   const { idRoom, user } = useContext(ChatContext);
   useEffect(() => {
@@ -55,7 +63,7 @@ const ChatBody = () => {
       }
     );
     if (bodyMessage.current) {
-      bodyMessage.current.scrollTop == bodyMessage.current.scrollHeight;
+      bodyMessage.current.scrollIntoView({ behavior: 'smooth' });
     }
   }
   const onSendMessage = async () => {
@@ -68,12 +76,15 @@ const ChatBody = () => {
           user,
           messageRef.current?.value
         );
+        if (bodyMessage.current) {
+          bodyMessage.current.scrollIntoView({ behavior: 'smooth' });
+        }
       } catch (e) {
+        if (bodyMessage.current) {
+          bodyMessage.current.scrollIntoView({ behavior: 'smooth' });
+        }
         console.log(e);
       } finally {
-        if (bodyMessage.current) {
-          bodyMessage.current.scrollTop == bodyMessage.current.scrollHeight;
-        }
         setLoading(false);
       }
     } else {

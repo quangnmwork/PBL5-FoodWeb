@@ -56,16 +56,16 @@ const GroupItem = (props: GroupItemProps) => {
       setLoading(false);
     }
   };
-  console.log('Group', data?.enablePermissionDetail);
+
   return (
-    <Flex alignItems={'center'}>
+    <Flex alignItems={'center'} my={'.5rem'}>
       <Text fontWeight={'bold'} color={'moccasin.500'} mr={'1rem'}>
         {props.permission.namePermission}
       </Text>
 
       <Button
         isLoading={loading}
-        variant={'outline'}
+        variant={data?.enablePermissionDetail == true ? 'outline' : 'solid'}
         rightIcon={
           data?.enablePermissionDetail == true ? (
             <AiOutlineLock />

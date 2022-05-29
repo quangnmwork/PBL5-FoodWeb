@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext } from 'react';
 import useSWR from 'swr';
 import axiosClient from '../../api/repository';
@@ -26,7 +26,6 @@ const ChatMessageContainer = React.forwardRef<HTMLDivElement, any>(
         borderWidth={'1px'}
         borderColor={'moccasin.100'}
         p={'1rem'}
-        ref={ref}
       >
         {data
           ? data.map((dataMessage: any, index: number) => (
@@ -38,6 +37,7 @@ const ChatMessageContainer = React.forwardRef<HTMLDivElement, any>(
               />
             ))
           : null}
+        <div ref={ref}></div>
       </Box>
     );
   }

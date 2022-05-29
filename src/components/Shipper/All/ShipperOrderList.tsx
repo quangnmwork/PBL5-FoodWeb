@@ -42,7 +42,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
           <Table variant={'striped'}>
             <Thead>
               <Tr>
-                <Th>Số thứ tự</Th>
+                <Th>ID</Th>
                 <Th>Tên người đặt</Th>
                 <Th>Ngày đặt món</Th>
                 <Th></Th>
