@@ -51,3 +51,10 @@ export const toISOLocalString = (date: Date) => {
 
   return localISOTime;
 };
+export function timeSince(date: Date) {
+  let hours = date.getHours().toString();
+  hours = hours.length > 1 ? hours : '0' + hours;
+  let minutes = date.getMinutes().toString();
+  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+  return hours + ':' + minutes + ` ${date.getHours() > 12 ? 'PM' : 'AM'}`;
+}

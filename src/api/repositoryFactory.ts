@@ -1,5 +1,6 @@
 import authRepository from './Authentication/authRepository';
 import foodsRepository from './Foods/foodsRepository';
+import chatRepository from './Order/chatRepository';
 import orderRepository from './Order/orderRepository';
 import adminRepository from './User/adminRepository';
 import sellerRepository from './User/sellerRepository';
@@ -13,7 +14,8 @@ const repositories = {
   Order: orderRepository,
   Seller: sellerRepository,
   Shipper: shipperRepository,
-  Admin: adminRepository
+  Admin: adminRepository,
+  Chat: chatRepository
 };
 
 export const authAPI = repositories['Authentication'];
@@ -23,3 +25,4 @@ export const orderAPI = repositories['Order'];
 export const sellerAPI = repositories['Seller'];
 export const shipperAPI = repositories['Shipper'];
 export const adminAPI = repositories['Admin'];
+export const chatAPI = repositories['Chat'];

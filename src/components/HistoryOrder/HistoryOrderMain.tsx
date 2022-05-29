@@ -7,7 +7,7 @@ const HistoryOrderMain = () => {
   const selectOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentSelect(event.target.value);
   };
-  console.log(currentSelect);
+
   return (
     <Flex
       maxWidth={{ base: '95%', md: '80%', lg: '70%' }}
@@ -30,8 +30,9 @@ const HistoryOrderMain = () => {
           Trạng thái
         </Text>
         <Select onChange={selectOnChange} width={'55%'}>
-          <option value={'false'}>Chưa giao hàng</option>
-          <option value={'true'}>Đã giao hàng</option>
+          <option value={'not-ship'}>Chưa nhận giao hàng</option>
+          <option value={'shipping'}>Đang giao hàng</option>
+          <option value={'ship'}>Đã giao hàng</option>
         </Select>
       </Flex>
       <HistoryOrderPagnitation isShipped={currentSelect} />
