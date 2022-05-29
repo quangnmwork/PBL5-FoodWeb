@@ -18,14 +18,14 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   useEffect(() => {
     let mounted = true;
-    if (props.isShipped == 'true') {
+    if (props.isShipped == 'ship') {
       orderAPI.getTotalPageOrderShipped().then((res) => {
         if (mounted) {
           setCurrentPage(1);
           setTotalPage(res.data);
         }
       });
-    } else {
+    } else if (props.isShipped == 'not-ship') {
       orderAPI.getTotalPageOrderNotShipped().then((res) => {
         if (mounted) {
           setCurrentPage(1);
@@ -33,6 +33,7 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
         }
       });
     }
+
     return () => {
       mounted = false;
     };

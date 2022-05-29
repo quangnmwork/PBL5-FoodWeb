@@ -25,17 +25,29 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
   }, [props.isShipped, props.numberPage]);
   useEffect(() => {
     let mounted = true;
-    if (props.isShipped == 'true') {
+    if (props.isShipped == 'ship') {
       orderAPI.getAllOrderShipped(props.numberPage).then((res) => {
         if (mounted) {
           setOrders(res.data);
         }
       });
+    } else if (props.isShipped == 'not-ship') {
+      orderAPI.getAllOrderNotShipped(props.numberPage).then((res) => {
+        if (mounted) {
+          const orderData = res.data.filter(
+            (order: any) => order.nameShipper == null
+          );
+          setOrders(orderData);
+        }
+      });
     } else {
       orderAPI.getAllOrderNotShipped(props.numberPage).then((res) => {
         if (mounted) {
-          console.log(res.data);
-          setOrders(res.data);
+          //console.log(res.data);
+          const orderData = res.data.filter(
+            (order: any) => order.nameShipper != null
+          );
+          setOrders(orderData);
         }
       });
     }

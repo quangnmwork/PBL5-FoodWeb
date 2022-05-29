@@ -9,6 +9,8 @@ export interface Order {
   idPayment: number;
   idCustomer: number;
   idShipper: number;
+  nameCustomer?: string;
+  nameShipper?: string;
 }
 export interface OrderShipper {
   idOrderDetail: number;
