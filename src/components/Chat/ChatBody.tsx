@@ -51,21 +51,20 @@ const ChatBody = () => {
         .start()
         .then(() => {
           console.log('Reiceive');
+          connection.on(
+            'ReceiveGroupMessage',
+            function (user: any, message: any, group: any) {
+              console.log('Reiceve event', user, group, message);
+            }
+          );
+          if (bodyMessage.current) {
+            bodyMessage.current.scrollIntoView({ behavior: 'smooth' });
+          }
         })
         .catch((error: any) => console.log(error));
     }
   }, [connection]);
-  if (connection) {
-    connection.on(
-      'ReceiveGroupMessage',
-      function (user: any, message: any, group: any) {
-        console.log('Reiceve event', user, group, message);
-      }
-    );
-    if (bodyMessage.current) {
-      bodyMessage.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
+
   const onSendMessage = async () => {
     if (connection) {
       try {

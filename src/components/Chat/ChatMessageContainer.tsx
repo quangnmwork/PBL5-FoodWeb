@@ -21,7 +21,7 @@ const ChatMessageContainer = React.forwardRef<HTMLDivElement, any>(
     return (
       <Box
         as={'div'}
-        maxHeight={'20rem'}
+        height={'20rem'}
         overflowY={'auto'}
         borderWidth={'1px'}
         borderColor={'moccasin.100'}
