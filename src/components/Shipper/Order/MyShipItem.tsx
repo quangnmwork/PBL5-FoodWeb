@@ -29,7 +29,7 @@ interface ReiceiveOrderDetailItem {
 }
 const MyShipItem = (props: MyShipItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { ship, index } = props;
+  const { ship } = props;
   const toast = useToast();
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const onGetDetail = async (id: number) => {
@@ -61,7 +61,7 @@ const MyShipItem = (props: MyShipItemProps) => {
   return (
     <>
       <Tr>
-        <Td>{index}</Td>
+        <Td>{ship.idOrderDetail}</Td>
         <Td>{ship.nameCustomer}</Td>
         <Td>{convertDateTime(new Date(ship.timeOrderDetail))}</Td>
         <Td>

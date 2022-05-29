@@ -88,7 +88,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   return (
     <>
       <Tr>
-        <Td>{props.index}</Td>
+        <Td>{props.id}</Td>
         <Td>{props.nameCustomer}</Td>
         <Td width={'fit-content'}>{convertDateTime(new Date(props.date))}</Td>
         <Td width={'fit-content'}>

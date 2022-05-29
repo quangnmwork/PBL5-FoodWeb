@@ -39,7 +39,10 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
   const banModal = useDisclosure();
   const banned = useCheckban();
   const toast = useToast();
-
+  useEffect(() => {
+    setSelectAvatar(undefined);
+    setCurrentAvatar('');
+  }, []);
   const onImageUploadChanging = (event: any) => {
     const currentTarget = event.target as HTMLInputElement;
     if (!currentTarget.files || currentTarget.files.length == 0) {
@@ -102,6 +105,7 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
       <Button
         leftIcon={<AddIcon />}
         onClick={() => {
+          setCurrentAvatar('');
           if (banned.data.enableGroupDetail == false) {
             banModal.onOpen();
             return;
@@ -136,7 +140,7 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
         }
       ></ModalCustom>
       <ModalCustom
-        header={<Text fontWeight={'bold'}>Tạo bài viết mới</Text>}
+        header={<Text fontWeight={'bold'}>Tạo món mới</Text>}
         onClose={onClose}
         isOpen={isOpen}
         footer={

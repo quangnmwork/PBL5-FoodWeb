@@ -8,12 +8,12 @@ const GroupContainer = () => {
   const newData = GroupPermission;
 
   return (
-    <Flex flexDirection={'column'}>
-      <Text fontWeight={'bold'} fontSize={'2xl'}>
+    <Flex flexDirection={'column'} ml={'5rem'} gap={'1rem'}>
+      <Text fontWeight={'bold'} fontSize={'3xl'} color={'main.500'}>
         Quản lý quyền group
       </Text>
       <Box>
-        <Text fontWeight={'bold'} fontSize={'2xl'}>
+        <Text fontWeight={'bold'} fontSize={'xl'}>
           Quản lý quyền customer
         </Text>
         {newData.map((item, index: number) =>
@@ -23,7 +23,7 @@ const GroupContainer = () => {
         )}
       </Box>
       <Box>
-        <Text fontWeight={'bold'} fontSize={'2xl'}>
+        <Text fontWeight={'bold'} fontSize={'xl'}>
           Quản lý quyền seller
         </Text>
         {newData.map((item, index: number) =>
@@ -33,7 +33,7 @@ const GroupContainer = () => {
         )}
       </Box>
       <Box>
-        <Text fontWeight={'bold'} fontSize={'2xl'}>
+        <Text fontWeight={'bold'} fontSize={'xl'}>
           Quản lý quyền shipper
         </Text>
         {newData.map((item, index: number) =>
