@@ -17,12 +17,11 @@ namespace FoodWeb.API.Database.Repositories
         }
         public RoomDetail CreateRoomDetail(int groupId, string userName, string message)
         {
-            OrderDetail orderDetail = _context.OrderDetails.FirstOrDefault(u => u.Room.IdRoom == groupId);
-            Room room = _context.Rooms.FirstOrDefault(u => u.IdRoom == groupId);
+            User user = _context.Users.FirstOrDefault(u => u.NameUser == userName);
             var roomDetail = new RoomDetail
             {
-                RoomId = room.IdRoom,
-                UserId = orderDetail.CustomerId,
+                RoomId = groupId,
+                UserId = user.IdUser,
                 Message = message,
                 TimeChat = DateTime.Now
             };
