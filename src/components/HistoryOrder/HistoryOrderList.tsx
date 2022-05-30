@@ -7,7 +7,7 @@ import {
   Tr,
   Text
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { orderAPI } from '../../api/repositoryFactory';
 import { Order } from '../../models/Order.model';
 
@@ -20,6 +20,7 @@ interface HistoryOrderListProps {
 
 const HistoryOrderList = (props: HistoryOrderListProps) => {
   const [orders, setOrders] = useState<Order[]>([]);
+
   useEffect(() => {
     setOrders([]);
   }, [props.isShipped, props.numberPage]);
@@ -35,8 +36,9 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
       orderAPI.getAllOrderNotShipped(props.numberPage).then((res) => {
         if (mounted) {
           const orderData = res.data.filter(
-            (order: any) => order.nameShipper == null
+            (order: any) => !order.nameShipper.length
           );
+
           setOrders(orderData);
         }
       });
@@ -44,9 +46,9 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
       orderAPI.getAllOrderNotShipped(props.numberPage).then((res) => {
         if (mounted) {
           //console.log(res.data);
-          const orderData = res.data.filter(
-            (order: any) => order.nameShipper != null
-          );
+
+          const orderData = res.data.filter((order: any) => order.nameShipper);
+
           setOrders(orderData);
         }
       });
