@@ -35,9 +35,7 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
     } else if (props.isShipped == 'not-ship') {
       orderAPI.getAllOrderNotShipped(props.numberPage).then((res) => {
         if (mounted) {
-          const orderData = res.data.filter(
-            (order: any) => !order.nameShipper.length
-          );
+          const orderData = res.data.filter((order: any) => !order.nameShipper);
 
           setOrders(orderData);
         }
