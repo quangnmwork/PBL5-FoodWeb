@@ -109,7 +109,7 @@ export const CartOrderSummary = () => {
         onClick={orderHandler}
         isLoading={loading}
       >
-        Thanh toán
+        Đặt hàng
       </Button>
     </Stack>
   );

@@ -67,7 +67,7 @@ const HistoryOrderPagnitation = (props: HistoryOrderPagnitationProps) => {
       width={'100%'}
     >
       <HistoryOrderList numberPage={currentPage} isShipped={props.isShipped} />
-      {totalPage > 1 ? (
+      {totalPage > 0 ? (
         <ReactPaginate
           breakLabel="..."
           nextLabel={

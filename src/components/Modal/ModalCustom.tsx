@@ -19,7 +19,12 @@ interface ModalCustomProps extends UseDisclosureProps {
 const ModalCustom = (props: ModalCustomProps) => {
   return (
     <>
-      <Modal onClose={props.onClose!} isOpen={props.isOpen!} isCentered>
+      <Modal
+        onClose={props.onClose!}
+        isOpen={props.isOpen!}
+        isCentered
+        size={'xl'}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{props.header}</ModalHeader>

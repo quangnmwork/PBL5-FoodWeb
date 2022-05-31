@@ -149,7 +149,7 @@ const FormSignUp = () => {
           </Text>
         </FormErrorMessage>
         <ButtonCustom
-          textDisplay="Sign up"
+          textDisplay="Đăng ký"
           onClick={handleSubmit(signupHandler)}
           width={'100%'}
           isLoading={isSubmitting}

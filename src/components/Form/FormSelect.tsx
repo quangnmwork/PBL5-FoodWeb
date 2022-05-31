@@ -14,7 +14,7 @@ const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
     const { ...rest } = props;
     return (
       <FormControl my={'1rem'}>
-        <FormLabel>Type Account</FormLabel>
+        <FormLabel>Loại tài khoản</FormLabel>
         <Select
           ref={ref}
           {...(props.register && props.nameRegister

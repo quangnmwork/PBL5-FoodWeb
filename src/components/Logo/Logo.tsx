@@ -14,7 +14,7 @@ const Logo = (props: LogoProps) => {
   return (
     <Box
       onClick={() => {
-        navigate(props.redirectLink || '/', { replace: true });
+        navigate(props.redirectLink || '/');
       }}
       cursor={'pointer'}
     >

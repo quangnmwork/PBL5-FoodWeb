@@ -26,3 +26,12 @@ export interface OrderShipper {
   nameCustomer?: string;
   nameShipper?: string;
 }
+export interface ReiceiveOrderDetailItem {
+  idFood: number;
+  nameFood: string;
+  numberFood: number;
+  imageFood?: string;
+  sellerId: number;
+  nameSeller: string;
+  avatar: string;
+}

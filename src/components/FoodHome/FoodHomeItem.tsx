@@ -26,7 +26,7 @@ const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
       role={'group'}
       title={`${props.food.nameFood},${props.food.timeCreate}`}
       onClick={() => {
-        navigate(`/food/${props.food.idFood}`, { replace: true });
+        navigate(`/food/${props.food.idFood}`);
       }}
     >
       <Flex flexDirection={'column'} ref={ref}>

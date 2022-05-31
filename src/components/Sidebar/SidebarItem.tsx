@@ -26,7 +26,7 @@ const SidebarItem = (props: SidebarItemProps) => {
       backgroundColor={props.isActive ? 'main.200' : 'transparent'}
       _hover={{ backgroundColor: 'main.200', color: 'white' }}
       onClick={() => {
-        navigate(props.linkTo, { replace: true });
+        navigate(props.linkTo);
       }}
     >
       {props.icon && (

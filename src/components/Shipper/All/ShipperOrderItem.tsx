@@ -5,21 +5,22 @@ import {
   useDisclosure,
   Flex,
   Box,
-  Avatar,
   Text,
   useToast
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { shipperAPI } from '../../../api/repositoryFactory';
 
 import {
   convertDateTime,
   convertDateTimeDetail
 } from '../../../utils/convertDateTime';
-import CustomCard from '../../Card/CustomCard';
+
 import ModalCustom from '../../Modal/ModalCustom';
 import { usePermissionDetail } from '../../../hooks/authentication/usePermissionDetail';
 import { useCheckban } from '../../../hooks/authentication/useCheckban';
+import ModalOrder from '../../Modal/ModalOrder';
+import { ReiceiveOrderDetailItem } from '../../../models/Order.model';
 interface ShipperOrderItemProps {
   date: string;
   index: number;
@@ -27,12 +28,7 @@ interface ShipperOrderItemProps {
   nameCustomer?: string;
   onTick?: any;
 }
-interface ReiceiveOrderDetailItem {
-  idFood: number;
-  nameFood: string;
-  numberFood: number;
-  imageFood?: string;
-}
+
 const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const banModal = useDisclosure();
@@ -170,26 +166,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
               px={'.5rem'}
             >
               {order.map((food) => (
-                <CustomCard
-                  key={food.idFood}
-                  px={'1rem'}
-                  py={'.5rem'}
-                  my={'.5rem'}
-                >
-                  <Flex justifyContent={'space-between'}>
-                    <Flex>
-                      <Avatar src={food.imageFood || '/assets/no-image.png'} />
-                      <Text ml={'.5rem'} fontWeight={'semibold'}>
-                        {food.nameFood}
-                      </Text>
-                    </Flex>
-                    <Flex>
-                      <Text fontWeight={'semibold'}>
-                        Số lượng : {food.numberFood}
-                      </Text>
-                    </Flex>
-                  </Flex>
-                </CustomCard>
+                <ModalOrder key={food.idFood} food={food} />
               ))}
             </Box>
           ) : null
