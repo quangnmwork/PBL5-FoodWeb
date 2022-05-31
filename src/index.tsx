@@ -8,11 +8,11 @@ import customThemes from './themes/themes';
 import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={customThemes}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <ChakraProvider theme={customThemes}>
         <App />
-      </BrowserRouter>
-    </ChakraProvider>
+      </ChakraProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

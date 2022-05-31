@@ -5,28 +5,25 @@ import {
   useToast,
   useDisclosure,
   Flex,
-  Avatar,
-  Text,
   Box
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { shipperAPI } from '../../../api/repositoryFactory';
-import { OrderShipper } from '../../../models/Order.model';
+import {
+  OrderShipper,
+  ReiceiveOrderDetailItem
+} from '../../../models/Order.model';
 import { convertDateTime } from '../../../utils/convertDateTime';
-import CustomCard from '../../Card/CustomCard';
+
 import ChatContainer from '../../Chat/ChatContainer';
 
 import ModalCustom from '../../Modal/ModalCustom';
+import ModalOrder from '../../Modal/ModalOrder';
 interface MyShipItemProps {
   ship: OrderShipper;
   index: number;
 }
-interface ReiceiveOrderDetailItem {
-  idFood: number;
-  nameFood: string;
-  numberFood: number;
-  imageFood?: string;
-}
+
 const MyShipItem = (props: MyShipItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { ship } = props;
@@ -107,26 +104,7 @@ const MyShipItem = (props: MyShipItemProps) => {
               px={'.5rem'}
             >
               {order.map((food) => (
-                <CustomCard
-                  key={food.idFood}
-                  px={'1rem'}
-                  py={'.5rem'}
-                  my={'.5rem'}
-                >
-                  <Flex justifyContent={'space-between'}>
-                    <Flex>
-                      <Avatar src={food.imageFood || '/assets/no-image.png'} />
-                      <Text ml={'.5rem'} fontWeight={'semibold'}>
-                        {food.nameFood}
-                      </Text>
-                    </Flex>
-                    <Flex>
-                      <Text fontWeight={'semibold'}>
-                        Số lượng : {food.numberFood}
-                      </Text>
-                    </Flex>
-                  </Flex>
-                </CustomCard>
+                <ModalOrder key={food.idFood} food={food} />
               ))}
             </Box>
           ) : null

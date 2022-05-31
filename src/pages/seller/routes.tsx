@@ -7,7 +7,7 @@ const SellerRoutes: RoutesConfig[] = [
     component: <SellerContainer />,
     redirectWhenAlreadyHasUser: false,
     needProtected: false,
-    specificRole: ['Customer']
+    specificRole: ['Customer', 'Shipper']
   }
 ];
 export default SellerRoutes;

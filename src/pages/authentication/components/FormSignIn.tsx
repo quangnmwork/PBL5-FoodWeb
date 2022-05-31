@@ -88,7 +88,7 @@ const FormSignIn = () => {
         />
 
         <ButtonCustom
-          textDisplay={'Sign In'}
+          textDisplay={'Đăng nhập'}
           onClick={handleSubmit(loginHandler)}
           width={'100%'}
           isLoading={isSubmitting}

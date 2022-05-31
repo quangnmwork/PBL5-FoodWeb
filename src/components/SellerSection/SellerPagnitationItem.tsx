@@ -25,7 +25,7 @@ const SellerPagnitationItem = (props: SellerPagnitationItemProps) => {
       role={'group'}
       title={`${props.seller.nameUser},${props.seller.address}`}
       onClick={() => {
-        navigate(`/seller/${props.seller.idUser}`, { replace: true });
+        navigate(`/seller/${props.seller.idUser}`);
       }}
     >
       <Flex flexDirection={'column'}>

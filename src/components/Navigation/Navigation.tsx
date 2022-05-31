@@ -29,13 +29,13 @@ const Navigation = () => {
       zIndex={'2'}
     >
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
-      <SearchBar />
+      {data && data.nameGroup == 'Customer' ? <SearchBar /> : null}
 
       {error || !checkObjectExist(data) ? (
         <ButtonCustom textDisplay={'Đăng nhập'} onClick={handlerLoginRouter} />
       ) : (
         <Flex alignItems={'center'}>
-          <Cart />
+          {data && data.nameGroup == 'Customer' ? <Cart /> : null}
           <AvatarCustom py={'2'} transition={'all .3s'} userData={data} />
         </Flex>
       )}

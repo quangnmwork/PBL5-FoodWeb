@@ -8,14 +8,13 @@ import {
   InputRightElement
 } from '@chakra-ui/react';
 import React, { createRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NestedMenu from './NestedMenu';
 
 const SearchBar = () => {
   const searchRef = createRef<HTMLInputElement>();
   const menuOptionRef = createRef<HTMLSelectElement>();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleSearch = () => {
     const handleSearchString =
@@ -24,14 +23,7 @@ const SearchBar = () => {
         : '';
     const handleSearchKeyName = searchRef.current?.value || '';
     window.scrollTo({ top: 0 });
-    navigate(
-      `../${
-        !location.pathname.includes('search') ? 'search/' : ''
-      }?${handleSearchString}keyName=${handleSearchKeyName}`,
-      {
-        replace: true
-      }
-    );
+    navigate(`../search?${handleSearchString}keyName=${handleSearchKeyName}`);
   };
   const handleKeyDownSearch = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key == 'Enter') {

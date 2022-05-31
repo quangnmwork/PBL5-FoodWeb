@@ -90,12 +90,14 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
           <Text color={'main.800'} width={'100%'}>
             {props.food.priceFood}₫
           </Text>
-          <IconButton
-            aria-label="Search database"
-            icon={<AddIcon />}
-            size={'xs'}
-            onClick={!error ? addCartHandler : onOpen}
-          />
+          {data && data.nameGroup == 'Customer' ? (
+            <IconButton
+              aria-label="Search database"
+              icon={<AddIcon />}
+              size={'xs'}
+              onClick={!error ? addCartHandler : onOpen}
+            />
+          ) : null}
         </Flex>
         <ModalCustom
           body={<p>Bạn cần phải đăng nhập trước khi đặt món</p>}
