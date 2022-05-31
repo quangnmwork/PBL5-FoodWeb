@@ -90,7 +90,7 @@ const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
           <Text color={'main.800'} width={'100%'}>
             {props.food.priceFood}₫
           </Text>
-          {data && data.nameGroup == 'Customer' ? (
+          {error || (data && data.nameGroup == 'Customer') ? (
             <IconButton
               aria-label="Search database"
               icon={<AddIcon />}
