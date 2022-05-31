@@ -55,6 +55,14 @@ namespace FoodWeb.API.Profiles
                                                     .ForMember(dest => dest.NameFood, opt => opt.MapFrom(src => src.Food.NameFood))
                                                     .ForMember(dest => dest.ImageFood, opt => opt.MapFrom(src => src.Food.ImageFood))
                                                     .ForMember(dest => dest.NumberFood, opt => opt.MapFrom(src => src.Number));
+            
+            CreateMap<ListOrder, InfoFoodAndSellerOrderDTO>().ForMember(dest => dest.IdFood, opt => opt.MapFrom(src => src.FoodId))
+                                                    .ForMember(dest => dest.NameFood, opt => opt.MapFrom(src => src.Food.NameFood))
+                                                    .ForMember(dest => dest.ImageFood, opt => opt.MapFrom(src => src.Food.ImageFood))
+                                                    .ForMember(dest => dest.NumberFood, opt => opt.MapFrom(src => src.Number))
+                                                    .ForMember(dest => dest.SellerId, opt => opt.MapFrom(src => src.Food.User.IdUser))
+                                                    .ForMember(dest => dest.NameSeller, opt => opt.MapFrom(src => src.Food.User.NameUser))
+                                                    .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.Food.User.Avatar));
 
             CreateMap<Payment, PaymentDTO>();
 

@@ -32,18 +32,10 @@ namespace FoodWeb.API.Database.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<InfoFoodOrderDTO> GetListFoodOrder(int IdOrderDetail)
+        public IEnumerable<InfoFoodAndSellerOrderDTO> GetListFoodOrder(int IdOrderDetail)
         {
-            // var listOrder = _context.ListOrders.Where(u => u.OrderDetailId == IdOrderDetail);
-
-            // List<InfoFoodOrderDTO> data = new List<InfoFoodOrderDTO>();
-
-            // foreach(var item in listOrder){
-            //     data.Fo
-            // }
-
             return _context.ListOrders.Where(u => u.OrderDetailId == IdOrderDetail)
-                                      .ProjectTo<InfoFoodOrderDTO>(_mapper.ConfigurationProvider);
+                                      .ProjectTo<InfoFoodAndSellerOrderDTO>(_mapper.ConfigurationProvider);
         }
     }
 }

@@ -128,7 +128,7 @@ namespace FoodWeb.API.Controllers
 
         [HttpGet("getListFoodOrder/{IdOrderDetail}")]   //customer xem chi tiết các food trong order detail mình đã tạo
                                                         //Shipper xem chi tiết các food trong tất cả các order detail 
-        public ActionResult<IEnumerable<InfoFoodOrderDTO>> GetListFoodOrder(int IdOrderDetail) 
+        public ActionResult<IEnumerable<InfoFoodAndSellerOrderDTO>> GetListFoodOrder(int IdOrderDetail) 
         {
             var Id = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if(!_authorizeService.IsCustommer(Int32.Parse(Id)) && !_authorizeService.IsShipper(Int32.Parse(Id)))

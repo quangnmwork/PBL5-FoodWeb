@@ -10,6 +10,6 @@ namespace FoodWeb.API.Database.IRepositories
     {
         public void CreateListOrder(int OrderDetailId, InfoFoodOrderDTO infoFood);
 
-        public IEnumerable<InfoFoodOrderDTO> GetListFoodOrder(int IdOrderDetail);
+        public IEnumerable<InfoFoodAndSellerOrderDTO> GetListFoodOrder(int IdOrderDetail);
     }
 }
