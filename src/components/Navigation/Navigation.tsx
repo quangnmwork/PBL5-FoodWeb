@@ -29,7 +29,7 @@ const Navigation = () => {
       zIndex={'2'}
     >
       <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
-      {data && data.nameGroup == 'Customer' ? <SearchBar /> : null}
+      {error || (data && data.nameGroup == 'Customer') ? <SearchBar /> : null}
 
       {error || !checkObjectExist(data) ? (
         <ButtonCustom textDisplay={'Đăng nhập'} onClick={handlerLoginRouter} />

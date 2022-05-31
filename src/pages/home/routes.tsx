@@ -12,8 +12,7 @@ const HomeRoutes: RoutesConfig[] = [
     path: '/search',
     component: <SearchContainer />,
     redirectWhenAlreadyHasUser: false,
-    needProtected: true,
-    specificRole: ['Customer']
+    needProtected: false
   }
 ];
 export default HomeRoutes;

@@ -24,5 +24,15 @@ export default {
   },
   getAllFoodsOfSeller(idSeller: number, pageNumber: number) {
     return axiosClient.get(`${path}/${idSeller}/foods/page-${pageNumber}`);
+  },
+  getAllSellerBySearch(keyName: string, pageNumber: number) {
+    return axiosClient.get(`${path}/getAllSellerSearch/page-${pageNumber}`, {
+      params: { keyName: keyName }
+    });
+  },
+  getTotalPageBySearch(keyName: string) {
+    return axiosClient.get(`${path}/getTotalPageSellerSearch`, {
+      params: { keyName: keyName }
+    });
   }
 };
