@@ -34,5 +34,8 @@ export default {
     return axiosClient.get(`${path}/getTotalPageSellerSearch`, {
       params: { keyName: keyName }
     });
+  },
+  getPaymentDetail(id: number) {
+    return axiosClient.get(`Payment/getPayment/${id}`);
   }
 };

@@ -87,6 +87,9 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
       });
 
       setLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error: any) {
       setLoading(false);
       console.log(error.message);

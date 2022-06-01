@@ -34,10 +34,13 @@ const SellerFoodItemDelete = ({ idFood }: { idFood: number }) => {
         duration: 1500,
         variant: 'subtle'
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (err: any) {
       setLoading(false);
       toast({
-        status: 'success',
+        status: 'error',
         title: 'Có lỗi xảy ra, vui lòng thử lại',
         position: 'bottom-right',
         duration: 1500,

@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { shipperAPI } from '../../../api/repositoryFactory';
+import usePayment from '../../../hooks/foods/usePayment';
 import {
   OrderShipper,
   ReiceiveOrderDetailItem
@@ -19,6 +20,7 @@ import ChatContainer from '../../Chat/ChatContainer';
 
 import ModalCustom from '../../Modal/ModalCustom';
 import ModalOrder from '../../Modal/ModalOrder';
+import PaymentBox from '../../Payment/PaymentBox';
 interface MyShipItemProps {
   ship: OrderShipper;
   index: number;
@@ -27,6 +29,7 @@ interface MyShipItemProps {
 const MyShipItem = (props: MyShipItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { ship } = props;
+  const { payment } = usePayment(props.ship.idOrderDetail);
   const toast = useToast();
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const onGetDetail = async (id: number) => {
@@ -44,6 +47,9 @@ const MyShipItem = (props: MyShipItemProps) => {
         duration: 1500,
         variant: 'subtle'
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error) {
       toast({
         status: 'error',
@@ -96,17 +102,20 @@ const MyShipItem = (props: MyShipItemProps) => {
         isOpen={isOpen}
         onClose={onClose}
         body={
-          order ? (
-            <Box
-              maxHeight={'20rem'}
-              overflowY={'auto'}
-              id={'modal'}
-              px={'.5rem'}
-            >
-              {order.map((food) => (
-                <ModalOrder key={food.idFood} food={food} />
-              ))}
-            </Box>
+          order && payment ? (
+            <>
+              <PaymentBox payment={payment} />
+              <Box
+                maxHeight={'25rem'}
+                overflowY={'auto'}
+                id={'modal'}
+                px={'.5rem'}
+              >
+                {order.map((food) => (
+                  <ModalOrder key={food.idFood} food={food} />
+                ))}
+              </Box>
+            </>
           ) : null
         }
       />

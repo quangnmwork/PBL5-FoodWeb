@@ -1,19 +1,19 @@
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { orderAPI } from '../../api/repositoryFactory';
-import CustomCard from '../Card/CustomCard';
+import usePayment from '../../hooks/foods/usePayment';
+import { ReiceiveOrderDetailItem } from '../../models/Order.model';
+
+import ModalOrder from '../Modal/ModalOrder';
+import PaymentBox from '../Payment/PaymentBox';
 
 interface HistoryOrderModalProps {
   orderDetailId: number;
 }
-interface ReiceiveOrderDetailItem {
-  idFood: number;
-  nameFood: string;
-  numberFood: number;
-  imageFood?: string;
-}
+
 const HistoryOrderModal = (props: HistoryOrderModalProps) => {
   const [foodsDetail, setFoodsDetail] = useState<ReiceiveOrderDetailItem[]>([]);
+
   useEffect(() => {
     let mounted = true;
     orderAPI.getAllFoodByOrderId(props.orderDetailId).then((res) => {
@@ -23,23 +23,13 @@ const HistoryOrderModal = (props: HistoryOrderModalProps) => {
       mounted = false;
     };
   }, []);
-  console.log(foodsDetail);
+  const { payment } = usePayment(props.orderDetailId);
+
   return (
-    <Box maxHeight={'20rem'} overflowY={'auto'} id={'modal'} px={'.5rem'}>
+    <Box maxHeight={'25rem'} overflowY={'auto'} id={'modal'} px={'.5rem'}>
+      {!payment || <PaymentBox payment={payment} />}
       {foodsDetail.map((food) => (
-        <CustomCard key={food.idFood} px={'1rem'} py={'.5rem'} my={'.5rem'}>
-          <Flex justifyContent={'space-between'}>
-            <Flex>
-              <Avatar src={food.imageFood || '/assets/no-image.png'} />
-              <Text ml={'.5rem'} fontWeight={'semibold'}>
-                {food.nameFood}
-              </Text>
-            </Flex>
-            <Flex>
-              <Text fontWeight={'semibold'}>Số lượng : {food.numberFood}</Text>
-            </Flex>
-          </Flex>
-        </CustomCard>
+        <ModalOrder food={food} key={food.idFood} />
       ))}
     </Box>
   );

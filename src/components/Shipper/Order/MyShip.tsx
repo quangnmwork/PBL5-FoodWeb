@@ -6,7 +6,8 @@ import {
   Tr,
   Th,
   Flex,
-  Tbody
+  Tbody,
+  Spinner
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
@@ -19,29 +20,24 @@ import MyShipItem from './MyShipItem';
 const MyShip = () => {
   const [ships, setShips] = useState<OrderShipper[]>([]);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     try {
       setLoading(true);
       let mounted = true;
-      const fetching = () => {
-        shipperAPI
-          .getMyShip()
-          .then((res) => {
-            if (mounted) setShips(res.data);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      };
-      const fetcherInterval = setInterval(() => {
-        fetching();
-      }, 500);
+
+      shipperAPI
+        .getMyShip()
+        .then((res) => {
+          if (mounted) setShips(res.data);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
 
       return () => {
         mounted = false;
-        clearInterval(fetcherInterval);
       };
     } catch (error: any) {}
   }, []);
@@ -76,9 +72,16 @@ const MyShip = () => {
             </Table>
           </TableContainer>
         ) : (
-          <Text fontWeight={'bold'}></Text>
+          <Text fontWeight={'bold'}>Bạn chưa có đơn hàng nào</Text>
         )
-      ) : null}
+      ) : (
+        <Spinner
+          color={'main.200'}
+          thickness="5px"
+          speed={'0.65s'}
+          size={'md'}
+        />
+      )}
     </Flex>
   );
 };
