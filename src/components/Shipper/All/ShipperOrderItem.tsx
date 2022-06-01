@@ -21,6 +21,9 @@ import { usePermissionDetail } from '../../../hooks/authentication/usePermission
 import { useCheckban } from '../../../hooks/authentication/useCheckban';
 import ModalOrder from '../../Modal/ModalOrder';
 import { ReiceiveOrderDetailItem } from '../../../models/Order.model';
+import usePayment from '../../../hooks/foods/usePayment';
+import PaymentBox from '../../Payment/PaymentBox';
+
 interface ShipperOrderItemProps {
   date: string;
   index: number;
@@ -34,6 +37,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const banModal = useDisclosure();
   const [order, setOrder] = useState<ReiceiveOrderDetailItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { payment } = usePayment(props.id);
   const permission = usePermissionDetail('Choice_Ship');
   const banned = useCheckban();
   const toast = useToast();
@@ -47,6 +51,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
       mounted = false;
     };
   }, [props.id]);
+
   const onTickShip = async () => {
     try {
       setLoading(true);
@@ -158,17 +163,20 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
         isOpen={isOpen}
         onClose={onClose}
         body={
-          order ? (
-            <Box
-              maxHeight={'20rem'}
-              overflowY={'auto'}
-              id={'modal'}
-              px={'.5rem'}
-            >
-              {order.map((food) => (
-                <ModalOrder key={food.idFood} food={food} />
-              ))}
-            </Box>
+          order && payment ? (
+            <>
+              <PaymentBox payment={payment} />
+              <Box
+                maxHeight={'20rem'}
+                overflowY={'auto'}
+                id={'modal'}
+                px={'.5rem'}
+              >
+                {order.map((food) => (
+                  <ModalOrder key={food.idFood} food={food} />
+                ))}
+              </Box>
+            </>
           ) : null
         }
       />

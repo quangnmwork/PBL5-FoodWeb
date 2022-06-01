@@ -78,7 +78,11 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
         duration: 1500,
         variant: 'subtle'
       });
+
       setLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error: any) {
       setLoading(false);
       toast({

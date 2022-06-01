@@ -34,11 +34,11 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
       borderColor={'moccasin.100'}
       boxShadow={'lg'}
     >
-      <Text fontWeight={'bold'} textAlign={'left'} my={'1rem'}>
+      <Text fontWeight={'bold'} textAlign={'left'} my={'1rem'} fontSize={'2xl'}>
         Danh sách đơn hàng đang chờ ship
       </Text>
       <TableContainer>
-        {!error ? (
+        {!error && data.length && data.length > 0 ? (
           <Table variant={'striped'}>
             <Thead>
               <Tr>
@@ -62,7 +62,11 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
                 : null}
             </Tbody>
           </Table>
-        ) : null}
+        ) : (
+          <Text fontWeight={'bold'}>
+            Hiện tại chưa có đơn hàng đang chờ ship
+          </Text>
+        )}
       </TableContainer>
     </Flex>
   );

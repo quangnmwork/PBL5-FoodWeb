@@ -1,4 +1,4 @@
-import {
+import React, {
   createRef,
   useContext,
   useEffect,
@@ -21,6 +21,7 @@ import { FiSend } from 'react-icons/fi';
 const ChatBody = () => {
   const [connection, setConnection] = useState<null | HubConnection>(null);
   const messageRef = createRef<HTMLInputElement>();
+  const [messageValue, setMessageValue] = useState<string>('');
   const bodyMessage =
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   const [loading, setLoading] = useState<boolean>();
@@ -69,12 +70,14 @@ const ChatBody = () => {
     if (connection) {
       try {
         setLoading(true);
-        await connection.invoke(
-          'SendMessageToGroup',
-          idRoom,
-          user,
-          messageRef.current?.value
-        );
+        if (messageValue.length > 0) {
+          await connection.invoke(
+            'SendMessageToGroup',
+            idRoom,
+            user,
+            messageValue
+          );
+        }
         if (bodyMessage.current) {
           bodyMessage.current.scrollIntoView({ behavior: 'smooth' });
         }
@@ -84,17 +87,32 @@ const ChatBody = () => {
         }
         console.log(e);
       } finally {
+        setMessageValue('');
         setLoading(false);
       }
     } else {
       console.log('No connection to server yet.');
     }
   };
+  const handleKeyDownSendMessage = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key == 'Enter') {
+      onSendMessage();
+    }
+  };
   return (
     <Box>
       <ChatMessageContainer ref={bodyMessage} />
       <Flex mt={'1rem'} gap={'.5rem'}>
-        <Input ref={messageRef} />
+        <Input
+          ref={messageRef}
+          value={messageValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setMessageValue(e.target.value);
+          }}
+          onKeyDown={handleKeyDownSendMessage}
+        />
         <IconButton
           aria-label="send-message"
           onClick={onSendMessage}

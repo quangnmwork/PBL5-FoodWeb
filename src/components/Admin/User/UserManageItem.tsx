@@ -146,22 +146,26 @@ const UserManageItem = (props: UserManageItemProps) => {
         header={<Text fontWeight={'bold'}>Chi tiết đơn hàng</Text>}
         body={
           <>
-            {ships.map((ship, index) => (
-              <Flex
-                justifyContent={'space-between'}
-                alignItems={'center'}
-                key={index}
-                my={'1rem'}
-                boxShadow={'lg'}
-                px={'1rem'}
-              >
-                <Avatar src={'/assets/seller.jpg'} />
-                <Text>
-                  Ngày đặt món :{' '}
-                  {convertDateTime(new Date(ship.timeOrderDetail))}
-                </Text>
-              </Flex>
-            ))}
+            {ships.length > 0 ? (
+              ships.map((ship, index) => (
+                <Flex
+                  justifyContent={'space-between'}
+                  alignItems={'center'}
+                  key={index}
+                  my={'1rem'}
+                  boxShadow={'lg'}
+                  px={'1rem'}
+                >
+                  <Avatar src={'/assets/seller.jpg'} />
+                  <Text>
+                    Ngày đặt món :{' '}
+                    {convertDateTime(new Date(ship.timeOrderDetail))}
+                  </Text>
+                </Flex>
+              ))
+            ) : (
+              <Text>Chưa có đơn hàng nào</Text>
+            )}
           </>
         }
       />

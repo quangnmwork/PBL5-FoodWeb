@@ -14,6 +14,7 @@ interface ModalCustomProps extends UseDisclosureProps {
   body?: React.ReactNode;
   header?: React.ReactNode;
   footer?: React.ReactNode;
+  size?: 'xl' | 'lg' | 'md' | '2xl' | '3xl';
 }
 
 const ModalCustom = (props: ModalCustomProps) => {
@@ -23,7 +24,7 @@ const ModalCustom = (props: ModalCustomProps) => {
         onClose={props.onClose!}
         isOpen={props.isOpen!}
         isCentered
-        size={'xl'}
+        size={props.size || 'xl'}
       >
         <ModalOverlay />
         <ModalContent>
