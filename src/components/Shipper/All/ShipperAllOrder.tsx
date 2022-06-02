@@ -49,32 +49,34 @@ const ShipperAllOrder = () => {
       width={'100%'}
     >
       <ShipperOrderList pageNumber={currentPage} />
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel={
-          <IconButton
-            variant="outline"
-            colorScheme="main"
-            aria-label="next"
-            fontSize={'1.2rem'}
-            icon={<ChevronRightIcon />}
-          />
-        }
-        previousLabel={
-          <IconButton
-            variant="outline"
-            colorScheme="teal"
-            aria-label="prev"
-            fontSize={'1.2rem'}
-            icon={<ChevronLeftIcon />}
-          />
-        }
-        pageCount={totalPage || 1}
-        containerClassName={'container'}
-        pageLinkClassName={'page-link'}
-        activeLinkClassName="page-link-active"
-        onClick={pageOnClick}
-      />
+      {totalPage > 0 ? (
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={
+            <IconButton
+              variant="outline"
+              colorScheme="main"
+              aria-label="next"
+              fontSize={'1.2rem'}
+              icon={<ChevronRightIcon />}
+            />
+          }
+          previousLabel={
+            <IconButton
+              variant="outline"
+              colorScheme="teal"
+              aria-label="prev"
+              fontSize={'1.2rem'}
+              icon={<ChevronLeftIcon />}
+            />
+          }
+          pageCount={totalPage || 1}
+          containerClassName={'container'}
+          pageLinkClassName={'page-link'}
+          activeLinkClassName="page-link-active"
+          onClick={pageOnClick}
+        />
+      ) : null}
     </Stack>
   );
 };

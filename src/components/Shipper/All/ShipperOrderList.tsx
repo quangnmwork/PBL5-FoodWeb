@@ -18,7 +18,7 @@ interface ShipperOrderListProps {
 const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
 
 const ShipperOrderList = (props: ShipperOrderListProps) => {
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     `https://localhost:5001/OrderDetail/getListOrderDetailChoiceShip/page-${props.pageNumber}`,
     fetcher,
     { refreshInterval: 500 }
@@ -38,35 +38,29 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
         Danh sách đơn hàng đang chờ ship
       </Text>
       <TableContainer>
-        {!error && data && data.length > 0 ? (
-          <Table variant={'striped'}>
-            <Thead>
-              <Tr>
-                <Th>ID</Th>
-                <Th>Tên người đặt</Th>
-                <Th>Ngày đặt món</Th>
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {data
-                ? data.map((order: any, index: number) => (
-                    <ShipperOrderItem
-                      key={index}
-                      date={order.timeOrderDetail}
-                      nameCustomer={order.nameCustomer}
-                      index={index}
-                      id={order.idOrderDetail}
-                    />
-                  ))
-                : null}
-            </Tbody>
-          </Table>
-        ) : (
-          <Text fontWeight={'bold'}>
-            Hiện tại chưa có đơn hàng đang chờ ship
-          </Text>
-        )}
+        <Table variant={'striped'}>
+          <Thead>
+            <Tr>
+              <Th>ID</Th>
+              <Th>Tên người đặt</Th>
+              <Th>Ngày đặt món</Th>
+              <Th></Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data && data.length > 0
+              ? data.map((order: any, index: number) => (
+                  <ShipperOrderItem
+                    key={index}
+                    date={order.timeOrderDetail}
+                    nameCustomer={order.nameCustomer}
+                    index={index}
+                    id={order.idOrderDetail}
+                  />
+                ))
+              : null}
+          </Tbody>
+        </Table>
       </TableContainer>
     </Flex>
   );
