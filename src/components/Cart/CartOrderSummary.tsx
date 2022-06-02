@@ -54,6 +54,7 @@ export const CartOrderSummary = () => {
           duration: 1500,
           variant: 'subtle'
         });
+        cart.resetCart();
       }
     } catch (error: any) {
       setLoading(false);
