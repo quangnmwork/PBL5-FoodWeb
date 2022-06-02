@@ -38,7 +38,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
         Danh sách đơn hàng đang chờ ship
       </Text>
       <TableContainer>
-        {!error && data.length && data.length > 0 ? (
+        {!error && data && data.length > 0 ? (
           <Table variant={'striped'}>
             <Thead>
               <Tr>
