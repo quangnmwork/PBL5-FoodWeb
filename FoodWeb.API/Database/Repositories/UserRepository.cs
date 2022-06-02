@@ -84,7 +84,7 @@ namespace FoodWeb.API.Database.Repositories
             List<SellerViewDTO> data = new List<SellerViewDTO>();
             foreach (var user in _context.Users)
             {
-                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller" && (_context.GroupDetails.FirstOrDefault(u => u.AccountId == user.Account.IdAccount && u.EnableGroupDetail == true) != null))
                     data.Add(_mapper.Map<SellerViewDTO>(user));
             }
             return (int)Math.Ceiling(1.0*data.Count()/PageServiceExtensions.SellerPageSize);
@@ -98,7 +98,7 @@ namespace FoodWeb.API.Database.Repositories
             List<SellerViewDTO> data = new List<SellerViewDTO>();
             foreach (var user in _context.Users)
             {
-                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller" && (_context.GroupDetails.FirstOrDefault(u => u.AccountId == user.Account.IdAccount && u.EnableGroupDetail == true) != null))
                     data.Add(_mapper.Map<SellerViewDTO>(user));
             }
             return data.OrderBy(u => u.IdUser).ToPagedList(numberPage, PageServiceExtensions.SellerPageSize);
@@ -129,7 +129,7 @@ namespace FoodWeb.API.Database.Repositories
             List<SellerViewDTO> data = new List<SellerViewDTO>();
             foreach (var user in _context.Users)
             {
-                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller" && (_context.GroupDetails.FirstOrDefault(u => u.AccountId == user.Account.IdAccount && u.EnableGroupDetail == true) != null))
                     data.Add(_mapper.Map<SellerViewDTO>(user));
             }
 
@@ -142,7 +142,7 @@ namespace FoodWeb.API.Database.Repositories
             List<SellerViewDTO> data = new List<SellerViewDTO>();
             foreach (var user in _context.Users)
             {
-                if (GetNameGroupByNameUser(user.NameUser) == "Seller")
+                if (GetNameGroupByNameUser(user.NameUser) == "Seller" && (_context.GroupDetails.FirstOrDefault(u => u.AccountId == user.Account.IdAccount && u.EnableGroupDetail == true) != null))
                     data.Add(_mapper.Map<SellerViewDTO>(user));
             }
 
