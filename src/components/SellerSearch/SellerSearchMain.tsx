@@ -1,5 +1,5 @@
 import { Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import useSeller from '../../hooks/foods/useSeller';
 
@@ -17,11 +17,6 @@ const SellerSearchMain = (props: SellerSearchMainProps) => {
   );
 
   const observer = useRef<null | IntersectionObserver>(null);
-  useEffect(() => {
-    return () => {
-      setPageNumber(1);
-    };
-  }, [pageNumber]);
 
   const lastFoodElementRef = useCallback(
     (node: any) => {
@@ -34,9 +29,9 @@ const SellerSearchMain = (props: SellerSearchMainProps) => {
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, props.keyName]
+    [loading, hasMore]
   );
-
+  // console.log(hasMore);
   // console.log('Eror', error);
 
   return (
@@ -67,7 +62,7 @@ const SellerSearchMain = (props: SellerSearchMainProps) => {
         </SimpleGrid>
 
         <Flex justifyContent={'center'} width={'100%'} mt={'2rem'}>
-          {loading ? (
+          {loading && !hasMore ? (
             <Spinner
               color={'main.200'}
               thickness="5px"

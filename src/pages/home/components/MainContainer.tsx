@@ -4,7 +4,7 @@ import SellerSection from '../../../components/SellerSection/SellerSection';
 
 const MainContainer = () => {
   return (
-    <Container mt={'2rem'} maxW={'7xl'}>
+    <Container mt={'2rem'} maxWidth={'7xl'}>
       <SellerSection />
       <FoodHomeContainer />
     </Container>
