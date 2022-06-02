@@ -21,20 +21,24 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
     return () => {
       setPageNumber(1);
     };
-  }, [pageNumber]);
+  }, [props.activeCategory, props.keyName]);
   const lastFoodElementRef = useCallback(
     (node: any) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
+
       observer.current = new IntersectionObserver((entries) => {
+        console.log(entries[0].isIntersecting);
         if (entries[0].isIntersecting && hasMore) {
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, props.keyName]
+    [loading, hasMore]
   );
+  console.log(props.keyName, loading, hasMore);
+  console.log(pageNumber);
   useEffect(() => {
     if (pageNumber > 1) {
       containerRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -46,7 +50,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
     <Flex
       flexDirection={'column'}
       alignItems={'center'}
-      flexBasis={'90%'}
+      flexBasis={'95%'}
       ref={containerRef}
       position={'sticky'}
       top={'5rem'}
@@ -69,7 +73,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
           : null}
       </SimpleGrid>
       <Flex justifyContent={'center'} width={'100%'} mt={'2rem'}>
-        {loading || (
+        {(loading && !hasMore) || (
           <Spinner
             color={'main.200'}
             thickness="5px"

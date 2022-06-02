@@ -24,12 +24,14 @@ const useFoodFetch = (
       .then((res) => {
         if (fetch) {
           setFoods((prevFoods) => {
-            // console.log([...new Set([...prevFoods, ...res.data])]);
             return [...new Set([...prevFoods, ...res.data])];
           });
           setHasMore(res.data.length > 0);
           setLoading(false);
         }
+      })
+      .catch(() => {
+        setHasMore(false);
       });
     return () => {
       fetch = false;

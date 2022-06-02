@@ -12,16 +12,22 @@ const useFoodSeller = (idUser: number, pageNumber: number) => {
     setLoading(true);
     setError(false);
     let fetch = true;
-    userAPI.getAllFoodsOfSeller(idUser, pageNumber).then((res) => {
-      if (fetch) {
-        setFoods((prevFoods) => {
-          console.log([...new Set([...prevFoods, ...res.data])]);
-          return [...new Set([...prevFoods, ...res.data])];
-        });
-        setHasMore(res.data.length > 0);
-        setLoading(false);
-      }
-    });
+    userAPI
+      .getAllFoodsOfSeller(idUser, pageNumber)
+      .then((res) => {
+        if (fetch) {
+          setFoods((prevFoods) => {
+            console.log([...new Set([...prevFoods, ...res.data])]);
+            return [...new Set([...prevFoods, ...res.data])];
+          });
+
+          setHasMore(res.data.length > 0);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        setHasMore(false);
+      });
     return () => {
       fetch = false;
     };

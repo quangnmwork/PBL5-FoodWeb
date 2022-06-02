@@ -29,7 +29,7 @@ const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
         navigate(`/food/${props.food.idFood}`);
       }}
     >
-      <Flex flexDirection={'column'} ref={ref}>
+      <Flex flexDirection={'column'} ref={ref} width={'12rem'}>
         <LazyLoad offset={20} height={100}>
           <Box overflow={'hidden'}>
             <Image
