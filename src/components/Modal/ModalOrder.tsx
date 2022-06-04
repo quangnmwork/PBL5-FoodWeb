@@ -44,7 +44,18 @@ const ModalOrder = (props: ModalOrderProps) => {
         </Flex>
 
         <Flex flexDirection={'column'}>
-          <Text fontWeight={'semibold'}>Số lượng : {food.numberFood}</Text>{' '}
+          <Text fontWeight={'semibold'}>
+            <Text as={'span'} color={'main.600'} fontWeight={'bold'}>
+              Số lượng
+            </Text>{' '}
+            : {food.numberFood}
+          </Text>
+          <Text fontWeight={'semibold'}>
+            <Text as={'span'} color={'main.600'} fontWeight={'bold'}>
+              Số tiền
+            </Text>{' '}
+            : {food.priceFood * food.numberFood}
+          </Text>
         </Flex>
       </Flex>
     </CustomCard>

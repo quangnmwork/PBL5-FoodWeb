@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 interface LogoProps {
   width?: string[];
   height?: string[];
+  state?: any;
   redirectLink?: string;
 }
 
@@ -14,7 +15,7 @@ const Logo = (props: LogoProps) => {
   return (
     <Box
       onClick={() => {
-        navigate(props.redirectLink || '/');
+        navigate(props.redirectLink || '/', { state: props.state });
       }}
       cursor={'pointer'}
     >
