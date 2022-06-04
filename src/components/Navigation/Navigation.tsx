@@ -1,6 +1,8 @@
 import { Flex } from '@chakra-ui/react';
+
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
+import { useSearch } from '../../services/utils/useSearch';
 import { checkObjectExist } from '../../utils/checkObjectNull';
 
 import AvatarCustom from '../Avatar/AvatarCustom';
@@ -13,8 +15,9 @@ const Navigation = () => {
   const { data, error } = useUser();
   const navigate = useNavigate();
   const handlerLoginRouter = () => {
-    navigate('/auth/sign-in', { replace: true });
+    navigate('/auth/sign-in');
   };
+  const search = useSearch();
   return (
     <Flex
       alignItems={'center'}
@@ -28,7 +31,11 @@ const Navigation = () => {
       top={'0'}
       zIndex={'2'}
     >
-      <Logo width={['3rem', '4rem']} height={['3rem', '4rem']} />
+      <Logo
+        width={['3rem', '4rem']}
+        height={['3rem', '4rem']}
+        state={{ searchInput: search.searchInput, category: search.category }}
+      />
       {error || (data && data.nameGroup == 'Customer') ? <SearchBar /> : null}
 
       {error || !checkObjectExist(data) ? (

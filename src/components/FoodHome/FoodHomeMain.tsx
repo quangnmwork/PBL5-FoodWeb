@@ -28,7 +28,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        console.log(entries[0].isIntersecting);
+        //console.log(entries[0].isIntersecting);
         if (entries[0].isIntersecting && hasMore) {
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
@@ -37,8 +37,8 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
     },
     [loading, hasMore]
   );
-  console.log(props.keyName, loading, hasMore);
-  console.log(pageNumber);
+  // console.log(props.keyName, loading, hasMore);
+  // console.log(pageNumber);
   useEffect(() => {
     if (pageNumber > 1) {
       containerRef.current?.scrollIntoView({ behavior: 'smooth' });

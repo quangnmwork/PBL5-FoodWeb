@@ -31,6 +31,7 @@ export interface ReiceiveOrderDetailItem {
   nameFood: string;
   numberFood: number;
   imageFood?: string;
+  priceFood: number;
   sellerId: number;
   nameSeller: string;
   avatar: string;

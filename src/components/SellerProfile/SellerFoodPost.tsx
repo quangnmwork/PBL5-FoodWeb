@@ -78,18 +78,18 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
 
       const res = await sellerAPI.createFood(foodData);
       props.onCreate(res.data.idFood);
-      toast({
-        status: 'success',
-        title: 'Tạo món ăn thành công',
-        position: 'bottom-right',
-        duration: 1500,
-        variant: 'subtle'
-      });
+      // toast({
+      //   status: 'success',
+      //   title: 'Tạo món ăn thành công',
+      //   position: 'bottom-right',
+      //   duration: 1500,
+      //   variant: 'subtle'
+      // });
 
       setLoading(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      onClose();
+
+      window.location.reload();
     } catch (error: any) {
       setLoading(false);
       console.log(error.message);
