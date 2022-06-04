@@ -10,6 +10,8 @@ namespace FoodWeb.API.DTOs
         
         public int NumberFood { get; set;}
 
+        public double PriceFood { get; set; }
+
         public int SellerId { get; set;}
 
         public string NameSeller { get; set;}
