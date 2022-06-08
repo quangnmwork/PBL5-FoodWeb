@@ -32,5 +32,7 @@ namespace FoodWeb.API.DTOs
         public string NameCustomer { get; set; }
 
         public string NameShipper { get; set; }
+
+        public string AddressCustomer { get; set; }
     }
 }
