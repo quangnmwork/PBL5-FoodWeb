@@ -30,6 +30,7 @@ interface ShipperOrderItemProps {
   id: number;
   nameCustomer?: string;
   onTick?: any;
+  addressCustomer?: string;
 }
 
 const ShipperOrderItem = (props: ShipperOrderItemProps) => {
@@ -165,7 +166,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
         body={
           order && payment ? (
             <>
-              <PaymentBox payment={payment} />
+              <PaymentBox payment={payment} address={props.addressCustomer} />
               <Box
                 maxHeight={'20rem'}
                 overflowY={'auto'}

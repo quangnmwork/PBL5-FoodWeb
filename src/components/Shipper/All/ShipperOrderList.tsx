@@ -56,6 +56,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
                     nameCustomer={order.nameCustomer}
                     index={index}
                     id={order.idOrderDetail}
+                    addressCustomer={order.addressCustomer}
                   />
                 ))
               : null}

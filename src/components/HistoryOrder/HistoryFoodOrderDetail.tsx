@@ -60,7 +60,10 @@ const HistoryFoodOrderDetail = (props: OrderDetailProps) => {
         onOpen={onOpen}
         header={'Chi tiết đơn hàng'}
         body={
-          <HistoryOrderModal orderDetailId={props.orderDetail.idOrderDetail} />
+          <HistoryOrderModal
+            orderDetailId={props.orderDetail.idOrderDetail}
+            address={props.orderDetail.addressCustomer}
+          />
         }
       />
     </Tr>

@@ -104,7 +104,7 @@ const MyShipItem = (props: MyShipItemProps) => {
         body={
           order && payment ? (
             <>
-              <PaymentBox payment={payment} />
+              <PaymentBox payment={payment} address={ship.addressCustomer} />
               <Box
                 maxHeight={'25rem'}
                 overflowY={'auto'}

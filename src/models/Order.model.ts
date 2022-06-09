@@ -11,6 +11,7 @@ export interface Order {
   idShipper: number;
   nameCustomer?: string;
   nameShipper?: string;
+  addressCustomer?: string;
 }
 export interface OrderShipper {
   idOrderDetail: number;
@@ -25,6 +26,7 @@ export interface OrderShipper {
   timeShipDone?: boolean;
   nameCustomer?: string;
   nameShipper?: string;
+  addressCustomer?: string;
 }
 export interface ReiceiveOrderDetailItem {
   idFood: number;

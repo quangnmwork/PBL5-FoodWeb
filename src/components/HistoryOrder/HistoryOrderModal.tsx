@@ -9,6 +9,7 @@ import PaymentBox from '../Payment/PaymentBox';
 
 interface HistoryOrderModalProps {
   orderDetailId: number;
+  address?: string;
 }
 
 const HistoryOrderModal = (props: HistoryOrderModalProps) => {
@@ -27,7 +28,7 @@ const HistoryOrderModal = (props: HistoryOrderModalProps) => {
 
   return (
     <Box maxHeight={'25rem'} overflowY={'auto'} id={'modal'} px={'.5rem'}>
-      {!payment || <PaymentBox payment={payment} />}
+      {!payment || <PaymentBox payment={payment} address={props.address} />}
       {foodsDetail.map((food) => (
         <ModalOrder food={food} key={food.idFood} />
       ))}
