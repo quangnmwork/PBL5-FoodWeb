@@ -40,7 +40,11 @@ const PaymentBox = (props: PaymentBoxProps) => {
           </Tbody>
         </Table>
       </TableContainer>
-      <Text mt={'1rem'} fontWeight={'bold'}>
+      <Text
+        mt={'1rem'}
+        fontWeight={'bold'}
+        display={address ? 'block' : 'none'}
+      >
         {'Địa chỉ giao hàng: '}
         <Text as={'span'} color={'main.600'} ml={'.5rem'}>
           {address}
