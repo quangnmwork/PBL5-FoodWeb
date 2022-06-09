@@ -1,4 +1,4 @@
-import { Flex, Avatar, Text } from '@chakra-ui/react';
+import { Flex, Avatar, Text, Skeleton } from '@chakra-ui/react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -26,38 +26,40 @@ const ModalOrder = (props: ModalOrderProps) => {
         navigate(`../seller/${food.sellerId}`);
       }}
     >
-      <Flex my={'.5rem'} alignItems={'center'} justifyContent={'center'}>
-        <Text color={'main.600'} fontSize={'lg'} fontWeight={'semibold'}>
-          Tên quán
-        </Text>
+      <Skeleton isLoaded={food ? true : false}>
+        <Flex my={'.5rem'} alignItems={'center'} justifyContent={'center'}>
+          <Text color={'main.600'} fontSize={'lg'} fontWeight={'semibold'}>
+            Tên quán
+          </Text>
 
-        <Text ml={'.5rem'} fontWeight={'semibold'} isTruncated={true}>
-          {food.nameSeller}
-        </Text>
-      </Flex>
-      <Flex justifyContent={'space-between'} alignItems={'center'}>
-        <Flex alignItems={'center'}>
-          <Avatar src={food.imageFood || '/assets/no-image.png'} />
           <Text ml={'.5rem'} fontWeight={'semibold'} isTruncated={true}>
-            {food.nameFood}
+            {food.nameSeller}
           </Text>
         </Flex>
+        <Flex justifyContent={'space-between'} alignItems={'center'}>
+          <Flex alignItems={'center'}>
+            <Avatar src={food.imageFood || '/assets/no-image.png'} />
+            <Text ml={'.5rem'} fontWeight={'semibold'} isTruncated={true}>
+              {food.nameFood}
+            </Text>
+          </Flex>
 
-        <Flex flexDirection={'column'}>
-          <Text fontWeight={'semibold'}>
-            <Text as={'span'} color={'main.600'} fontWeight={'bold'}>
-              Số lượng
-            </Text>{' '}
-            : {food.numberFood}
-          </Text>
-          <Text fontWeight={'semibold'}>
-            <Text as={'span'} color={'main.600'} fontWeight={'bold'}>
-              Số tiền
-            </Text>{' '}
-            : {food.priceFood * food.numberFood}
-          </Text>
+          <Flex flexDirection={'column'}>
+            <Text fontWeight={'semibold'}>
+              <Text as={'span'} color={'main.600'} fontWeight={'bold'}>
+                Số lượng
+              </Text>{' '}
+              : {food.numberFood}
+            </Text>
+            <Text fontWeight={'semibold'}>
+              <Text as={'span'} color={'main.600'} fontWeight={'bold'}>
+                Số tiền
+              </Text>{' '}
+              : {food.priceFood * food.numberFood}
+            </Text>
+          </Flex>
         </Flex>
-      </Flex>
+      </Skeleton>
     </CustomCard>
   );
 };

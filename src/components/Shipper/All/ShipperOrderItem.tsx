@@ -164,7 +164,7 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
         isOpen={isOpen}
         onClose={onClose}
         body={
-          order && payment ? (
+          payment ? (
             <>
               <PaymentBox payment={payment} address={props.addressCustomer} />
               <Box
