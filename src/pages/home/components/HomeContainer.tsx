@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import ButtonScrollToTop from '../../../components/Button/ButtonScrollToTop';
 import Footer from '../../../components/Footer/Footer';
 import Hero from '../../../components/Hero/Hero';
+import Loading from '../../../components/layout/Loading';
 import { useUser } from '../../../hooks/authentication/useUser';
 import useWatchScroll from '../../../hooks/utils/useWatchScroll';
 import clientStorage from '../../../utils/clientStorage';
@@ -14,7 +15,7 @@ const HomeContainer = () => {
   const { data, error } = useUser();
 
   if (!data && clientStorage.getClientStorage().getToken()) {
-    return <div></div>;
+    return <Loading />;
   }
   if (!error) {
     if (data) {
