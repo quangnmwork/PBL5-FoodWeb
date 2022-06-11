@@ -1,6 +1,5 @@
-import { DynamicObject } from '../models/DynamicObject.model';
 import lodash from 'lodash';
 
-export const checkObjectExist = (obj: DynamicObject) => {
+export const checkObjectExist = (obj: any) => {
   return !lodash.isEmpty(obj);
 };

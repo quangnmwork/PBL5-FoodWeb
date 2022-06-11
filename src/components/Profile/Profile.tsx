@@ -21,6 +21,7 @@ import { userAPI } from '../../api/repositoryFactory';
 
 interface ProfileProps {
   userData?: DynamicObject;
+  mutate: any;
 }
 
 const Profile = (props: ProfileProps) => {
@@ -29,6 +30,7 @@ const Profile = (props: ProfileProps) => {
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<signupInput | signinInput>();
+
   const userName = createRef<HTMLInputElement>();
   const address = createRef<HTMLInputElement>();
   const phone = createRef<HTMLInputElement>();
@@ -64,7 +66,7 @@ const Profile = (props: ProfileProps) => {
       if (submitData.address) {
         formData.append('Address', submitData.address);
       }
-      console.log(formData);
+
       const res = await userAPI.updateUserProfile(formData);
       if (res.status == 200) {
         toast({
@@ -75,6 +77,7 @@ const Profile = (props: ProfileProps) => {
           variant: 'subtle'
         });
       }
+      props.mutate();
     } catch (err: any) {
       toast({
         status: 'error',

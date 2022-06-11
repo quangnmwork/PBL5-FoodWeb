@@ -1,8 +1,8 @@
 import { Flex, useToast, Text, Button } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { adminAPI } from '../../../api/repositoryFactory';
 import useSWR from 'swr';
-import axiosClient from '../../../api/repository';
+
 import { PermissionGroup } from '../../../models/Permission.model';
 import { AiOutlineLock, AiOutlineUnlock } from 'react-icons/ai';
 
@@ -13,16 +13,12 @@ interface GroupItemProps {
   >;
 }
 
-const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
-
 const GroupItem = (props: GroupItemProps) => {
   const toast = useToast();
   const [loading, setLoading] = useState<boolean>();
 
-  const { data } = useSWR(
-    `${process.env.REACT_APP_DOMAIN}Admin/getPermissionDetailByCode/${props.permission.codePermissionDetail}`,
-    fetcher,
-    { refreshInterval: 100 }
+  const { data, mutate } = useSWR(
+    `${process.env.REACT_APP_DOMAIN}Admin/getPermissionDetailByCode/${props.permission.codePermissionDetail}`
   );
   const currentState = data?.enablePermissionDetail
     ? `Tắt quyền ${props.permission.namePermission}`
@@ -53,6 +49,7 @@ const GroupItem = (props: GroupItemProps) => {
         variant: 'subtle'
       });
     } finally {
+      mutate();
       setLoading(false);
     }
   };

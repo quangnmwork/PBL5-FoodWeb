@@ -7,11 +7,11 @@ import {
   SkeletonText
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { Seller } from '../../models/User.model';
+import { User } from '../../models/User.model';
 import CustomCard from '../Card/CustomCard';
 
 interface SellerPagnitationItemProps {
-  seller: Seller;
+  seller: User;
   isLoading: boolean;
 }
 

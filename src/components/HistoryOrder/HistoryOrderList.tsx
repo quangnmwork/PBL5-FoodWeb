@@ -1,4 +1,13 @@
-import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  Flex,
+  Spinner,
+  Table,
+  TableContainer,
+  Tbody,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { orderAPI } from '../../api/repositoryFactory';
 import { Order } from '../../models/Order.model';
@@ -36,23 +45,26 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
             const orderData = res.data.filter(
               (order: any) => !order.nameShipper
             );
-
+            console.log(orderData);
             setOrders(orderData);
           }
         })
         .finally(() => setLoading(false));
     } else {
-      orderAPI.getAllOrderNotShipped(props.numberPage).then((res) => {
-        if (mounted) {
-          //console.log(res.data);
+      orderAPI
+        .getAllOrderNotShipped(props.numberPage)
+        .then((res) => {
+          if (mounted) {
+            //console.log(res.data);
 
-          const orderData = res.data
-            .filter((order: any) => order.nameShipper)
-            .finally(() => setLoading(false));
+            const orderData = res.data.filter(
+              (order: any) => order.nameShipper
+            );
 
-          setOrders(orderData);
-        }
-      });
+            setOrders(orderData);
+          }
+        })
+        .finally(() => setLoading(false));
     }
     return () => {
       mounted = false;
@@ -70,8 +82,9 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
               <Th></Th>
             </Tr>
           </Thead>
+
           <Tbody>
-            {orders.length > 0 && !loading
+            {orders.length > 0
               ? orders.map((orderDetail) => (
                   <HistoryFoodOrderDetail
                     key={orderDetail.idOrderDetail}
@@ -82,6 +95,22 @@ const HistoryOrderList = (props: HistoryOrderListProps) => {
           </Tbody>
         </Table>
       </TableContainer>
+      {loading ? (
+        <Flex
+          mx={'auto'}
+          width={'100%'}
+          alignItems={'center'}
+          mt={'1rem'}
+          justifyContent={'center'}
+        >
+          <Spinner
+            color={'main.200'}
+            thickness="5px"
+            speed={'0.65s'}
+            size={'md'}
+          />
+        </Flex>
+      ) : null}
     </>
   );
 };

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import useFoodSeller from '../../hooks/foods/useFoodSeller';
-import { Seller } from '../../models/User.model';
+import { User } from '../../models/User.model';
 import SellerFoodItem from './SellerFoodItem';
 
-const SellerFoods = (props: Partial<Seller>) => {
+const SellerFoods = (props: Partial<User>) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const { foods, loading, hasMore } = useFoodSeller(
     parseInt(props.idUser!),

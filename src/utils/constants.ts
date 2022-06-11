@@ -63,3 +63,4 @@ export const GroupPermission: Pick<
     nameGroup: 'Shipper'
   }
 ];
+export const MAX_TIME = 999999 * 1000;

@@ -16,6 +16,7 @@ import { useCart } from '../../services/cart/useCart';
 import ModalCustom from '../Modal/ModalCustom';
 import { Food } from './../../models/Food.model';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
+import { MAX_TIME } from '../../utils/constants';
 interface SellerFoodItemProps {
   food: Food;
 }
@@ -23,7 +24,7 @@ interface SellerFoodItemProps {
 const SellerFoodItem = React.forwardRef<any, SellerFoodItemProps>(
   (props, ref) => {
     const cart = useCart();
-    const { data, error } = useUser();
+    const { data, error } = useUser(MAX_TIME);
     const toast = useToast();
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();

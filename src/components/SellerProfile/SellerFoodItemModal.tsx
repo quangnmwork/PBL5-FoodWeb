@@ -1,5 +1,5 @@
 import { Image, Box, Flex, Text } from '@chakra-ui/react';
-import React from 'react';
+
 import { Food } from '../../models/Food.model';
 import { convertDateTime } from '../../utils/convertDateTime';
 interface SellerFoodItemModalProps {

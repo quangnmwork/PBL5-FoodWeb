@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { userAPI } from '../../api/repositoryFactory';
 
-import { Seller } from '../../models/User.model';
+import { User } from '../../models/User.model';
 
 const useSeller = (keyName: string, pageNumber: number) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const [sellers, setSellers] = useState<Seller[]>([]);
+  const [sellers, setSellers] = useState<User[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(false);
   useEffect(() => {
     setSellers([]);

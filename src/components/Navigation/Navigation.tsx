@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useSearch } from '../../services/utils/useSearch';
 import { checkObjectExist } from '../../utils/checkObjectNull';
+import { MAX_TIME } from '../../utils/constants';
 
 import AvatarCustom from '../Avatar/AvatarCustom';
 import ButtonCustom from '../Button/ButtonCustom';
@@ -12,11 +13,12 @@ import Cart from './Cart/Cart';
 import SearchBar from './SearchBar/SearchBar';
 
 const Navigation = () => {
-  const { data, error } = useUser();
+  const { data, error } = useUser(MAX_TIME);
   const navigate = useNavigate();
   const handlerLoginRouter = () => {
     navigate('/auth/sign-in');
   };
+
   const search = useSearch();
   return (
     <Flex
@@ -36,7 +38,9 @@ const Navigation = () => {
         height={['3rem', '4rem']}
         state={{ searchInput: search.searchInput, category: search.category }}
       />
-      {error || (data && data.nameGroup == 'Customer') ? <SearchBar /> : null}
+      {error || !data || (data && data.nameGroup == 'Customer') ? (
+        <SearchBar />
+      ) : null}
 
       {error || !checkObjectExist(data) ? (
         <ButtonCustom textDisplay={'Đăng nhập'} onClick={handlerLoginRouter} />

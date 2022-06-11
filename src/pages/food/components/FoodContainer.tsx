@@ -4,13 +4,12 @@ import FoodMain from '../../../components/Food/FoodMain';
 import Navigation from '../../../components/Navigation/Navigation';
 import { useUser } from '../../../hooks/authentication/useUser';
 import clientStorage from '../../../utils/clientStorage';
+import { MAX_TIME } from '../../../utils/constants';
 
 const FoodContainer = () => {
-  const { data, error, mutate } = useUser();
+  const { data, error } = useUser(MAX_TIME);
   // console.log('Error', !error);
   if (!error) {
-    mutate();
-    console.log('Data', data);
     if (
       data?.nameGroup !== 'Customer' &&
       data &&

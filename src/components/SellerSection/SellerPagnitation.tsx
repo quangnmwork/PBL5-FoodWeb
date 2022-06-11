@@ -1,22 +1,27 @@
 import { SimpleGrid } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { userAPI } from '../../api/repositoryFactory';
-import { Seller } from '../../models/User.model';
+import { User } from '../../models/User.model';
+
 import SellerPagnitationItem from './SellerPagnitationItem';
 
 interface SellerPagnitationProps {
   numberPage: number;
 }
-const fakeArray = new Array(10).fill(1).map((_, index) => ({
-  avatar: '/assets/user-avatar.jpg',
-  nameUser: `Seller ${index}`,
-  address: `${index}`,
-  idUser: `${index}`,
-  phone: '123'
-}));
+const fakeArray = new Array(10).fill(1).map((_, index) => {
+  const fakeItem: User = {
+    avatar: '/assets/user-avatar.jpg',
+    nameUser: `Seller ${index}`,
+    address: `${index}`,
+    idUser: `${index}`,
+    phone: '123',
+    nameGroup: 'Seller'
+  };
+  return fakeItem;
+});
 
 const SellerPagnitation = (props: SellerPagnitationProps) => {
-  const [seller, setSeller] = useState<Seller[]>([]);
+  const [seller, setSeller] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

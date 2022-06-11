@@ -1,13 +1,10 @@
 import useSWR from 'swr';
-import axiosClient from '../../api/repository';
-
-const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
+import { MAX_TIME } from '../../utils/constants';
 
 export const usePermissionDetail = (permissionCode: string) => {
-  const { data, error } = useSWR(
+  const { data, error, mutate } = useSWR(
     `${process.env.REACT_APP_DOMAIN}Admin/getPermissionDetailByCode/${permissionCode}`,
-    fetcher,
-    { refreshInterval: 500 }
+    { refreshInterval: MAX_TIME }
   );
-  return { data, error };
+  return { data, error, mutate };
 };

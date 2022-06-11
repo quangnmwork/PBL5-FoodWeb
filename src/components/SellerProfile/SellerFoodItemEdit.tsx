@@ -25,6 +25,8 @@ import { usePermissionDetail } from '../../hooks/authentication/usePermissionDet
 import ModalCustom from '../Modal/ModalCustom';
 import { useCheckban } from '../../hooks/authentication/useCheckban';
 import { convertDateTimeDetail } from '../../utils/convertDateTime';
+import { useNavigate } from 'react-router-dom';
+
 interface SellerFoodItemEditProps {
   food: Food;
   onChange?: any;
@@ -51,6 +53,7 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
     setCurrentAvatar(url);
   };
   const banModal = useDisclosure();
+  const navigate = useNavigate();
   const banned = useCheckban();
   useEffect(() => {
     if (!selectAvatar) return;
@@ -81,7 +84,7 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
 
       setLoading(false);
       setTimeout(() => {
-        window.location.reload();
+        navigate(0);
       }, 500);
     } catch (error: any) {
       setLoading(false);
@@ -100,6 +103,8 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
       <Button
         leftIcon={<EditIcon />}
         onClick={() => {
+          permission.mutate();
+          banned.mutate();
           if (banned.data.enableGroupDetail == false) {
             banModal.onOpen();
             return;

@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { userAPI } from '../../api/repositoryFactory';
 import CustomCard from '../Card/CustomCard';
-import { Seller } from './../../models/User.model';
+import { User } from './../../models/User.model';
 import SellerDetail from './SellerDetail';
 import SellerFoods from './SellerFoods';
 
 const SellerMain = () => {
-  const [seller, setSeller] = useState<Seller>();
+  const [seller, setSeller] = useState<User>();
   const params = useParams();
   useEffect(() => {
     let mounted = true;

@@ -2,16 +2,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import useSWR from 'swr';
-import { userAPI } from '../../api/repositoryFactory';
+import clientStorage from '../../utils/clientStorage';
 
-const fetcher = (_: string) => userAPI.getUserProfile().then((res) => res.data);
+import { User } from './../../models/User.model';
 
-export const useUser = () => {
+export const useUser = (timeRefreshInterval?: number) => {
   // console.log(`${process.env.REACT_APP_DOMAIN}Users/GetProfileUser`);
-  const { data, error, mutate } = useSWR(
-    `${process.env.REACT_APP_DOMAIN}Users/GetProfileUser`,
-    fetcher,
-    { refreshInterval: 500 }
+  let condition = false;
+  if (clientStorage.getClientStorage().getToken()?.length) {
+    condition = true;
+  }
+
+  const options = timeRefreshInterval ? timeRefreshInterval : 500;
+
+  const { data, error, mutate, isValidating } = useSWR<User>(
+    condition ? `${process.env.REACT_APP_DOMAIN}Users/GetProfileUser` : null,
+    { refreshInterval: options }
   );
-  return { data, error, mutate };
+
+  return { data, error, mutate, isValidating };
 };

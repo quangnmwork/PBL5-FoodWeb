@@ -1,18 +1,19 @@
 import { Box, Drawer, DrawerContent, useDisclosure } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { DynamicObject } from '../../models/DynamicObject.model';
+import { User } from '../../models/User.model';
 import MobileSidebar from './MobileSidebar';
 import SidebarContent from './SidebarContent';
 
 interface SidebarProps {
   children?: ReactNode;
-  userData: DynamicObject;
+  userData: User;
   error: DynamicObject;
 }
 
 const Sidebar = (props: SidebarProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(props.userData);
+
   return (
     <Box minHeight={'100%'}>
       <SidebarContent

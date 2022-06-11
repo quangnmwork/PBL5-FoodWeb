@@ -29,7 +29,7 @@ interface ShipperOrderItemProps {
   index: number;
   id: number;
   nameCustomer?: string;
-  onTick?: any;
+  mutate?: any;
   addressCustomer?: string;
 }
 
@@ -56,7 +56,8 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
   const onTickShip = async () => {
     try {
       setLoading(true);
-
+      banned.mutate();
+      permission.mutate();
       if (permission.data.enablePermissionDetail == false) {
         toast({
           status: 'error',
@@ -85,6 +86,8 @@ const ShipperOrderItem = (props: ShipperOrderItemProps) => {
         duration: 1500,
         variant: 'subtle'
       });
+    } finally {
+      props.mutate();
     }
   };
   return (

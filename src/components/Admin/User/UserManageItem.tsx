@@ -13,12 +13,13 @@ import {
   Input,
   Textarea
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import useSWR from 'swr';
-import axiosClient from '../../../api/repository';
+
 import { adminAPI } from '../../../api/repositoryFactory';
 import { OrderShipper } from '../../../models/Order.model';
 import { User } from '../../../models/User.model';
+import { MAX_TIME } from '../../../utils/constants';
 import {
   convertDateTime,
   toISOLocalString
@@ -28,7 +29,7 @@ interface UserManageItemProps {
   user: User;
   role: string;
 }
-const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
+
 const UserManageItem = (props: UserManageItemProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const shipModal = useDisclosure();
@@ -37,10 +38,10 @@ const UserManageItem = (props: UserManageItemProps) => {
   const dateRef = React.createRef<HTMLInputElement>();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const toast = useToast();
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     `${process.env.REACT_APP_DOMAIN}Admin/checkBanGroup/${props.user.idUser}`,
-    fetcher,
-    { refreshInterval: 500 }
+
+    { refreshInterval: MAX_TIME }
   );
   const onGetDetailShip = async () => {
     try {
@@ -52,6 +53,7 @@ const UserManageItem = (props: UserManageItemProps) => {
   const onBan = async (message: string, type: string) => {
     try {
       // console.log(messageRef.current?.value, dateRef.current?.value);
+      mutate();
       const date = dateRef.current?.value
         ? toISOLocalString(new Date(dateRef.current?.value))
         : toISOLocalString(new Date());
@@ -92,6 +94,8 @@ const UserManageItem = (props: UserManageItemProps) => {
         });
       }
       setIsEdit(false);
+    } finally {
+      mutate();
     }
   };
   console.log(data);
@@ -243,4 +247,4 @@ const UserManageItem = (props: UserManageItemProps) => {
   );
 };
 
-export default UserManageItem;
+export default memo(UserManageItem);

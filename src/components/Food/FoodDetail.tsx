@@ -24,17 +24,22 @@ import ModalCustom from '../Modal/ModalCustom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useNavigate } from 'react-router-dom';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
+import { MAX_TIME } from '../../utils/constants';
 const FoodDetail = (props: Partial<Food>) => {
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
-  const { data, error } = useUser();
+  const { data, error } = useUser(MAX_TIME);
   const permission = usePermissionDetail('Create_Order');
   const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addCartHandler = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (permission.data.enablePermissionDetail == false) {
+    if (
+      permission &&
+      permission.data &&
+      permission.data.enablePermissionDetail == false
+    ) {
       toast({
         status: 'error',
         description: 'Hệ thống đang bảo trì , bạn không thể đặt hàng',
@@ -122,7 +127,7 @@ const FoodDetail = (props: Partial<Food>) => {
       <ButtonCustom
         textDisplay={'Thêm vào giỏ hàng'}
         borderRadius={'0'}
-        onClick={!error ? addCartHandler : onOpen}
+        onClick={!error && data ? addCartHandler : onOpen}
       />
       <ModalCustom
         body={<p>Bạn cần phải đăng nhập trước khi đặt món</p>}

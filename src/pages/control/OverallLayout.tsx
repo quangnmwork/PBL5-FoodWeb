@@ -1,3 +1,4 @@
+import { Routes } from 'react-router-dom';
 import RenderRoutes from '../../utils/RenderRoutes';
 import { RoutesNotFound } from '../404/routes';
 import AuthRoutes from '../authentication/routes';
@@ -8,7 +9,7 @@ import SellerRoutes from '../seller/routes';
 import UserRoutes from '../user/routes';
 const OverallLayout = () => {
   return (
-    <>
+    <Routes>
       {RenderRoutes(AuthRoutes)}
       {RenderRoutes(HomeRoutes)}
       {RenderRoutes(UserRoutes)}
@@ -16,7 +17,7 @@ const OverallLayout = () => {
       {RenderRoutes(FoodRoutes)}
       {RenderRoutes(CartRoutes)}
       {RenderRoutes(RoutesNotFound)}
-    </>
+    </Routes>
   );
 };
 

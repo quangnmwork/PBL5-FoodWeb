@@ -1,6 +1,7 @@
 import { Table, TableContainer, Tbody, Td, Tr, Text } from '@chakra-ui/react';
 import { useUser } from '../../hooks/authentication/useUser';
 import { Payment } from '../../models/Payment.model';
+import { MAX_TIME } from '../../utils/constants';
 import { convertDateTime } from '../../utils/convertDateTime';
 interface PaymentBoxProps {
   payment: Payment;
@@ -8,7 +9,7 @@ interface PaymentBoxProps {
 }
 const PaymentBox = (props: PaymentBoxProps) => {
   const { payment, address } = props;
-  const { data } = useUser();
+  const { data } = useUser(MAX_TIME);
   const dispalyTotal = () => {
     if (data) {
       if (data.nameGroup == 'Customer') return;

@@ -8,11 +8,12 @@ import Loading from '../../../components/layout/Loading';
 import { useUser } from '../../../hooks/authentication/useUser';
 import useWatchScroll from '../../../hooks/utils/useWatchScroll';
 import clientStorage from '../../../utils/clientStorage';
+import { MAX_TIME } from '../../../utils/constants';
 import Navigation from './../../../components/Navigation/Navigation';
 import MainContainer from './MainContainer';
 const HomeContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
-  const { data, error } = useUser();
+  const { data, error } = useUser(MAX_TIME);
 
   if (!data && clientStorage.getClientStorage().getToken()) {
     return <Loading />;

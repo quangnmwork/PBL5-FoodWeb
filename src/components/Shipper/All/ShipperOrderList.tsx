@@ -11,6 +11,7 @@ import {
 
 import useSWR from 'swr';
 import axiosClient from '../../../api/repository';
+import { MAX_TIME } from '../../../utils/constants';
 import ShipperOrderItem from './ShipperOrderItem';
 interface ShipperOrderListProps {
   pageNumber: number;
@@ -18,10 +19,10 @@ interface ShipperOrderListProps {
 const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
 
 const ShipperOrderList = (props: ShipperOrderListProps) => {
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     `https://localhost:5001/OrderDetail/getListOrderDetailChoiceShip/page-${props.pageNumber}`,
     fetcher,
-    { refreshInterval: 500 }
+    { refreshInterval: MAX_TIME }
   );
 
   return (
@@ -53,6 +54,7 @@ const ShipperOrderList = (props: ShipperOrderListProps) => {
                   <ShipperOrderItem
                     key={index}
                     date={order.timeOrderDetail}
+                    mutate={mutate}
                     nameCustomer={order.nameCustomer}
                     index={index}
                     id={order.idOrderDetail}

@@ -1,10 +1,10 @@
 import { Box, Image, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Seller } from '../../models/User.model';
+import { User } from '../../models/User.model';
 import CustomCard from '../Card/CustomCard';
 interface SellerSearchtemProps {
-  seller: Seller;
+  seller: User;
 }
 
 const SellerSearchItem = React.forwardRef<any, SellerSearchtemProps>(

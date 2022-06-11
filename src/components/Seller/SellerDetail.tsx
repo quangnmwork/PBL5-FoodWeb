@@ -9,11 +9,11 @@ import {
   Td,
   TableContainer
 } from '@chakra-ui/react';
-import { Seller } from '../../models/User.model';
+import { User } from '../../models/User.model';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone } from 'react-icons/ai';
 
-const SellerDetail = (props: Partial<Seller>) => {
+const SellerDetail = (props: Partial<User>) => {
   return (
     <Flex
       flexDirection={'column'}

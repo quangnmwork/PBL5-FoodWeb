@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   createRef,
   useContext,
@@ -17,6 +18,7 @@ import { ChatContext } from './ChatContext';
 
 import ChatMessageContainer from './ChatMessageContainer';
 import { FiSend } from 'react-icons/fi';
+import useSWR from 'swr';
 
 const ChatBody = () => {
   const [connection, setConnection] = useState<null | HubConnection>(null);
@@ -26,6 +28,9 @@ const ChatBody = () => {
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   const [loading, setLoading] = useState<boolean>();
   const { idRoom, user } = useContext(ChatContext);
+  const { data, mutate } = useSWR(
+    `${process.env.REACT_APP_DOMAIN}RoomDetail/${idRoom}`
+  );
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
       .withUrl('https://localhost:5001/chat', {
@@ -55,7 +60,7 @@ const ChatBody = () => {
           connection.on(
             'ReceiveGroupMessage',
             function (user: any, message: any, group: any) {
-              console.log('Reiceve event', user, group, message);
+              mutate();
             }
           );
           if (bodyMessage.current) {
@@ -88,6 +93,7 @@ const ChatBody = () => {
         console.log(e);
       } finally {
         setMessageValue('');
+        mutate();
         setLoading(false);
       }
     } else {
@@ -103,7 +109,7 @@ const ChatBody = () => {
   };
   return (
     <Box>
-      <ChatMessageContainer ref={bodyMessage} />
+      <ChatMessageContainer ref={bodyMessage} data={data} />
       <Flex mt={'1rem'} gap={'.5rem'}>
         <Input
           ref={messageRef}

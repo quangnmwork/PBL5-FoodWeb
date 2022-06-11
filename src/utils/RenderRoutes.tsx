@@ -5,7 +5,7 @@ import { permissionGuard } from './authUtils';
 import { checkObjectExist } from './checkObjectNull';
 
 const RenderRoutes = (routesConfig: RoutesConfig[]) => {
-  const { data, error } = useUser();
+  const { data, error } = useUser(12000);
   return routesConfig.map(
     ({
       path,
