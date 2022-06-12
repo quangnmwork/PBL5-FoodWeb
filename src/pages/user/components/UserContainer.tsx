@@ -1,5 +1,5 @@
-import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+
 import GroupContainer from '../../../components/Admin/Group/GroupContainer';
 import UserManageContainer from '../../../components/Admin/User/UserManageContainer';
 import HistoryOrderMain from '../../../components/HistoryOrder/HistoryOrderMain';
@@ -12,17 +12,18 @@ import MyShip from '../../../components/Shipper/Order/MyShip';
 
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import { useUser } from '../../../hooks/authentication/useUser';
+import clientStorage from '../../../utils/clientStorage';
 
 import { MAX_TIME } from '../../../utils/constants';
 
 const UserContainer = () => {
   const { data, error, mutate } = useUser(MAX_TIME);
-
+  console.log(data);
   const location = useLocation();
   return (
     <>
       {data ? (
-        !error ? (
+        !error && clientStorage.getClientStorage().getToken() ? (
           <Sidebar userData={data} error={error}>
             {location.pathname == '/user/profile' ? (
               <Profile userData={data} mutate={mutate} />
