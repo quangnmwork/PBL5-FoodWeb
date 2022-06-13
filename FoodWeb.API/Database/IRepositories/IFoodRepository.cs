@@ -37,7 +37,7 @@ namespace FoodWeb.API.Database.IRepositories
 
         public int GetTotalPageFoodByIdSellerForSeller(int IdSeller);
         
-        public IEnumerable<FoodForSellerDTO> GetAllFoodByIdSellerForSellerPaging(int IdSeller, int numberPage);
+        public IEnumerable<FoodForSellerDTO> GetAllFoodByIdSellerForSeller(int IdSeller);
 
         public FoodForSellerDTO SetHiddenFood(HiddenFoodDTO hiddenFoodDTO);
 

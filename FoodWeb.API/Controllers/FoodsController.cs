@@ -136,7 +136,7 @@ namespace FoodWeb.API.Controllers
             return Ok(_foodRepository.GetTotalPageFoodByIdSellerForSeller(Id));
         }
 
-        [HttpGet("getListFood/page-{numberPage}")]  // Lấy các food của 1 seller (có phân trang) dành cho seller
+        [HttpGet("getListFood")]  // Lấy các food của 1 seller (có phân trang) dành cho seller
         public ActionResult<IEnumerable<FoodForSellerDTO>> GetListFoodOfSeller(int numberPage)
         {
             int Id = Int32.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -144,7 +144,7 @@ namespace FoodWeb.API.Controllers
                 return BadRequest("Action only seller");
             }
 
-            return Ok(_foodRepository.GetAllFoodByIdSellerForSellerPaging(Id, numberPage));
+            return Ok(_foodRepository.GetAllFoodByIdSellerForSeller(Id));
         }
         
         [HttpPost("setHiddenFood")]     // Seller set ẩn hiện các món ăn

@@ -121,12 +121,11 @@ namespace FoodWeb.API.Database.Repositories
             return (int)Math.Ceiling(1.0*number/PageServiceExtensions.FoodOfSellerManagePageSize);
         }
 
-        public IEnumerable<FoodForSellerDTO> GetAllFoodByIdSellerForSellerPaging(int IdSeller, int numberPage)
+        public IEnumerable<FoodForSellerDTO> GetAllFoodByIdSellerForSeller(int IdSeller)
         {
             return _context.Foods.Where(s => s.UserId == IdSeller)
                                  .ProjectTo<FoodForSellerDTO>(_mapper.ConfigurationProvider)
-                                 .OrderBy(u => u.IdFood)
-                                 .ToPagedList(numberPage, PageServiceExtensions.FoodOfSellerManagePageSize);
+                                 .OrderBy(u => u.IdFood);
         }
 
         public FoodForSellerDTO SetHiddenFood(HiddenFoodDTO hiddenFoodDTO)
