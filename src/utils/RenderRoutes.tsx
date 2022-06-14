@@ -1,11 +1,14 @@
 import { Route, Navigate } from 'react-router-dom';
+
 import { useUser } from '../hooks/authentication/useUser';
 import { RoutesConfig } from '../models/RoutesConfig.model';
+
 import { permissionGuard } from './authUtils';
 import { checkObjectExist } from './checkObjectNull';
 
 const RenderRoutes = (routesConfig: RoutesConfig[]) => {
   const { data, error } = useUser(12000);
+
   return routesConfig.map(
     ({
       path,

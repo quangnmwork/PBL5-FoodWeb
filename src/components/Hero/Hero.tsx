@@ -6,7 +6,9 @@ const Hero = () => {
       bgImage={'/assets/hero.jpg'}
       height={'70vh'}
       bgPosition={'center'}
+      bgRepeat={'no-repeat'}
       alignItems={'center'}
+      bgSize={'100%'}
       justifyContent={'center'}
     >
       <Flex

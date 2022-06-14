@@ -48,9 +48,7 @@ const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
           <SkeletonText isLoaded={props.food ? true : false}>
             <Text isTruncated={true}>{props.food.nameFood}</Text>
           </SkeletonText>
-          <SkeletonText isLoaded={props.food ? true : false}>
-            <Text isTruncated={true}>{props.food.descriptionFood}</Text>
-          </SkeletonText>
+
           <Divider />
         </Box>
         <Flex justifyContent={'space-between'} py={'.2rem'} px={'.3rem'}>

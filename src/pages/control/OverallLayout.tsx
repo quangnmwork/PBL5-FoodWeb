@@ -1,4 +1,5 @@
 import { Routes } from 'react-router-dom';
+
 import RenderRoutes from '../../utils/RenderRoutes';
 import { RoutesNotFound } from '../404/routes';
 import AuthRoutes from '../authentication/routes';

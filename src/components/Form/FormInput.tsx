@@ -36,42 +36,51 @@ interface UserSignup extends InputProps {
 
 const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
   (props, ref) => {
-    const { ...rest } = props;
+    const {
+      typeInput,
+      textLabel,
+      placeholder,
+      errorMessage,
+      isEditable,
+      mustDisable,
+      my,
+      register,
+      nameRegister,
+      ...rest
+    } = props;
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [canEdit, setCanEdit] = useState<boolean>(false);
     const handleType = useCallback(() => {
-      if (props.typeInput == 'password' && showPassword == true) return 'text';
-      if (!props.typeInput) return 'text';
-      return props.typeInput || 'text';
+      if (typeInput == 'password' && showPassword == true) return 'text';
+      if (!typeInput) return 'text';
+      return typeInput || 'text';
     }, [showPassword]);
     const handleDisable = useCallback(() => {
-      if (props.mustDisable) return true;
-      if (props.isEditable && !canEdit) return true;
+      if (mustDisable) return true;
+      if (isEditable && !canEdit) return true;
       return false;
     }, [canEdit]);
     return (
       <FormControl
-        my={props.my || { base: '.5rem', md: '1rem' }}
-        isInvalid={props.errorMessage ? true : false}
+        my={my || { base: '.5rem', md: '1rem' }}
+        isInvalid={errorMessage ? true : false}
       >
-        {props.typeInput !== 'submit' ? (
-          <FormLabel htmlFor={props.textLabel}>{props.textLabel}</FormLabel>
+        {typeInput !== 'submit' ? (
+          <FormLabel htmlFor={textLabel}>{textLabel}</FormLabel>
         ) : null}
         <InputGroup>
           <Input
             borderWidth={'1.5px'}
             ref={ref}
-            id={props.typeInput !== 'submit' ? props.textLabel : ''}
+            id={typeInput !== 'submit' ? textLabel : ''}
             type={handleType()}
             isReadOnly={handleDisable()}
-            placeholder={props.placeholder || ''}
-            {...(props.register && props.nameRegister
-              ? props.register(props.nameRegister)
-              : null)}
+            placeholder={placeholder || ''}
+            {...(register && nameRegister ? register(nameRegister) : null)}
             {...rest}
             variant={handleDisable() ? 'filled' : 'outline'}
           />
-          {props.typeInput == 'password' ? (
+          {typeInput == 'password' ? (
             <InputRightElement height={'full'}>
               <Button
                 variant={'ghost'}
@@ -81,7 +90,7 @@ const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
               </Button>
             </InputRightElement>
           ) : null}
-          {props.isEditable ? (
+          {isEditable ? (
             <InputRightElement height={'full'}>
               <Button
                 variant={'ghost'}
@@ -94,7 +103,7 @@ const FormInput = React.forwardRef<HTMLInputElement, UserSignup>(
             </InputRightElement>
           ) : null}
         </InputGroup>
-        <FormErrorMessage>{props.errorMessage}</FormErrorMessage>
+        <FormErrorMessage>{errorMessage}</FormErrorMessage>
       </FormControl>
     );
   }

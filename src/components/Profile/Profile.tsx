@@ -37,7 +37,7 @@ const Profile = (props: ProfileProps) => {
   const [selectAvatar, setSelectAvatar] = useState<File | undefined>();
   const [currentAvatar, setCurrentAvatar] = useState<string>();
   const toast = useToast();
-  console.log(props.userData);
+  // console.log(props.userData);
   const updateUserProfileHandler = async (data: signupInput | signinInput) => {
     try {
       const submitData = data as Partial<signupInput>;

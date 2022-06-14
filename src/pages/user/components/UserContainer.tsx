@@ -18,7 +18,7 @@ import { MAX_TIME } from '../../../utils/constants';
 
 const UserContainer = () => {
   const { data, error, mutate } = useUser(MAX_TIME);
-  console.log(data);
+  // console.log(data);
   const location = useLocation();
   return (
     <>

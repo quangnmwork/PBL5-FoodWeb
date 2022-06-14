@@ -11,7 +11,8 @@ import {
   Table,
   Tbody,
   Input,
-  Textarea
+  Textarea,
+  Box
 } from '@chakra-ui/react';
 import React, { memo, useState } from 'react';
 import useSWR from 'swr';
@@ -152,20 +153,28 @@ const UserManageItem = (props: UserManageItemProps) => {
           <>
             {ships.length > 0 ? (
               ships.map((ship, index) => (
-                <Flex
-                  justifyContent={'space-between'}
-                  alignItems={'center'}
+                <Box
                   key={index}
                   my={'1rem'}
                   boxShadow={'lg'}
                   px={'1rem'}
+                  borderColor={'moccasin.50'}
+                  borderWidth={'1px'}
                 >
-                  <Avatar src={'/assets/seller.jpg'} />
-                  <Text>
-                    Ngày đặt món :{' '}
-                    {convertDateTime(new Date(ship.timeOrderDetail))}
+                  <Text fontWeight={'bold'} mb={'.5rem'}>
+                    ID Đơn hàng:{' '}
+                    <Text as={'span'} color={'main.600'}>
+                      {ship.idOrderDetail}
+                    </Text>
                   </Text>
-                </Flex>
+                  <Flex justifyContent={'space-between'} alignItems={'center'}>
+                    <Avatar src={'/assets/seller.jpg'} />
+                    <Text>
+                      Ngày đặt món :{' '}
+                      {convertDateTime(new Date(ship.timeOrderDetail))}
+                    </Text>
+                  </Flex>
+                </Box>
               ))
             ) : (
               <Text>Chưa có đơn hàng nào</Text>

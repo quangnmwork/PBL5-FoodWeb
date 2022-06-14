@@ -37,10 +37,11 @@ const FormSignIn = () => {
     data: signinInput
   ): Promise<void> => {
     try {
-      console.log(data);
+      // console.log(data);
       const res = await authAPI.signin(data);
-      console.log(res);
+      // console.log(res);
       clientStorage.getClientStorage().setToken(res.data.token);
+
       navigate('/', { replace: true });
     } catch (err: any) {
       toast({

@@ -7,10 +7,10 @@ interface ButtonProp extends ButtonProps {
   isLoading?: boolean;
 }
 const ButtonCustom = (props: ButtonProp) => {
-  const { ...rest } = props;
+  const { textDisplay, ...rest } = props;
   return (
     <Button width={props.width} isLoading={props.isLoading} {...rest}>
-      {props.textDisplay || ''}
+      {textDisplay || ''}
     </Button>
   );
 };

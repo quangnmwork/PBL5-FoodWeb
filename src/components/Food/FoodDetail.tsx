@@ -9,7 +9,8 @@ import {
   TableContainer,
   useDisclosure,
   Button,
-  useToast
+  useToast,
+  SkeletonText
 } from '@chakra-ui/react';
 import React from 'react';
 import { AiFillTags } from 'react-icons/ai';
@@ -25,7 +26,12 @@ import { useUser } from '../../hooks/authentication/useUser';
 import { useNavigate } from 'react-router-dom';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 import { MAX_TIME } from '../../utils/constants';
-const FoodDetail = (props: Partial<Food>) => {
+interface FoodDetailProps {
+  food?: Food;
+  loading: boolean;
+}
+const FoodDetail = (props: FoodDetailProps) => {
+  const { food, loading } = props;
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
   const { data, error } = useUser(MAX_TIME);
@@ -48,17 +54,17 @@ const FoodDetail = (props: Partial<Food>) => {
       });
       return;
     }
-    if (data && !error) {
-      const food = {
-        idFood: props.idFood?.toString() || '1',
+    if (data && !error && food) {
+      const foodItem = {
+        idFood: food.idFood?.toString() || '1',
         numberFood: parseInt(numberButtonRef.current?.value || '-1'),
-        imageFood: props.imageFood || '',
-        nameFood: props.nameFood || '',
-        priceFood: props.priceFood || 0
+        imageFood: food.imageFood || '',
+        nameFood: food.nameFood || '',
+        priceFood: food.priceFood || 0
       };
       // console.log(food);
-      if (food.numberFood > 0) {
-        cart.addFood(food);
+      if (foodItem.numberFood > 0) {
+        cart.addFood(foodItem);
         toast({
           status: 'success',
           title: 'Thêm vào giỏ thành công',
@@ -77,7 +83,7 @@ const FoodDetail = (props: Partial<Food>) => {
       alignItems={'flex-start'}
     >
       <Text fontSize={'2rem'} color={'richText.100'}>
-        {props.nameFood}
+        <SkeletonText isLoaded={!loading}> {food?.nameFood}</SkeletonText>
       </Text>
       <TableContainer>
         <Table variant="unstyled">
@@ -91,7 +97,9 @@ const FoodDetail = (props: Partial<Food>) => {
                   </Text>
                 </Flex>
               </Td>
-              <Td>{props.nameCategory}</Td>
+              <SkeletonText isLoaded={!loading}>
+                <Td>{food?.nameCategory}</Td>
+              </SkeletonText>
             </Tr>
             <Tr>
               <Td padding={'0'}>
@@ -102,7 +110,9 @@ const FoodDetail = (props: Partial<Food>) => {
                   </Text>
                 </Flex>
               </Td>
-              <Td>{props.priceFood}₫</Td>
+              <SkeletonText isLoaded={!loading}>
+                <Td>{food?.priceFood}₫</Td>
+              </SkeletonText>
             </Tr>
             <Tr>
               <Td padding={'0'}>
@@ -113,7 +123,13 @@ const FoodDetail = (props: Partial<Food>) => {
                   </Text>
                 </Flex>
               </Td>
-              <Td>{convertDateTime(props.timeCreate)}</Td>
+              <SkeletonText isLoaded={!loading}>
+                <Td>
+                  {convertDateTime(
+                    food?.timeCreate ? new Date(food.timeCreate) : new Date()
+                  )}
+                </Td>
+              </SkeletonText>
             </Tr>
             <Tr>
               <Td padding={'0'}>Số lượng</Td>

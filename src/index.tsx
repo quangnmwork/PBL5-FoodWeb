@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 import customThemes from './themes/themes';
 import { BrowserRouter } from 'react-router-dom';
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

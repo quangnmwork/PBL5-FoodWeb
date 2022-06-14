@@ -1,6 +1,6 @@
+import OverallLayout from './pages/control/OverallLayout';
 import { SWRConfig } from 'swr';
 import axiosClient from './api/repository';
-import OverallLayout from './pages/control/OverallLayout';
 function App() {
   return (
     <SWRConfig
@@ -11,7 +11,7 @@ function App() {
         provider: () => new Map()
       }}
     >
-      <OverallLayout />
+      <OverallLayout />{' '}
     </SWRConfig>
   );
 }

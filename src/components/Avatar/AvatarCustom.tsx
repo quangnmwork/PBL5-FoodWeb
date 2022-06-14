@@ -9,6 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useCart } from '../../services/cart/useCart';
+
 import clientStorage from '../../utils/clientStorage';
 import { MAX_TIME } from '../../utils/constants';
 import { DynamicObject } from './../../models/DynamicObject.model';
@@ -17,26 +18,27 @@ interface AvatarCustomProps extends MenuButtonProps {
 }
 
 const AvatarCustom = (props: AvatarCustomProps) => {
-  const { ...rest } = props;
+  const { userData, ...rest } = props;
   const cart = useCart();
   const { mutate } = useUser(MAX_TIME);
+
   const navigate = useNavigate();
   const handlerLogout = () => {
     clientStorage.getClientStorage().clearToken();
     navigate('../', { replace: true });
     mutate(undefined);
+
     cart.resetCart();
   };
   const handlerRouter = () => {
     navigate('/user/profile', { replace: true });
   };
   const handleAvatar = () => {
-    if (props.userData?.avatar) return props.userData.avatar;
-    if (props.userData?.nameGroup == 'Customer')
-      return '/assets/user-avatar.jpg';
-    if (props.userData?.nameGroup == 'Shipper') return '/assets/shipper.jpg';
-    if (props.userData?.nameGroup == 'Seller') return '/assets/seller.jpg';
-    if (props.userData?.nameGroup == 'Admin') return '/assets/admin.png';
+    if (userData?.avatar) return userData.avatar;
+    if (userData?.nameGroup == 'Customer') return '/assets/user-avatar.jpg';
+    if (userData?.nameGroup == 'Shipper') return '/assets/shipper.jpg';
+    if (userData?.nameGroup == 'Seller') return '/assets/seller.jpg';
+    if (userData?.nameGroup == 'Admin') return '/assets/admin.png';
   };
   return (
     <Menu>
