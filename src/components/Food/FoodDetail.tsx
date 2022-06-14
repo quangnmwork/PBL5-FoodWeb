@@ -82,9 +82,11 @@ const FoodDetail = (props: FoodDetailProps) => {
       marginLeft={'3rem'}
       alignItems={'flex-start'}
     >
-      <Text fontSize={'2rem'} color={'richText.100'}>
-        <SkeletonText isLoaded={!loading}> {food?.nameFood}</SkeletonText>
-      </Text>
+      <SkeletonText isLoaded={!loading}>
+        <Text fontSize={'2rem'} color={'richText.100'}>
+          {food?.nameFood}
+        </Text>
+      </SkeletonText>
       <TableContainer>
         <Table variant="unstyled">
           <Tbody>
@@ -97,9 +99,12 @@ const FoodDetail = (props: FoodDetailProps) => {
                   </Text>
                 </Flex>
               </Td>
-              <SkeletonText isLoaded={!loading}>
-                <Td>{food?.nameCategory}</Td>
-              </SkeletonText>
+
+              <Td>
+                <SkeletonText isLoaded={!loading}>
+                  {food?.nameCategory}{' '}
+                </SkeletonText>
+              </Td>
             </Tr>
             <Tr>
               <Td padding={'0'}>
@@ -110,9 +115,12 @@ const FoodDetail = (props: FoodDetailProps) => {
                   </Text>
                 </Flex>
               </Td>
-              <SkeletonText isLoaded={!loading}>
-                <Td>{food?.priceFood}₫</Td>
-              </SkeletonText>
+
+              <Td>
+                <SkeletonText isLoaded={!loading}>
+                  {food?.priceFood}₫{' '}
+                </SkeletonText>
+              </Td>
             </Tr>
             <Tr>
               <Td padding={'0'}>
@@ -123,13 +131,15 @@ const FoodDetail = (props: FoodDetailProps) => {
                   </Text>
                 </Flex>
               </Td>
-              <SkeletonText isLoaded={!loading}>
-                <Td>
+
+              <Td>
+                {' '}
+                <SkeletonText isLoaded={!loading}>
                   {convertDateTime(
                     food?.timeCreate ? new Date(food.timeCreate) : new Date()
-                  )}
-                </Td>
-              </SkeletonText>
+                  )}{' '}
+                </SkeletonText>
+              </Td>
             </Tr>
             <Tr>
               <Td padding={'0'}>Số lượng</Td>

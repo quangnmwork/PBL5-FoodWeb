@@ -7,11 +7,12 @@ import {
   MenuButtonProps
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../hooks/authentication/useUser';
+import { useSWRConfig } from 'swr';
+
 import { useCart } from '../../services/cart/useCart';
 
 import clientStorage from '../../utils/clientStorage';
-import { MAX_TIME } from '../../utils/constants';
+
 import { DynamicObject } from './../../models/DynamicObject.model';
 interface AvatarCustomProps extends MenuButtonProps {
   userData?: DynamicObject;
@@ -20,13 +21,13 @@ interface AvatarCustomProps extends MenuButtonProps {
 const AvatarCustom = (props: AvatarCustomProps) => {
   const { userData, ...rest } = props;
   const cart = useCart();
-  const { mutate } = useUser(MAX_TIME);
+  const { mutate } = useSWRConfig();
 
   const navigate = useNavigate();
   const handlerLogout = () => {
     clientStorage.getClientStorage().clearToken();
     navigate('../', { replace: true });
-    mutate(undefined);
+    mutate('Users/GetProfileUser');
 
     cart.resetCart();
   };

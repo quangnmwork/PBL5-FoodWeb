@@ -7,15 +7,16 @@ import { permissionGuard } from './authUtils';
 import { checkObjectExist } from './checkObjectNull';
 
 const RenderRoutes = (routesConfig: RoutesConfig[]) => {
-  const { data, error } = useUser(12000);
+  const { data, error } = useUser(0);
 
   return routesConfig.map(
     ({
       path,
-      component,
+
       redirectWhenAlreadyHasUser,
       needProtected,
-      specificRole
+      specificRole,
+      component
     }) => {
       if (needProtected && !checkObjectExist(data) && error) {
         return (
@@ -26,6 +27,7 @@ const RenderRoutes = (routesConfig: RoutesConfig[]) => {
           ></Route>
         );
       }
+
       if (needProtected && data && !error && specificRole) {
         return (
           <Route

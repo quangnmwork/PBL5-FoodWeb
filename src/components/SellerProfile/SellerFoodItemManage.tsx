@@ -9,7 +9,7 @@ import {
   useDisclosure,
   useToast
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Food } from '../../models/Food.model';
 import CustomCard from '../Card/CustomCard';
 
@@ -52,15 +52,11 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
           });
           return;
         }
-        const res = await sellerAPI.hiddenFood(
-          props.food.idFood,
-          !props.food.isHidden
-        );
-        console.log(res);
+        await sellerAPI.hiddenFood(props.food.idFood, !props.food.isHidden);
 
         toast({
           status: 'success',
-          title: `${props.food.isHidden ? 'Hiện' : 'Ẩn'} bài viết thành công`,
+          title: `${isHidden ? 'Hiện' : 'Ẩn'} bài viết thành công`,
           position: 'bottom-right',
           duration: 1500,
           variant: 'subtle'
@@ -175,4 +171,4 @@ const SellerFoodItemManage = React.forwardRef<any, FoodHomeItemProps>(
 );
 SellerFoodItemManage.displayName = 'SellerFoodItemManage';
 
-export default SellerFoodItemManage;
+export default memo(SellerFoodItemManage);

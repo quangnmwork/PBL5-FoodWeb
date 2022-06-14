@@ -1,6 +1,7 @@
-import { Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { Flex, SimpleGrid } from '@chakra-ui/react';
 import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import useFoodFetch from '../../hooks/foods/useFoodFetch';
+import SpinnerCustom from '../Spinner/SpinnerCustom';
 import FoodHomeItem from './FoodHomeItem';
 
 interface FoodHomeMainProps {
@@ -73,14 +74,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
           : null}
       </SimpleGrid>
       <Flex justifyContent={'center'} width={'100%'} mt={'2rem'}>
-        {(loading && !hasMore) || (
-          <Spinner
-            color={'main.200'}
-            thickness="5px"
-            speed={'0.65s'}
-            size={'md'}
-          />
-        )}
+        {(loading && !hasMore) || <SpinnerCustom />}
       </Flex>
     </Flex>
   );

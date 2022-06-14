@@ -13,7 +13,7 @@ export const useUser = (timeRefreshInterval?: number) => {
     condition = true;
   }
 
-  const options = timeRefreshInterval ? timeRefreshInterval : 500;
+  const options = timeRefreshInterval ? timeRefreshInterval : 0;
 
   const { data, error, mutate, isValidating } = useSWR<User>(
     condition ? `${process.env.REACT_APP_DOMAIN}Users/GetProfileUser` : null,

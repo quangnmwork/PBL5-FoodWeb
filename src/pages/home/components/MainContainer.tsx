@@ -1,6 +1,11 @@
 import { Container } from '@chakra-ui/react';
-import FoodHomeContainer from '../../../components/FoodHome/FoodHomeContainer';
-import SellerSection from '../../../components/SellerSection/SellerSection';
+import { lazy } from 'react';
+const FoodHomeContainer = lazy(
+  () => import('../../../components/FoodHome/FoodHomeContainer')
+);
+const SellerSection = lazy(
+  () => import('../../../components/SellerSection/SellerSection')
+);
 
 const MainContainer = () => {
   return (

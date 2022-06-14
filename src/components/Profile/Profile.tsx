@@ -18,10 +18,10 @@ import { useForm } from 'react-hook-form';
 import { signinInput, signupInput } from '../../models/Authentication.model';
 import { createRef, useEffect, useState } from 'react';
 import { userAPI } from '../../api/repositoryFactory';
+import { useSWRConfig } from 'swr';
 
 interface ProfileProps {
   userData?: DynamicObject;
-  mutate: any;
 }
 
 const Profile = (props: ProfileProps) => {
@@ -30,6 +30,7 @@ const Profile = (props: ProfileProps) => {
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<signupInput | signinInput>();
+  const { mutate } = useSWRConfig();
 
   const userName = createRef<HTMLInputElement>();
   const address = createRef<HTMLInputElement>();
@@ -77,7 +78,7 @@ const Profile = (props: ProfileProps) => {
           variant: 'subtle'
         });
       }
-      props.mutate();
+      mutate('Users/GetProfileUser');
     } catch (err: any) {
       toast({
         status: 'error',
