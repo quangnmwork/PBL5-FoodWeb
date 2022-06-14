@@ -25,7 +25,7 @@ import { usePermissionDetail } from '../../hooks/authentication/usePermissionDet
 import ModalCustom from '../Modal/ModalCustom';
 import { useCheckban } from '../../hooks/authentication/useCheckban';
 import { convertDateTimeDetail } from '../../utils/convertDateTime';
-import { useNavigate } from 'react-router-dom';
+import { useSWRConfig } from 'swr';
 
 interface SellerFoodItemEditProps {
   food: Food;
@@ -42,6 +42,7 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
   const descriptionRef = React.createRef<HTMLTextAreaElement>();
   const typeRef = React.createRef<HTMLSelectElement>();
   const permission = usePermissionDetail('Edit_Food');
+  const { mutate } = useSWRConfig();
   const toast = useToast();
   const onImageUploadChanging = (event: any) => {
     const currentTarget = event.target as HTMLInputElement;
@@ -53,7 +54,7 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
     setCurrentAvatar(url);
   };
   const banModal = useDisclosure();
-  const navigate = useNavigate();
+
   const banned = useCheckban();
   useEffect(() => {
     if (!selectAvatar) return;
@@ -81,11 +82,9 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
         duration: 1500,
         variant: 'subtle'
       });
+      mutate('Foods/getListFood');
 
       setLoading(false);
-      setTimeout(() => {
-        navigate(0);
-      }, 500);
     } catch (error: any) {
       setLoading(false);
       toast({

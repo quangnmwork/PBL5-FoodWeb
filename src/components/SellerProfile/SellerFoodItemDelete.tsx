@@ -14,13 +14,15 @@ import ModalCustom from '../Modal/ModalCustom';
 
 import { useCheckban } from '../../hooks/authentication/useCheckban';
 import { convertDateTimeDetail } from '../../utils/convertDateTime';
-import { useNavigate } from 'react-router-dom';
+import { useSWRConfig } from 'swr';
 
 const SellerFoodItemDelete = ({ idFood }: { idFood: number }) => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { mutate } = useSWRConfig();
+
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+
   const banModal = useDisclosure();
   const banned = useCheckban();
   const permission = usePermissionDetail('Delete_Food');
@@ -36,9 +38,7 @@ const SellerFoodItemDelete = ({ idFood }: { idFood: number }) => {
         duration: 1500,
         variant: 'subtle'
       });
-      setTimeout(() => {
-        navigate(0);
-      }, 500);
+      mutate('Foods/getListFood');
     } catch (err: any) {
       setLoading(false);
       toast({

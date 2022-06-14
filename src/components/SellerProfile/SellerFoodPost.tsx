@@ -23,12 +23,9 @@ import ModalCustom from '../Modal/ModalCustom';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
 import { convertDateTimeDetail } from '../../utils/convertDateTime';
 import { useCheckban } from '../../hooks/authentication/useCheckban';
-import { useNavigate } from 'react-router-dom';
+import { useSWRConfig } from 'swr';
 
-interface SellerFoodPostProps {
-  onCreate?: any;
-}
-const SellerFoodPost = (props: SellerFoodPostProps) => {
+const SellerFoodPost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const nameRef = React.createRef<HTMLInputElement>();
   const priceRef = React.createRef<HTMLInputElement>();
@@ -40,7 +37,8 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
   const permission = usePermissionDetail('Create_Food');
   const banModal = useDisclosure();
   const banned = useCheckban();
-  const navigate = useNavigate();
+  const { mutate } = useSWRConfig();
+
   const toast = useToast();
   useEffect(() => {
     setSelectAvatar(undefined);
@@ -80,19 +78,18 @@ const SellerFoodPost = (props: SellerFoodPostProps) => {
       console.log(foodData.getAll('DescriptionFood'));
 
       const res = await sellerAPI.createFood(foodData);
-      props.onCreate(res.data.idFood);
-      // toast({
-      //   status: 'success',
-      //   title: 'Tạo món ăn thành công',
-      //   position: 'bottom-right',
-      //   duration: 1500,
-      //   variant: 'subtle'
-      // });
+      if (res.status == 200)
+        toast({
+          status: 'success',
+          title: 'Tạo món ăn thành công',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      mutate('Foods/getListFood');
 
       setLoading(false);
       onClose();
-
-      navigate(0);
     } catch (error: any) {
       setLoading(false);
       console.log(error.message);

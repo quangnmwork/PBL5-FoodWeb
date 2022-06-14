@@ -1,34 +1,15 @@
-import { useEffect, useState } from 'react';
-import { sellerAPI } from '../../api/repositoryFactory';
+import useSWR from 'swr';
 import { Food } from '../../models/Food.model';
+import { MAX_TIME } from '../../utils/constants';
 
-const useSellerFood = (pageNumber: number, id?: number) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [foods, setFoods] = useState<Food[]>([]);
-  const [error, setError] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  useEffect(() => {
-    setFoods([]);
-  }, [id]);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(false);
-    let fetch = true;
-    sellerAPI.getListFoods(pageNumber).then((res) => {
-      if (fetch) {
-        setFoods((prevFoods) => {
-          // console.log([...new Set([...prevFoods, ...res.data])]);
-          return [...new Set([...prevFoods, ...res.data])];
-        });
-        setHasMore(res.data.length > 0);
-        setLoading(false);
-      }
-    });
-    return () => {
-      fetch = false;
-    };
-  }, [pageNumber, id]);
-  return { error, loading, foods, hasMore };
+const useSellerFood = () => {
+  const { data, error, mutate } = useSWR<Food[]>('Foods/getListFood', {
+    refreshInterval: MAX_TIME
+  });
+  return {
+    data,
+    error,
+    mutate
+  };
 };
 export default useSellerFood;
