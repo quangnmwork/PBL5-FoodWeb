@@ -6,7 +6,6 @@ import ButtonScrollToTop from '../../../components/Button/ButtonScrollToTop';
 import Loading from '../../../components/layout/Loading';
 import { useUser } from '../../../hooks/authentication/useUser';
 import useWatchScroll from '../../../hooks/utils/useWatchScroll';
-import clientStorage from '../../../utils/clientStorage';
 
 import { lazy, Suspense } from 'react';
 const NavigationComponent = lazy(
@@ -18,17 +17,10 @@ const HeroComponent = lazy(() => import('../../../components/Hero/Hero'));
 const HomeContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
   const { data, error } = useUser(0);
-
-  if (!data && clientStorage.getClientStorage().getToken()) {
-    return <Loading />;
-  }
   if (!error) {
     if (data) {
-      if (
-        data?.nameGroup !== 'Customer' &&
-        clientStorage.getClientStorage().getToken()
-      )
-        return <Navigate to={'/user/profile'} replace={true} />;
+      if (data.nameGroup !== 'Customer')
+        return <Navigate to={'/user/profile'} />;
     }
   }
 

@@ -19,6 +19,7 @@ import { authAPI } from '../../../api/repositoryFactory';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clientStorage from '../../../utils/clientStorage';
+import { useSWRConfig } from 'swr';
 
 const FormSignIn = () => {
   const {
@@ -30,7 +31,7 @@ const FormSignIn = () => {
     resolver: yupResolver(signinSchema)
   });
   const toast = useToast();
-
+  const { mutate } = useSWRConfig();
   const [_, setSigninErr] = useState<string>('');
   const navigate = useNavigate();
   const loginHandler: SubmitHandler<signinInput> = async (
@@ -41,7 +42,7 @@ const FormSignIn = () => {
       const res = await authAPI.signin(data);
       // console.log(res);
       clientStorage.getClientStorage().setToken(res.data.token);
-
+      await mutate('Users/GetProfileUser');
       navigate('/', { replace: true });
     } catch (err: any) {
       toast({
