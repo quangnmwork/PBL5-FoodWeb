@@ -7,9 +7,8 @@ import clientStorage from '../../utils/clientStorage';
 import { User } from './../../models/User.model';
 
 export const useUser = (timeRefreshInterval?: number) => {
-  // console.log(`${process.env.REACT_APP_DOMAIN}Users/GetProfileUser`);
   let condition = false;
-  if (clientStorage.getClientStorage().getToken()?.length) {
+  if (clientStorage.getClientStorage().getToken()) {
     condition = true;
   }
 
