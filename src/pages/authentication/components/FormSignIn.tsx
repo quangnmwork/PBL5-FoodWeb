@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  FormControl,
-  Flex,
-  FormErrorMessage,
-  Text,
-  useToast
-} from '@chakra-ui/react';
+import { FormControl, Flex, useToast } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import ButtonCustom from '../../../components/Button/ButtonCustom';
 import FormInput from '../../../components/Form/FormInput';
@@ -15,11 +9,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { signinInput } from './../../../models/Authentication.model';
 import { signinSchema } from './../validation/index';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authAPI } from '../../../api/repositoryFactory';
+import { authAPI, userAPI } from '../../../api/repositoryFactory';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clientStorage from '../../../utils/clientStorage';
 import { useSWRConfig } from 'swr';
+import { useUser } from '../../../hooks/authentication/useUser';
 
 const FormSignIn = () => {
   const {
@@ -30,6 +25,7 @@ const FormSignIn = () => {
   } = useForm<signinInput>({
     resolver: yupResolver(signinSchema)
   });
+
   const toast = useToast();
   const { mutate } = useSWRConfig();
   const [_, setSigninErr] = useState<string>('');
@@ -39,11 +35,20 @@ const FormSignIn = () => {
   ): Promise<void> => {
     try {
       // console.log(data);
+      const updateUser = async () => {
+        const res = await userAPI.getUserProfile();
+        return res.data;
+      };
       const res = await authAPI.signin(data);
       // console.log(res);
       clientStorage.getClientStorage().setToken(res.data.token);
-      await mutate('Users/GetProfileUser');
-      navigate('/', { replace: true });
+      const mutateRes = await mutate('Users/GetProfileUser', updateUser());
+
+      if (mutateRes && mutateRes.nameGroup == 'Customer') {
+        navigate('/');
+      } else {
+        navigate('/user/profile');
+      }
     } catch (err: any) {
       toast({
         status: 'error',

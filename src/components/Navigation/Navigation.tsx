@@ -3,16 +3,18 @@ import { Flex } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useSearch } from '../../services/utils/useSearch';
-import { checkObjectExist } from '../../utils/checkObjectNull';
 
 import AvatarCustom from '../Avatar/AvatarCustom';
 import ButtonCustom from '../Button/ButtonCustom';
 import Logo from '../Logo/Logo';
 import Cart from './Cart/Cart';
 import SearchBar from './SearchBar/SearchBar';
-
-const Navigation = () => {
+interface NavigattionProps {
+  isMustHide?: boolean;
+}
+const Navigation = ({ isMustHide }: NavigattionProps) => {
   const { data, error } = useUser(0);
+
   const navigate = useNavigate();
   const handlerLoginRouter = () => {
     navigate('/auth/sign-in');
@@ -37,11 +39,9 @@ const Navigation = () => {
         height={['3rem', '4rem']}
         state={{ searchInput: search.searchInput, category: search.category }}
       />
-      {error || !data || (data && data.nameGroup == 'Customer') ? (
-        <SearchBar />
-      ) : null}
+      {error || !data || !isMustHide ? <SearchBar /> : null}
 
-      {error || !checkObjectExist(data) ? (
+      {error || !data ? (
         <ButtonCustom textDisplay={'Đăng nhập'} onClick={handlerLoginRouter} />
       ) : (
         <Flex alignItems={'center'}>

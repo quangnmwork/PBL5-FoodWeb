@@ -17,6 +17,7 @@ const HeroComponent = lazy(() => import('../../../components/Hero/Hero'));
 const HomeContainer = () => {
   const { isShowScrollToTop } = useWatchScroll();
   const { data, error } = useUser(0);
+
   if (!error) {
     if (data) {
       if (data.nameGroup !== 'Customer')
