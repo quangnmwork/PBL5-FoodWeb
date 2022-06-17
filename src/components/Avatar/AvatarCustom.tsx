@@ -24,11 +24,10 @@ const AvatarCustom = (props: AvatarCustomProps) => {
   const { mutate } = useSWRConfig();
 
   const navigate = useNavigate();
-  const handlerLogout = () => {
+  const handlerLogout = async () => {
     clientStorage.getClientStorage().clearToken();
+    await mutate('Users/GetProfileUser');
     navigate('../', { replace: true });
-    mutate('Users/GetProfileUser');
-
     cart.resetCart();
   };
   const handlerRouter = () => {
