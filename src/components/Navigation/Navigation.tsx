@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useSearch } from '../../services/utils/useSearch';
 import { checkObjectExist } from '../../utils/checkObjectNull';
-import { MAX_TIME } from '../../utils/constants';
 
 import AvatarCustom from '../Avatar/AvatarCustom';
 import ButtonCustom from '../Button/ButtonCustom';
@@ -13,7 +12,7 @@ import Cart from './Cart/Cart';
 import SearchBar from './SearchBar/SearchBar';
 
 const Navigation = () => {
-  const { data, error } = useUser(MAX_TIME);
+  const { data, error } = useUser(0);
   const navigate = useNavigate();
   const handlerLoginRouter = () => {
     navigate('/auth/sign-in');
