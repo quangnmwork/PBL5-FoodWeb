@@ -25,7 +25,7 @@ import ModalCustom from '../Modal/ModalCustom';
 import { useUser } from '../../hooks/authentication/useUser';
 import { useNavigate } from 'react-router-dom';
 import { usePermissionDetail } from '../../hooks/authentication/usePermissionDetail';
-import { MAX_TIME } from '../../utils/constants';
+
 interface FoodDetailProps {
   food?: Food;
   loading: boolean;
@@ -34,7 +34,7 @@ const FoodDetail = (props: FoodDetailProps) => {
   const { food, loading } = props;
   const numberButtonRef = React.createRef<HTMLInputElement>();
   const cart = useCart();
-  const { data, error } = useUser(MAX_TIME);
+  const { data, error } = useUser(0);
   const permission = usePermissionDetail('Create_Order');
   const navigate = useNavigate();
   const toast = useToast();

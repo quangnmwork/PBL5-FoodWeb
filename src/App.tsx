@@ -6,11 +6,10 @@ function App() {
     <SWRConfig
       value={{
         fetcher: (resource: string) =>
-          axiosClient.get(resource).then((res) => res.data),
-        provider: () => new Map()
+          axiosClient.get(resource).then((res) => res.data)
       }}
     >
-      <OverallLayout />{' '}
+      <OverallLayout />
     </SWRConfig>
   );
 }

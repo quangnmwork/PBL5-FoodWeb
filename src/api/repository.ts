@@ -1,8 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import queryString from 'query-string';
-
+const url =
+  process.env.NODE_ENV == 'development'
+    ? process.env.REACT_APP_DOMAIN
+    : process.env.REACT_APP_DOMAIN_PROD;
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_DOMAIN_PROD,
+  baseURL: url,
   headers: { crossDomain: true, 'Content-Type': 'application/json' },
   paramsSerializer: (params: Record<string, string>) =>
     queryString.stringify(params)
