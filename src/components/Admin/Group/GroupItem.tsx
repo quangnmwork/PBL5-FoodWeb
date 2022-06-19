@@ -1,4 +1,4 @@
-import { Flex, useToast, Text, Button } from '@chakra-ui/react';
+import { Flex, useToast, Text, Button, Skeleton } from '@chakra-ui/react';
 import { useState } from 'react';
 import { adminAPI } from '../../../api/repositoryFactory';
 import useSWR from 'swr';
@@ -31,8 +31,9 @@ const GroupItem = (props: GroupItemProps) => {
   ) => {
     try {
       setLoading(true);
-      console.log(enable);
+
       await adminAPI.setGroupPermission(code, enable);
+      mutate();
       toast({
         status: 'success',
         title: `${enable ? 'Tắt' : 'Bật'} quyền ${permissionName} thành công`,
@@ -49,7 +50,6 @@ const GroupItem = (props: GroupItemProps) => {
         variant: 'subtle'
       });
     } finally {
-      mutate();
       setLoading(false);
     }
   };
@@ -60,26 +60,28 @@ const GroupItem = (props: GroupItemProps) => {
         {props.permission.namePermission}
       </Text>
 
-      <Button
-        isLoading={loading}
-        variant={data?.enablePermissionDetail == true ? 'outline' : 'solid'}
-        rightIcon={
-          data?.enablePermissionDetail == true ? (
-            <AiOutlineLock />
-          ) : (
-            <AiOutlineUnlock />
-          )
-        }
-        onClick={() => {
-          onChangeEnable(
-            props.permission.codePermissionDetail,
-            data?.enablePermissionDetail == true ? false : true,
-            props.permission.namePermission
-          );
-        }}
-      >
-        {currentState}
-      </Button>
+      <Skeleton isLoaded={data}>
+        <Button
+          isLoading={loading}
+          variant={data?.enablePermissionDetail == true ? 'outline' : 'solid'}
+          rightIcon={
+            data?.enablePermissionDetail == true ? (
+              <AiOutlineLock />
+            ) : (
+              <AiOutlineUnlock />
+            )
+          }
+          onClick={() => {
+            onChangeEnable(
+              props.permission.codePermissionDetail,
+              data?.enablePermissionDetail == true ? false : true,
+              props.permission.namePermission
+            );
+          }}
+        >
+          {currentState}
+        </Button>
+      </Skeleton>
     </Flex>
   );
 };
