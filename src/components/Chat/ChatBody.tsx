@@ -31,10 +31,15 @@ const ChatBody = () => {
   const { data, mutate } = useSWR(`RoomDetail/${idRoom}`);
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl(`${process.env.REACT_APP_DOMAIN_PROD}/chat`, {
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets
-      })
+      .withUrl(
+        process.env.NODE_ENV == 'production'
+          ? `${process.env.REACT_APP_DOMAIN_PROD}chat`
+          : `${process.env.REACT_APP_DOMAIN}chat`,
+        {
+          skipNegotiation: true,
+          transport: HttpTransportType.WebSockets
+        }
+      )
       .configureLogging(LogLevel.Information)
       .build();
 
