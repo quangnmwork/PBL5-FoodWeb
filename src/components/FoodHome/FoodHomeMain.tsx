@@ -19,9 +19,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
   );
   const observer = useRef<null | IntersectionObserver>(null);
   useEffect(() => {
-    return () => {
-      setPageNumber(1);
-    };
+    setPageNumber(1);
   }, [props.activeCategory, props.keyName]);
   const lastFoodElementRef = useCallback(
     (node: any) => {
