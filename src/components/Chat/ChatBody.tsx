@@ -28,9 +28,7 @@ const ChatBody = () => {
     useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
   const [loading, setLoading] = useState<boolean>();
   const { idRoom, user } = useContext(ChatContext);
-  const { data, mutate } = useSWR(
-    `${process.env.REACT_APP_DOMAIN}RoomDetail/${idRoom}`
-  );
+  const { data, mutate } = useSWR(`RoomDetail/${idRoom}`);
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
       .withUrl('https://localhost:5001/chat', {

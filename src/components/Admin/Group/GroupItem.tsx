@@ -18,7 +18,7 @@ const GroupItem = (props: GroupItemProps) => {
   const [loading, setLoading] = useState<boolean>();
 
   const { data, mutate } = useSWR(
-    `${process.env.REACT_APP_DOMAIN}Admin/getPermissionDetailByCode/${props.permission.codePermissionDetail}`
+    `Admin/getPermissionDetailByCode/${props.permission.codePermissionDetail}`
   );
   const currentState = data?.enablePermissionDetail
     ? `Tắt quyền ${props.permission.namePermission}`

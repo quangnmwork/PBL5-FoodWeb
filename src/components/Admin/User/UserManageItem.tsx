@@ -40,7 +40,7 @@ const UserManageItem = (props: UserManageItemProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const toast = useToast();
   const { data, mutate } = useSWR(
-    `${process.env.REACT_APP_DOMAIN}Admin/checkBanGroup/${props.user.idUser}`,
+    `Admin/checkBanGroup/${props.user.idUser}`,
 
     { refreshInterval: MAX_TIME }
   );

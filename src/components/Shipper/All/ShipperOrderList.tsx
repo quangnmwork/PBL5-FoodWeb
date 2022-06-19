@@ -10,18 +10,17 @@ import {
 } from '@chakra-ui/react';
 
 import useSWR from 'swr';
-import axiosClient from '../../../api/repository';
+
 import { MAX_TIME } from '../../../utils/constants';
 import ShipperOrderItem from './ShipperOrderItem';
 interface ShipperOrderListProps {
   pageNumber: number;
 }
-const fetcher = (url: string) => axiosClient.get(url).then((res) => res.data);
 
 const ShipperOrderList = (props: ShipperOrderListProps) => {
   const { data, mutate } = useSWR(
-    `https://localhost:5001/OrderDetail/getListOrderDetailChoiceShip/page-${props.pageNumber}`,
-    fetcher,
+    `OrderDetail/getListOrderDetailChoiceShip/page-${props.pageNumber}`,
+
     { refreshInterval: MAX_TIME }
   );
 
