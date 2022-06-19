@@ -31,7 +31,7 @@ const ChatBody = () => {
   const { data, mutate } = useSWR(`RoomDetail/${idRoom}`);
   useEffect(() => {
     const newConnection = new HubConnectionBuilder()
-      .withUrl('https://localhost:5001/chat', {
+      .withUrl(`${process.env.REACT_APP_DOMAIN_PROD}/chat`, {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets
       })
