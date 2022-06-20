@@ -85,6 +85,9 @@ const SellerFoodItemEdit = (props: SellerFoodItemEditProps) => {
       mutate('Foods/getListFood');
 
       setLoading(false);
+      setTimeout(() => {
+        onClose();
+      }, 500);
     } catch (error: any) {
       setLoading(false);
       toast({

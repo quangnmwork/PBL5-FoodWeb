@@ -20,7 +20,7 @@ import useSWR from 'swr';
 import { adminAPI } from '../../../api/repositoryFactory';
 import { OrderShipper } from '../../../models/Order.model';
 import { User } from '../../../models/User.model';
-import { MAX_TIME } from '../../../utils/constants';
+
 import {
   convertDateTime,
   toISOLocalString
@@ -42,7 +42,7 @@ const UserManageItem = (props: UserManageItemProps) => {
   const { data, mutate } = useSWR(
     `Admin/checkBanGroup/${props.user.idUser}`,
 
-    { refreshInterval: MAX_TIME }
+    { refreshInterval: 500 }
   );
   const onGetDetailShip = async () => {
     try {
