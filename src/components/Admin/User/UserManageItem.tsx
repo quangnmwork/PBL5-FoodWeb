@@ -126,7 +126,7 @@ const UserManageItem = (props: UserManageItemProps) => {
                   Chi tiết đơn hàng
                 </Button>
               ) : null}
-              {!data?.enableGroupDetail ? (
+              {data && !data.enableGroupDetail ? (
                 <Button
                   size={'xs'}
                   variant={'outline'}
