@@ -34,7 +34,7 @@ const FoodHomeItem = React.forwardRef<any, FoodHomeItemProps>((props, ref) => {
           <Box overflow={'hidden'}>
             <Image
               src={props.food.imageFood}
-              alt={props.food.imageFood}
+              alt={props.food.nameFood}
               boxSize={'8rem'}
               width={'100%'}
               transition={'all .2s ease-in'}

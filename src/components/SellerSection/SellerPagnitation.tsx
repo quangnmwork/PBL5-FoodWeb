@@ -43,7 +43,7 @@ const SellerPagnitation = (props: SellerPagnitationProps) => {
   }, [props.numberPage]);
   return (
     <>
-      <SimpleGrid columns={5} spacing={'1.5rem'}>
+      <SimpleGrid columns={[2, null, 3, 5]} spacing={'1.5rem'}>
         {seller.length
           ? seller.map((sellerUser) => (
               <SellerPagnitationItem

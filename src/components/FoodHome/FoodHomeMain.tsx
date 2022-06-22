@@ -54,7 +54,7 @@ const FoodHomeMain = (props: FoodHomeMainProps) => {
       position={'sticky'}
       top={'5rem'}
     >
-      <SimpleGrid ml={'2rem'} columns={5} spacing={'1rem'}>
+      <SimpleGrid ml={'2rem'} columns={[2, null, 3, 5]} spacing={'1rem'}>
         {!error && foods.length
           ? foods.map((food, index) => {
               if (foods.length === index + 1) {
