@@ -136,6 +136,9 @@ namespace FoodWeb.API.Controllers
 
             if(!_authorizeService.IsSeller(BanUserDTO.IdUser) && !_authorizeService.IsShipper(BanUserDTO.IdUser))
                 return NotFound();
+            
+            if(BanUserDTO.TimeEnable < DateTime.Now)
+                return BadRequest("Time is invalid");
 
             if(_authorizeService.IsShipper(BanUserDTO.IdUser)){
                 if(_adminRepository.GetListOrderShipperChoice(BanUserDTO.IdUser).ToList().Count() != 0){
@@ -180,6 +183,9 @@ namespace FoodWeb.API.Controllers
             if(!_authorizeService.IsSeller(BanUserDTO.IdUser) && !_authorizeService.IsShipper(BanUserDTO.IdUser))
                 return NotFound();
             
+            if(BanUserDTO.TimeEnable < DateTime.Now)
+                return BadRequest("Time is invalid");
+                
             var groupDetail = _adminRepository.EditBanGroup(BanUserDTO);
             return Ok(groupDetail);
         }
