@@ -44,6 +44,7 @@ const UserManageItem = (props: UserManageItemProps) => {
 
     { refreshInterval: 500 }
   );
+  // console.log(data);
   const onGetDetailShip = async () => {
     try {
       adminAPI
@@ -58,8 +59,13 @@ const UserManageItem = (props: UserManageItemProps) => {
       const date = dateRef.current?.value
         ? toISOLocalString(new Date(dateRef.current?.value))
         : toISOLocalString(new Date());
+      if (
+        dateRef.current?.value &&
+        new Date() > new Date(dateRef.current?.value)
+      )
+        throw new Error('Time is Valid');
       if (type == 'Ban') {
-        console.log('Date', date, dateRef.current?.value);
+        // console.log('Date', date, dateRef.current?.value);
         await adminAPI.banUser(+props.user.idUser, date, message);
       } else if (type == 'Unban') {
         await adminAPI.unbanUser(+props.user.idUser);
@@ -77,10 +83,19 @@ const UserManageItem = (props: UserManageItemProps) => {
       });
       setIsEdit(false);
     } catch (err: any) {
-      if (props.role == 'shipper') {
+      // console.log(err.message);
+      if (props.role == 'shipper' && !err.message.includes('Time')) {
         toast({
           status: 'error',
           title: 'Tài khoản đang có đơn hàng , không thể ban',
+          position: 'bottom-right',
+          duration: 1500,
+          variant: 'subtle'
+        });
+      } else if (err.message.includes('Time')) {
+        toast({
+          status: 'error',
+          title: 'Thời gian ban không hợp lệ, vui lòng thử lại',
           position: 'bottom-right',
           duration: 1500,
           variant: 'subtle'
@@ -94,6 +109,7 @@ const UserManageItem = (props: UserManageItemProps) => {
           variant: 'subtle'
         });
       }
+
       setIsEdit(false);
     } finally {
       mutate();

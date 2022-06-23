@@ -43,7 +43,7 @@ const UserManageList = (props: UserManageListProps) => {
       mounted = false;
     };
   }, [props.currentPage, props.name, props.address, props.phone]);
-  console.log(users.length);
+
   return (
     <>
       {!loading ? (
