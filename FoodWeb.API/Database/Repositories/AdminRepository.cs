@@ -196,11 +196,10 @@ namespace FoodWeb.API.Database.Repositories
             
             if(groupDetail.EnableGroupDetail)   return _mapper.Map<GroupDetailDTO>(groupDetail);
 
-            GroupDetailDTO newGroupDetail = new GroupDetailDTO();
             if(DateTime.Now > groupDetail.TimeEnable)
-                newGroupDetail = UnBanGroup(IdUser);
+                return UnBanGroup(IdUser);
 
-            return _mapper.Map<GroupDetailDTO>(newGroupDetail);
+            return _mapper.Map<GroupDetailDTO>(groupDetail);
         }
     }
 }
